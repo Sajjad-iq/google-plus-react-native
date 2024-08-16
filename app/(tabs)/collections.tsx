@@ -3,18 +3,18 @@ import { View, Text } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useHeader } from '@/context/HeaderContext';
 
-export default function HomeScreen() {
+export default function CollectionsScreen() {
     const { setHeaderTitle } = useHeader();
 
     useFocusEffect(
         React.useCallback(() => {
-            setHeaderTitle('Home');
+            setHeaderTitle('Collections');
         }, [setHeaderTitle])
     );
 
     return (
         <View>
-            <Text>Home Screen</Text>
+            <Text>Collections Screen</Text>
         </View>
-    );
+    ); // communities
 }
