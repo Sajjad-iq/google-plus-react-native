@@ -3,9 +3,9 @@ import { Header } from './header';
 import PrimaryDrawerItems from './primaryDrawerItems';
 import SecondaryDrawerItems from './secondaryDrawerItems';
 
-export const CustomDrawerContent = (props: any) => {
+export const DrawerContent = (props: any) => {
     return (
-        <DrawerContentScrollView contentContainerStyle={{
+        <DrawerContentScrollView scrollEnabled={false} contentContainerStyle={{
             paddingTop: 0,
         }}  {...props}>
             <Header />

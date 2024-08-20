@@ -4,6 +4,7 @@ import {
     MaterialIcons,
 } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { Colors } from "@/constants/Colors";
 export default function PrimaryDrawerItems() {
     return (
         <>
@@ -15,9 +16,9 @@ export default function PrimaryDrawerItems() {
                 labelStyle={[
                     styles.navItemLabel,
                 ]}
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
-                    router.push("/(stack)/profile");
+                    router.push("/(stack)/postView");
                 }} />
 
             <DrawerItem
@@ -28,7 +29,7 @@ export default function PrimaryDrawerItems() {
                 labelStyle={[
                     styles.navItemLabel,
                 ]}
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
                     router.push("/(stack)/people");
                 }} />
@@ -41,7 +42,7 @@ export default function PrimaryDrawerItems() {
                 labelStyle={[
                     styles.navItemLabel,
                 ]}
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
                     router.push("/(stack)/events");
                 }} />
@@ -54,7 +55,7 @@ export default function PrimaryDrawerItems() {
                 labelStyle={[
                     styles.navItemLabel,
                 ]}
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
                     router.push("/(stack)/settings");
                 }} />
@@ -67,7 +68,7 @@ export default function PrimaryDrawerItems() {
                 labelStyle={[
                     styles.navItemLabel,
                 ]}
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
                     router.push("/(stack)/feedback");
                 }} />
@@ -80,7 +81,7 @@ export default function PrimaryDrawerItems() {
                 labelStyle={[
                     styles.navItemLabel,
                 ]}
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
                     router.push("/(stack)/help");
                 }} />

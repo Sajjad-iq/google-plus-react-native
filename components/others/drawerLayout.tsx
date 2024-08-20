@@ -1,27 +1,27 @@
 import { Drawer } from "expo-router/drawer";
-import { CustomDrawerContent } from "@/components/customDrawerContent";
 import { TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 import { useHeader } from "@/context/HeaderContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Colors } from "@/constants/Colors";
+import { DrawerContent } from "./DrawerContent";
 
-export default function DrawerComponent() {
+export default function DrawerLayout() {
     const navigation = useNavigation();
     const { headerTitle } = useHeader();
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer
-                drawerContent={(props) => <CustomDrawerContent {...props} />}
+                drawerContent={(props) => <DrawerContent {...props} />}
                 screenOptions={{
-
                     headerStyle: {
-                        backgroundColor: '#d32f2f',
+                        backgroundColor: Colors.redPrimary,
                     },
-                    headerTintColor: '#FFFFFF',
+                    headerTintColor: Colors.whitePrimary,
                     headerTitleStyle: {
-                        color: '#FFFFFF',
+                        color: Colors.whitePrimary,
                     },
                     headerTitleAlign: 'left',
                     headerTitle: headerTitle,
@@ -30,8 +30,18 @@ export default function DrawerComponent() {
                             <Icon
                                 name="menu"
                                 size={28}
-                                color="#FFFFFF"
+                                color={Colors.whitePrimary}
                                 style={{ marginLeft: 16, marginRight: 20 }}
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity onPress={() => console.log('Search icon pressed')}>
+                            <Icon
+                                name="search"
+                                size={26}
+                                color={Colors.whitePrimary}
+                                style={{ marginRight: 16 }}
                             />
                         </TouchableOpacity>
                     ),

@@ -4,10 +4,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View } from 'react-native'; // Import View for styling
+import { Colors } from '@/constants/Colors';
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: '#d32f2f', headerShown: false }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: Colors.redPrimary, headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{

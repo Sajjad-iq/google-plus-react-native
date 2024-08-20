@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Avatar } from '../../UI/avatar';
+import { Colors } from '@/constants/Colors';
 
 export function Header() {
 
@@ -13,8 +15,10 @@ export function Header() {
             resizeMode="cover" // Optional: adjusts how the image is resized to fit the view
         >
             <View style={styles.userDetailsWrapper}>
-                <Image source={require('@/assets/images/ProfileImg.jpg')} style={[styles.avatar, { marginTop: insets.top + 15 }]} // Adds insets top to marginTop
-                />
+                <View style={[{ marginTop: insets.top + 15 }]} >
+                    <Avatar size={'Large'} />
+                </View>
+
 
                 <View style={styles.detailsWrapper}>
                     <Text style={styles.userName}>KILUA ZOLDYK</Text>
@@ -43,14 +47,8 @@ const styles = StyleSheet.create({
         width: '100%',
         gap: 10,
     },
-    avatar: {
-        width: 65,
-        height: 65,
-        borderRadius: 50,
-        marginTop: 15,
-    },
     userEmail: {
-        color: '#edece8',
+        color: Colors.grayPrimary,
         fontSize: 12,
         fontWeight: 'bold',
         textShadowColor: 'rgba(0, 0, 0, 0.15) ', // Shadow color
@@ -58,7 +56,7 @@ const styles = StyleSheet.create({
         textShadowRadius: 5, // Shadow blur radius
         // Optional: makes the text bold
     }, userName: {
-        color: '#fff',
+        color: Colors.whitePrimary,
         fontSize: 14,
         fontWeight: 'bold',
         textShadowColor: 'rgba(0, 0, 0, 0.40)', // Shadow color

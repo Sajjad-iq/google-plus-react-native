@@ -1,11 +1,11 @@
 import { HeaderProvider } from "@/context/HeaderContext";
-import DrawerWrapper from "@/components/drawerComponent";
+import DrawerLayout from "@/components/others/drawerLayout";
 
 export default function RootLayout() {
 
   return (
     <HeaderProvider>
-      <DrawerWrapper />
+      <DrawerLayout />
     </HeaderProvider>
   );
 }
