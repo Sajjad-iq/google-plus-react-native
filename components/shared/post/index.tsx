@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import PostHeader from './postHeader';
 import PostImage from './postImage';
 import { PostFooter } from './postFooter';
+import { router } from 'expo-router';
 
 export default function Post() {
     return (
@@ -14,7 +15,9 @@ export default function Post() {
             <View style={{ paddingVertical: 0, paddingHorizontal: 20 }}>
                 <Text style={styles.textContent}>Lorem ipsum</Text>
             </View>
-            <PostImage />
+            <PostImage onPress={() => {
+                router.push("/(stack)/postView");
+            }} />
             <PostFooter />
         </View>
     );

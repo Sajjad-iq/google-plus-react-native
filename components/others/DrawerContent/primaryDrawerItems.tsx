@@ -18,7 +18,7 @@ export default function PrimaryDrawerItems() {
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
-                    router.push("/(stack)/postView");
+                    router.push("/(stack)/profile");
                 }} />
 
             <DrawerItem

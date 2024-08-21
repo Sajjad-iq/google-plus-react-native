@@ -1,12 +1,15 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
 import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 
-export function WhatsNew() {
+interface Props {
+    onPress: () => void
+}
+export function WhatsNew(props: Props) {
     return (
-        <View style={styles.Wrapper}>
+        <Pressable onPress={props.onPress} style={styles.Wrapper} >
             <View style={styles.textWrapper} >
                 <Avatar size={'Medium'} />
                 <Text style={styles.text}>What's new with you?</Text>
@@ -15,7 +18,7 @@ export function WhatsNew() {
             <TouchableOpacity style={styles.button}>
                 <MaterialIcons name="camera-alt" size={25} color={'gray'} />
             </TouchableOpacity>
-        </View>
+        </Pressable>
     )
 }
 

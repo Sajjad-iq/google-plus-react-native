@@ -3,9 +3,12 @@ import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Colors } from '@/constants/Colors';
 
-export function Pencil() {
+interface Props {
+    onPress: () => void
+}
+export function Pencil(props: Props) {
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={props.onPress} style={styles.button}>
             <MaterialCommunityIcons name="pencil" size={26} color="white" />
         </TouchableOpacity>
     )

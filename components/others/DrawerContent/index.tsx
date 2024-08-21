@@ -5,7 +5,7 @@ import SecondaryDrawerItems from './secondaryDrawerItems';
 
 export const DrawerContent = (props: any) => {
     return (
-        <DrawerContentScrollView scrollEnabled={false} contentContainerStyle={{
+        <DrawerContentScrollView contentContainerStyle={{
             paddingTop: 0,
         }}  {...props}>
             <Header />

@@ -25,6 +25,7 @@ export function Avatar(props: Props) {
 
 const styles = StyleSheet.create({
     avatar: {
+        flex: 0,
         borderRadius: 50,
     },
     smallSize: {

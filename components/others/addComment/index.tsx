@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Colors } from '@/constants/Colors';
 import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
+import { PrimaryButton } from '@/components/UI/PrimaryButton';
 
 export function AddComment() {
     const [isFocused, setIsFocused] = useState(false);
@@ -21,9 +22,7 @@ export function AddComment() {
                 />
 
                 {!isFocused && (
-                    <TouchableOpacity style={styles.postButton}>
-                        <Text style={styles.postButtonText}>POST</Text>
-                    </TouchableOpacity>
+                    <PrimaryButton title={"POST"} />
                 )}
             </View>
 
@@ -38,9 +37,8 @@ export function AddComment() {
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity style={styles.postButton}>
-                        <Text style={styles.postButtonText}>POST</Text>
-                    </TouchableOpacity>
+                    <PrimaryButton title={"POST"} />
+
                 </View>
             )}
         </View>
@@ -81,15 +79,5 @@ const styles = StyleSheet.create({
         gap: 25,
     },
     iconButton: {
-    },
-    postButton: {
-        backgroundColor: 'transparent',
-        paddingVertical: 8,
-        borderRadius: 5,
-    },
-    postButtonText: {
-        color: Colors.bluePrimary,
-        fontSize: 16,
-        fontWeight: '600',
-    },
+    }
 });
