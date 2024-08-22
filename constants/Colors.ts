@@ -5,5 +5,7 @@ export const Colors = {
   grayX2: 'rgba(0, 0, 0, 0.35)',
   whitePrimary: '#FFFFFF',
   text: '#000',
-  bluePrimary: "rgb(73, 132, 204)"
+  blackPrimary: '#000',
+  bluePrimary: "#4285F4",
+  greenPrimary: "#34A853"
 }

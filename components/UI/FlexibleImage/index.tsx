@@ -1,14 +1,12 @@
-import { Dimensions, Image, Pressable, StyleSheet } from 'react-native'
+import { Dimensions, Image, Pressable, PressableProps, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-
 
 const { width: screenWidth } = Dimensions.get('window');
 
-interface Props {
-    onPress: () => void
-}
-export default function PostImage(props: Props) {
+interface Props extends PressableProps {
 
+}
+export default function FlexibleImage({ ...props }: Props) {
     const [imageHeight, setImageHeight] = useState<number | null>(null);
     const imageSource = require('@/assets/images/profile_cover.webp');
 
@@ -21,7 +19,7 @@ export default function PostImage(props: Props) {
 
     return (
         imageHeight && (
-            <Pressable onPress={props.onPress}>
+            <Pressable {...props}>
                 <Image
 
                     source={imageSource}
@@ -35,10 +33,8 @@ export default function PostImage(props: Props) {
 }
 
 const styles = StyleSheet.create({
-
     imageContent: {
         width: '100%',  // Full width of the container
-        marginTop: 20,
         backgroundColor: 'black',
     },
 });

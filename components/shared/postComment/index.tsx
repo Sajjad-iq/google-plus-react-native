@@ -10,7 +10,7 @@ export function PostComment(props: Props) {
     return (
         <View style={styles.wrapper}>
             <Avatar size='Small' />
-            <View style={[styles.innerWrapper, { borderBottomWidth: props.lastOne ? 0 : 1 }]} >
+            <View style={[styles.innerWrapper]} >
                 <View style={{ gap: 5, flex: 1 }}>
                     <Text style={styles.arthur}>KILUA ZOLDYK</Text>
                     <Text>some text here...</Text>
@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         flex: 1,
         borderBottomColor: Colors.grayX3,
-        borderBottomWidth: 1,
-        paddingBottom: 20
     },
     arthur: {
         fontWeight: 'bold',

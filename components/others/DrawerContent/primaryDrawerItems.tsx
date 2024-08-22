@@ -31,7 +31,6 @@ export default function PrimaryDrawerItems() {
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
-                    router.push("/(stack)/people");
                 }} />
 
             <DrawerItem
@@ -44,7 +43,6 @@ export default function PrimaryDrawerItems() {
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
-                    router.push("/(stack)/events");
                 }} />
 
             <DrawerItem
@@ -70,7 +68,6 @@ export default function PrimaryDrawerItems() {
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
-                    router.push("/(stack)/feedback");
                 }} />
 
             <DrawerItem
@@ -83,7 +80,6 @@ export default function PrimaryDrawerItems() {
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
-                    router.push("/(stack)/help");
                 }} />
         </>
     )

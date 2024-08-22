@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import PostHeader from './postHeader';
-import PostImage from './postImage';
 import { PostFooter } from './postFooter';
 import { router } from 'expo-router';
+import FlexibleImage from '@/components/UI/FlexibleImage';
 
 export default function Post() {
     return (
@@ -12,10 +12,10 @@ export default function Post() {
                 <PostHeader avatar="" userName="Kilua Zoldyk" date="2d" status="Public" />
             </View>
 
-            <View style={{ paddingVertical: 0, paddingHorizontal: 20 }}>
+            <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>
                 <Text style={styles.textContent}>Lorem ipsum</Text>
             </View>
-            <PostImage onPress={() => {
+            <FlexibleImage onPress={() => {
                 router.push("/(stack)/postView");
             }} />
             <PostFooter />

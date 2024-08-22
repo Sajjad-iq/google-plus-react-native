@@ -6,9 +6,10 @@ import Post from '@/components/shared/post';
 import { WhatsNew } from '@/components/others/whatsNew';
 import { Pencil } from '@/components/others/Pencil';
 import { CreatePost } from '@/components/others/createPost';
+import { Colors } from '@/constants/Colors';
 
 export default function HomeScreen() {
-    const { setHeaderTitle } = useHeader();
+    const { setHeaderTitle, setHeaderColor } = useHeader();
     const [modalVisible, setModalVisible] = useState(false);
     const showHideCratePost = () => {
         setModalVisible(!modalVisible)
@@ -16,6 +17,7 @@ export default function HomeScreen() {
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle('Home');
+            setHeaderColor(Colors.redPrimary);
         }, [setHeaderTitle])
     );
 

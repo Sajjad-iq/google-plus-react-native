@@ -9,15 +9,18 @@ import { DrawerContent } from "./DrawerContent";
 
 export default function DrawerLayout() {
     const navigation = useNavigation();
-    const { headerTitle } = useHeader();
+    const { headerTitle, headerColor } = useHeader();
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'transparent' }}>
             <Drawer
                 drawerContent={(props) => <DrawerContent {...props} />}
                 screenOptions={{
                     headerStyle: {
-                        backgroundColor: Colors.redPrimary,
+                        backgroundColor: headerColor,
+                        elevation: 0, // Remove shadow on Android
+                        shadowOpacity: 0, // Remove shadow on iOS
+                        borderBottomWidth: 0, // Ensure no border at the bottom
                     },
                     headerTintColor: Colors.whitePrimary,
                     headerTitleStyle: {

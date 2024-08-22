@@ -4,11 +4,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View } from 'react-native'; // Import View for styling
-import { Colors } from '@/constants/Colors';
+import { useHeader } from '@/context/HeaderContext';
 
 export default function TabLayout() {
+
+  const { headerColor } = useHeader();
+
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: Colors.redPrimary, headerShown: false }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: headerColor, headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -18,7 +21,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="collections"
+        name="(collections)"
         options={{
           title: 'Collections',
           tabBarIcon: ({ color }) => (
@@ -30,7 +33,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="communities"
+        name="(communities)"
         options={{
           title: 'Communities',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons size={28} name="google-circles-communities" color={color} />
