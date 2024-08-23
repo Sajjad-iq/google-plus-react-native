@@ -4,7 +4,6 @@ import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
 
 interface Props {
-    lastOne: boolean
 }
 export function PostComment(props: Props) {
     return (

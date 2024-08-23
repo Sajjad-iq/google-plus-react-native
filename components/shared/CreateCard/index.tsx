@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
         elevation: 12, // Elevation for Android to create a shadow effect similar to the blur
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: 4
     },
 });

@@ -9,7 +9,7 @@ export default function Post() {
     return (
         <View style={styles.postWrapper}>
             <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-                <PostHeader avatar="" userName="Kilua Zoldyk" date="2d" status="Public" />
+                <PostHeader avatar="" userName="KILUA ZOLDYK" date="2d" status="Public" />
             </View>
 
             <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>

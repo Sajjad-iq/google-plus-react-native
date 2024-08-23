@@ -87,6 +87,7 @@ export default function ScreensLayout() {
             <MaterialCommunityIcons name="arrow-left" size={28} color={Colors.whitePrimary} />
           </TouchableOpacity>
         ),
+        title: '',
         headerStyle: {
           backgroundColor: Colors.redPrimary, // Customize as needed
         },

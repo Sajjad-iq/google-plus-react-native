@@ -1,23 +1,19 @@
-import { Text, StyleSheet, Pressable, PressableProps, ViewStyle } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import React from 'react';
 import { Colors } from '@/constants/Colors';
 
-interface Props extends PressableProps {
+interface Props extends TouchableOpacityProps {
     title?: string;
 }
 
-export function PrimaryButton({ title = 'POST', style, ...rest }: Props) {
+export function PrimaryButton({ title = 'POST', ...rest }: Props) {
     return (
-        <Pressable
-            style={(state) =>
-                typeof style === 'function'
-                    ? [styles.postButton, style(state)]
-                    : [styles.postButton, style]
-            }
+        <TouchableOpacity
+            style={[styles.postButton, rest.style]}
             {...rest}
         >
             <Text style={styles.postButtonText}>{title}</Text>
-        </Pressable>
+        </TouchableOpacity>
     );
 }
 

@@ -16,12 +16,11 @@ export default function PostView() {
                 </View>
 
                 <View style={styles.commentsWrapper}>
-                    <PostComment lastOne={false} />
-                    <PostComment lastOne={false} />
-                    <PostComment lastOne={false} />
-                    <PostComment lastOne={false} />
-                    <PostComment lastOne={true} />
-
+                    <PostComment />
+                    <PostComment />
+                    <PostComment />
+                    <PostComment />
+                    <PostComment />
                 </View>
             </ScrollView>
 
@@ -38,10 +37,9 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
     }, commentsWrapper: {
-        paddingTop: 20,
+        paddingVertical: 15,
         backgroundColor: Colors.whitePrimary,
         gap: 20
-
     },
     scrollViewContent: {
         paddingVertical: 5,
