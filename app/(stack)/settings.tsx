@@ -7,8 +7,10 @@ import ProfileChangeCoverImages from '@/components/others/ProfileChangeCoverImag
 import ChangeLanguage from '@/components/others/ChangeLanguage';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { PrimaryButton } from '@/components/UI/PrimaryButton';
+import { useTranslation } from 'react-i18next';
 
 export default function Settings() {
+    const { t } = useTranslation();
 
     return (
         <KeyboardAvoidingView>
@@ -16,8 +18,8 @@ export default function Settings() {
                 <View style={styles.container}>
                     <View style={{ gap: 30 }}>
                         <ProfileChangeCoverImages />
-                        <LabeledInput label='First Name' placeholder='john' />
-                        <LabeledInput label='Last Name' placeholder='Doe' />
+                        <LabeledInput label={t("settings.firstName")} />
+                        <LabeledInput label={t("settings.lastName")} />
                     </View>
                 </View>
 
@@ -27,7 +29,7 @@ export default function Settings() {
                     </View>
                 </View>
 
-                <PrimaryButton style={{ alignSelf: 'flex-end', marginBottom: 20 }} title='SAVE' />
+                <PrimaryButton style={{ alignSelf: 'flex-end', marginBottom: 20 }} title={t("settings.save")} />
             </ScrollView>
         </KeyboardAvoidingView>
     );

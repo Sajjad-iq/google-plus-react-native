@@ -5,17 +5,19 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View } from 'react-native'; // Import View for styling
 import { useHeader } from '@/context/HeaderContext';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
 
   const { headerColor } = useHeader();
+  const { t } = useTranslation();
 
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: headerColor, headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: t('home.title'),
           tabBarIcon: ({ color }) => <MaterialIcons size={28} name="home" color={color} />
         }}
       />
@@ -23,7 +25,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(collections)"
         options={{
-          title: 'Collections',
+          title: t('Collections.title'),
           tabBarIcon: ({ color }) => (
             <View style={{ transform: [{ rotate: '45deg' }] }}>
               <Ionicons size={20} name="grid" color={color} />
@@ -35,7 +37,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(communities)"
         options={{
-          title: 'Communities',
+          title: t('Communities.title'),
           tabBarIcon: ({ color }) => <MaterialCommunityIcons size={28} name="google-circles-communities" color={color} />
         }}
       />
@@ -43,7 +45,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          title: 'Notifications',
+          title: t('Notifications.title'),
           tabBarIcon: ({ color }) => <MaterialIcons size={28} name="notifications" color={color} />
         }}
       />

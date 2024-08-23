@@ -4,9 +4,11 @@ import { Colors } from '@/constants/Colors';
 import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { PrimaryButton } from '@/components/UI/PrimaryButton';
+import { useTranslation } from 'react-i18next';
 
 export function AddComment() {
     const [isFocused, setIsFocused] = useState(false);
+    const { t } = useTranslation();
 
     return (
         <View style={styles.wrapper}>
@@ -14,16 +16,16 @@ export function AddComment() {
                 <Avatar size={'Small'} />
                 <TextInput
                     style={styles.textArea}
-                    placeholder="Add a comment"
+                    placeholder={t("post.addCommentPlaceholder")}
                     placeholderTextColor={Colors.grayX2}
                     multiline={true}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                 />
 
-                {!isFocused && (
-                    <PrimaryButton title={"POST"} />
-                )}
+                {/*         {!isFocused && (
+                    <PrimaryButton title={t("post.postComment")} />
+                )} */}
             </View>
 
             {isFocused && (
@@ -37,7 +39,7 @@ export function AddComment() {
                         </TouchableOpacity>
                     </View>
 
-                    <PrimaryButton title={"POST"} />
+                    <PrimaryButton title={t("post.postComment")} />
 
                 </View>
             )}

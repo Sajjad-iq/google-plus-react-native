@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TextInputProps } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TextInputProps, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { Colors } from '@/constants/Colors';
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.whitePrimary,
     paddingHorizontal: 8,
-    paddingVertical: 20,
+    paddingVertical: Platform.OS === 'ios' ? 20 : 10,
     borderRadius: 4,
     borderColor: Colors.grayX2,
     borderWidth: 1,

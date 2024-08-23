@@ -4,12 +4,16 @@ import PostHeader from './postHeader';
 import { PostFooter } from './postFooter';
 import { router } from 'expo-router';
 import FlexibleImage from '@/components/UI/FlexibleImage';
+import { useTranslation } from 'react-i18next';
 
 export default function Post() {
+
+    const { t } = useTranslation();
+
     return (
         <View style={styles.postWrapper}>
             <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-                <PostHeader avatar="" userName="KILUA ZOLDYK" date="2d" status="Public" />
+                <PostHeader avatar="" userName="KILUA ZOLDYK" date={`2 ${t('post.postTimer.d')} `} status={t('post.postState.public')} />
             </View>
 
             <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>

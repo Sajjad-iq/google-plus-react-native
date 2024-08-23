@@ -3,6 +3,7 @@ import { Image, Text } from 'react-native';
 import { DrawerItem } from '@react-navigation/drawer';
 import { StyleSheet, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 // Import your custom icons
 const googlePhotosIcon = require('@/assets/images/photos.png'); // Replace with your actual icon path social.png
@@ -10,9 +11,12 @@ const hangoutsIcon = require('@/assets/images/social.png'); // Replace with your
 const googleIcon = require('@/assets/images/google.png'); // Replace with your actual icon path 
 
 export default function SecondaryDrawerItems() {
+
+    const { t } = useTranslation();
+
     return (
         <View style={styles.wrapper}>
-            <Text style={styles.title}>Google apps</Text>
+            <Text style={styles.title}>{t("drawerContent.googleApps")}</Text>
             <DrawerItem
                 icon={({ size }) => (
                     <Image
@@ -20,7 +24,7 @@ export default function SecondaryDrawerItems() {
                         style={[styles.icon, { width: size, height: size }]} // Set icon size
                     />
                 )}
-                label={"Google Photos"}
+                label={t("drawerContent.googlePhotos")}
                 labelStyle={styles.navItemLabel}
                 style={{ backgroundColor: "#fff" }}
                 onPress={() => {
@@ -33,7 +37,7 @@ export default function SecondaryDrawerItems() {
                         style={[styles.icon, { width: size, height: size }]} // Set icon size
                     />
                 )}
-                label={"Hangouts"}
+                label={t("drawerContent.hangouts")}
                 labelStyle={styles.navItemLabel}
                 style={{ backgroundColor: "#fff" }}
                 onPress={() => {
@@ -46,7 +50,7 @@ export default function SecondaryDrawerItems() {
                         style={[styles.icon, { width: size, height: size }]} // Set icon size
                     />
                 )}
-                label={"Google Search"}
+                label={t("drawerContent.googleSearch")}
                 labelStyle={styles.navItemLabel}
                 style={{ backgroundColor: "#fff" }}
                 onPress={() => {
@@ -56,7 +60,7 @@ export default function SecondaryDrawerItems() {
                 icon={({ size, color }) => (
                     <MaterialIcons name="my-location" size={size} color={color} />
                 )}
-                label={"Locations"}
+                label={t("drawerContent.locations")}
                 labelStyle={[
                     styles.navItemLabel,
                 ]}

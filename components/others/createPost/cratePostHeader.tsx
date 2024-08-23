@@ -4,8 +4,11 @@ import { Colors } from '@/constants/Colors';
 import { Avatar } from '@/components/UI/avatar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PrimaryButton } from '@/components/UI/PrimaryButton';
+import { useTranslation } from 'react-i18next';
 
 export function CratePostHeader() {
+    const { t } = useTranslation();
+
     return (
         <View style={{
             flexDirection: 'row', justifyContent: 'space-between', gap: 15, padding: 20,
@@ -15,10 +18,10 @@ export function CratePostHeader() {
                 <Text style={styles.arthurName} >KILUA ZOLDYK</Text>
                 <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
                     <MaterialCommunityIcons name="earth" size={24} color={Colors.bluePrimary} />
-                    <Text style={{ color: Colors.bluePrimary, fontWeight: '500' }}>Public</Text>
+                    <Text style={{ color: Colors.bluePrimary, fontWeight: '500' }}>{t('createPost.postState.public')}</Text>
                 </View>
             </View>
-            <PrimaryButton title={"POST"} />
+            <PrimaryButton title={t('createPost.post')} />
         </View>
     )
 }

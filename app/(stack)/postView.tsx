@@ -5,14 +5,18 @@ import { Colors } from '@/constants/Colors';
 import { AddComment } from '@/components/others/addComment';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { PostComment } from '@/components/shared/postComment';
+import { useTranslation } from 'react-i18next';
 
 export default function PostView() {
+
+    const { t } = useTranslation();
+
     return (
         <KeyboardAvoidingView >
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <Post />
                 <View style={styles.statusWrapper}>
-                    <Text style={styles.stateLabel}>Shared publicly . View activity</Text>
+                    <Text style={styles.stateLabel}>{t('post.previewFooterMessage.public')}</Text>
                 </View>
 
                 <View style={styles.commentsWrapper}>

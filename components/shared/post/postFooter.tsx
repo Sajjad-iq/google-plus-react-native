@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 
 export function PostFooter() {
+
     return (
         <View style={styles.container}>
             <View style={styles.buttonWrapper} >

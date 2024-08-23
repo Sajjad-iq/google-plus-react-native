@@ -3,16 +3,20 @@ import React from 'react'
 import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     onPress: () => void
 }
 export function WhatsNew(props: Props) {
+
+    const { t } = useTranslation();
+
     return (
         <Pressable onPress={props.onPress} style={styles.Wrapper} >
             <View style={styles.textWrapper} >
                 <Avatar size={'Medium'} />
-                <Text style={styles.text}>What's new with you?</Text>
+                <Text style={styles.text}>{t("home.whatsNew")}</Text>
             </View>
 
             <TouchableOpacity style={styles.button}>

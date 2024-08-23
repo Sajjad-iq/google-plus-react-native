@@ -2,10 +2,14 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 }
 export function PostComment(props: Props) {
+
+    const { t } = useTranslation();
+
     return (
         <View style={styles.wrapper}>
             <Avatar size='Small' />
@@ -15,7 +19,7 @@ export function PostComment(props: Props) {
                     <Text>some text here...</Text>
                 </View>
 
-                <Text style={{ flex: 0, marginRight: 20 }}>42m</Text>
+                <Text style={{ flex: 0, marginRight: 20, color: Colors.grayX2 }}>{`42 ${t("post.postTimer.m")}`}</Text>
             </View>
         </View>
     )

@@ -1,0 +1,78 @@
+{
+    "language": "ar-IQ",
+    "home": {
+        "title": "الصفحة الرئيسية",
+        "whatsNew": "اكتب شيئاً..."
+    },
+    "Collections": {
+        "title": "المختارات",
+        "createCollection": "إنشاء مختارة",
+        "featured": "مميزة",
+        "yours": "خاصتك",
+        "followings": "تتابعها"
+    },
+    "Communities": {
+        "title": "المجموعات",
+        "createCommunity": "إنشاء مجموعة",
+        "recommended": "مقترحة",
+        "yours": "خاصتك",
+        "member": "عضو"
+    },
+    "Notifications": {
+        "title": "الإشعارات"
+    },
+    "post": {
+        "postState": {
+            "private": "خاص",
+            "public": "عام"
+        },
+        "previewFooterMessage": {
+            "public": "تمت المشاركة بشكل عام . عرض الأنشطة"
+        },
+        "postTimer": {
+            "d": "ي",
+            "h": "س",
+            "m": "د",
+            "y": "س"
+        },
+        "addCommentPlaceholder": "اكتب تعليق...",
+        "postComment": "أرسل"
+    },
+    "createPost": {
+        "postState": {
+            "private": "خاص",
+            "public": "عام"
+        },
+        "post": "نشر",
+        "inputPlaceholder": "اكتب شيئاً...",
+        "addLocation": " أضف موقعك الحالي"
+    },
+    "drawerContent": {
+        "profile": "الملف الشخصي",
+        "people": "الأشخاص",
+        "events": "الأحداث",
+        "settings": "الإعدادات",
+        "feedback": "إرسال تعليقات",
+        "help": "المساعدة",
+        "googleApps": "تطبيقات جوجل",
+        "hangouts": "Hangouts",
+        "googlePhotos": "صور ",
+        "googleSearch": "Google",
+        "locations": "المواقع"
+    },
+    "profile": {
+        "editProfile": "تعديل الملف الشخصي",
+        "interests": "اهتمامات",
+        "about": " الملف الشخصي"
+    },
+    "settings": {
+        "firstName": "الاسم الاول",
+        "lastName": "الاسم الثاني",
+        "language": {
+            "title": "اللغة",
+            "english": "الأنجليزية",
+            "arabic": "العربية"
+        },
+        "save": "حفظ"
+    }
+}

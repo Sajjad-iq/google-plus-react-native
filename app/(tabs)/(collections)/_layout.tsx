@@ -7,6 +7,7 @@ import type {
 import { withLayoutContext } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { useHeader } from '@/context/HeaderContext';
+import { useTranslation } from 'react-i18next';
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -19,6 +20,7 @@ export const MaterialTopTabs = withLayoutContext<
 
 export default function TabLayout() {
     const { headerColor } = useHeader();
+    const { t } = useTranslation();
 
     return (
         <MaterialTopTabs
@@ -34,9 +36,9 @@ export default function TabLayout() {
                 tabBarInactiveTintColor: Colors.grayPrimary, // Set inactive text color
                 tabBarLabelStyle: { fontSize: 12 }, // Set font size of tab labels
             }}>
-            <MaterialTopTabs.Screen name="index" options={{ title: "FEATURED" }} />
-            <MaterialTopTabs.Screen name="followings" options={{ title: "FOLLOWINGS" }} />
-            <MaterialTopTabs.Screen name="yours" options={{ title: "YOURS" }} />
+            <MaterialTopTabs.Screen name="index" options={{ title: t("Collections.featured") }} />
+            <MaterialTopTabs.Screen name="followings" options={{ title: t("Collections.followings") }} />
+            <MaterialTopTabs.Screen name="yours" options={{ title: t("Collections.yours") }} />
         </MaterialTopTabs>
     );
 }

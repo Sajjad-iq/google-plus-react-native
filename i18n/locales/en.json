@@ -1,0 +1,78 @@
+{
+    "language": "en-US",
+    "home": {
+        "title": "Home",
+        "whatsNew": "Write something..."
+    },
+    "Collections": {
+        "title": "Collections",
+        "createCollection": "Create Collection",
+        "featured": "Featured",
+        "yours": "Yours",
+        "followings": "Following"
+    },
+    "Communities": {
+        "title": "Communities",
+        "createCommunity": "Create Community",
+        "recommended": "Recommended",
+        "yours": "Yours",
+        "member": "Member"
+    },
+    "Notifications": {
+        "title": "Notifications"
+    },
+    "post": {
+        "postState": {
+            "private": "Private",
+            "public": "Public"
+        },
+        "previewFooterMessage": {
+            "public": "Shared publicly. View activities"
+        },
+        "postTimer": {
+            "d": "d",
+            "h": "h",
+            "m": "m",
+            "y": "y"
+        },
+        "addCommentPlaceholder": "Write a comment...",
+        "postComment": "Send"
+    },
+    "createPost": {
+        "postState": {
+            "private": "Private",
+            "public": "Public"
+        },
+        "post": "Post",
+        "inputPlaceholder": "Write something...",
+        "addLocation": "Add your current location"
+    },
+    "drawerContent": {
+        "profile": "Profile",
+        "people": "People",
+        "events": "Events",
+        "settings": "Settings",
+        "feedback": "Send Feedback",
+        "help": "Help",
+        "googleApps": "Google Apps",
+        "hangouts": "Hangouts",
+        "googlePhotos": "Google Photos",
+        "googleSearch": "Google",
+        "locations": "Locations"
+    },
+    "profile": {
+        "editProfile": "Edit Profile",
+        "interests": "Interests",
+        "about": "About"
+    },
+    "settings": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "language": {
+            "title": "Language",
+            "english": "English",
+            "arabic": "Arabic"
+        },
+        "save": "Save"
+    }
+}

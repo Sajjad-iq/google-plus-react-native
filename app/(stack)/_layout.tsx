@@ -3,10 +3,11 @@ import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from "@/constants/Colors";
-import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from "react-i18next";
 
 export default function ScreensLayout() {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <Stack screenOptions={{
@@ -67,7 +68,7 @@ export default function ScreensLayout() {
           ),
           headerRight: () => (
             <View style={styles.headerTitleContainer}>
-              <Text style={styles.headerTitle}>ABOUT</Text>
+              <Text style={styles.headerTitle}>{t("profile.about")}</Text>
               <TouchableOpacity onPress={() => { }}>
                 <MaterialCommunityIcons name="dots-vertical" size={28} color={Colors.whitePrimary} />
               </TouchableOpacity>

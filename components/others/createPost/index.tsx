@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
 import { CreatePostFooter } from './createPostFooter';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     isActive: boolean;
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export const CreatePost = (props: Props) => {
+    const { t } = useTranslation();
+
     return (
         <Modal
             animationType="slide"
@@ -27,7 +30,7 @@ export const CreatePost = (props: Props) => {
                             <CratePostHeader />
                             <TextInput
                                 style={styles.textArea}
-                                placeholder="Write something ..."
+                                placeholder={t('createPost.inputPlaceholder')}
                                 placeholderTextColor={Colors.grayX2}
                                 multiline={true}
                             />
@@ -38,7 +41,7 @@ export const CreatePost = (props: Props) => {
                         style={styles.addLocationButton}
                     >
                         <MaterialIcons name="location-pin" size={28} color="gray" />
-                        <Text style={styles.addLocationText}>Add your location</Text>
+                        <Text style={styles.addLocationText}>{t('createPost.addLocation')}</Text>
                     </TouchableOpacity>
 
                     <CreatePostFooter />
