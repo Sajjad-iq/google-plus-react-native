@@ -19,6 +19,9 @@ export default function PrimaryDrawerItems() {
                 label={t("drawerContent.profile")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
@@ -32,6 +35,9 @@ export default function PrimaryDrawerItems() {
                 label={t("drawerContent.people")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
@@ -44,6 +50,9 @@ export default function PrimaryDrawerItems() {
                 label={t("drawerContent.events")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
@@ -56,6 +65,9 @@ export default function PrimaryDrawerItems() {
                 label={t("drawerContent.settings")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
@@ -69,6 +81,9 @@ export default function PrimaryDrawerItems() {
                 label={t("drawerContent.feedback")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {
@@ -81,6 +96,9 @@ export default function PrimaryDrawerItems() {
                 label={t("drawerContent.help")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: Colors.whitePrimary }}
                 onPress={() => {

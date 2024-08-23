@@ -6,7 +6,7 @@ import type {
 } from '@react-navigation/material-top-tabs';
 import { withLayoutContext } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { useHeader } from '@/context/HeaderContext';
+import { useHeader } from '@/context/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
 const { Navigator } = createMaterialTopTabNavigator();

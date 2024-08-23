@@ -4,6 +4,7 @@ import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
+import { useLayoutDirection } from '@/context/GlobalContext';
 
 interface Props {
     onPress: () => void
@@ -11,10 +12,11 @@ interface Props {
 export function WhatsNew(props: Props) {
 
     const { t } = useTranslation();
-
+    const { currentLayoutDirection } = useLayoutDirection()
+    const flexDirection = currentLayoutDirection == 'rtl' ? 'row-reverse' : 'row'
     return (
-        <Pressable onPress={props.onPress} style={styles.Wrapper} >
-            <View style={styles.textWrapper} >
+        <Pressable onPress={props.onPress} style={[styles.Wrapper, { flexDirection: flexDirection }]} >
+            <View style={[styles.textWrapper, { flexDirection: flexDirection }]} >
                 <Avatar size={'Medium'} />
                 <Text style={styles.text}>{t("home.whatsNew")}</Text>
             </View>

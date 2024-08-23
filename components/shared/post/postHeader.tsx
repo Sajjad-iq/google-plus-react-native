@@ -1,5 +1,6 @@
 import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
+import { useLayoutDirection } from '@/context/GlobalContext';
 import { AntDesign } from '@expo/vector-icons';
 import { View, Text, StyleSheet } from 'react-native'
 
@@ -11,13 +12,16 @@ interface Props {
 }
 
 export default function PostHeader(props: Props) {
+
+    const { currentLayoutDirection } = useLayoutDirection()
+    const flexDirection = currentLayoutDirection == 'rtl' ? 'row-reverse' : 'row'
     return (
-        <View style={styles.headerWrapper} >
-            <View style={styles.leftContainer}>
+        <View style={[styles.headerWrapper, { flexDirection: flexDirection }]} >
+            <View style={[styles.leftContainer, { flexDirection: flexDirection }]}>
                 <Avatar size="Medium" src={props.avatar} />
-                <View style={styles.labelWrapper}>
+                <View style={[styles.labelWrapper, { flexDirection: flexDirection }]}>
                     <Text style={styles.arthurName} >{props.userName}</Text>
-                    <AntDesign name="caretright" size={8} color={Colors.grayX2} />
+                    <AntDesign style={{ transform: [{ rotate: currentLayoutDirection === 'rtl' ? '180deg' : '0deg' }] }} name="caretright" size={8} color={Colors.grayX2} />
                     <Text style={styles.postStatus}>{props.status}</Text>
                 </View>
             </View>
@@ -40,7 +44,7 @@ const styles = StyleSheet.create({
     labelWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 2
+        gap: 4
     },
     arthurName: {
         fontWeight: 'bold',

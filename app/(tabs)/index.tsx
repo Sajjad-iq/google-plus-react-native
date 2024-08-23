@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { useHeader } from '@/context/HeaderContext';
+import { useHeader } from '@/context/GlobalContext';
 import Post from '@/components/shared/post';
 import { WhatsNew } from '@/components/others/whatsNew';
 import { Pencil } from '@/components/others/Pencil';

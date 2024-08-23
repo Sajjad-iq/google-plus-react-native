@@ -25,8 +25,12 @@ export default function SecondaryDrawerItems() {
                     />
                 )}
                 label={t("drawerContent.googlePhotos")}
-                labelStyle={styles.navItemLabel}
-                style={{ backgroundColor: "#fff" }}
+                labelStyle={[
+                    styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
+                ]} style={{ backgroundColor: "#fff" }}
                 onPress={() => {
                 }} />
 
@@ -38,8 +42,12 @@ export default function SecondaryDrawerItems() {
                     />
                 )}
                 label={t("drawerContent.hangouts")}
-                labelStyle={styles.navItemLabel}
-                style={{ backgroundColor: "#fff" }}
+                labelStyle={[
+                    styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
+                ]} style={{ backgroundColor: "#fff" }}
                 onPress={() => {
                 }} />
 
@@ -51,8 +59,12 @@ export default function SecondaryDrawerItems() {
                     />
                 )}
                 label={t("drawerContent.googleSearch")}
-                labelStyle={styles.navItemLabel}
-                style={{ backgroundColor: "#fff" }}
+                labelStyle={[
+                    styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
+                ]} style={{ backgroundColor: "#fff" }}
                 onPress={() => {
                 }} />
 
@@ -63,6 +75,9 @@ export default function SecondaryDrawerItems() {
                 label={t("drawerContent.locations")}
                 labelStyle={[
                     styles.navItemLabel,
+                    {
+                        textAlign: 'left'
+                    }
                 ]}
                 style={{ backgroundColor: "#fff" }}
                 onPress={() => {

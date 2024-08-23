@@ -5,31 +5,31 @@ import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { PrimaryButton } from '@/components/UI/PrimaryButton';
 import { useTranslation } from 'react-i18next';
+import { useLayoutDirection } from '@/context/GlobalContext';
 
 export function AddComment() {
     const [isFocused, setIsFocused] = useState(false);
     const { t } = useTranslation();
+    const { currentLayoutDirection } = useLayoutDirection()
+    const flexDirection = currentLayoutDirection == 'rtl' ? 'row-reverse' : 'row'
+    const align = currentLayoutDirection == 'rtl' ? 'right' : 'left'
 
     return (
         <View style={styles.wrapper}>
-            <View style={styles.inputRow}>
+            <View style={[styles.inputRow, { flexDirection: flexDirection }]}>
                 <Avatar size={'Small'} />
                 <TextInput
-                    style={styles.textArea}
+                    style={[styles.textArea, { textAlign: align }]}
                     placeholder={t("post.addCommentPlaceholder")}
                     placeholderTextColor={Colors.grayX2}
                     multiline={true}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                 />
-
-                {/*         {!isFocused && (
-                    <PrimaryButton title={t("post.postComment")} />
-                )} */}
             </View>
 
             {isFocused && (
-                <View style={styles.actionsRow}>
+                <View style={[styles.actionsRow, { flexDirection: flexDirection }]}>
                     <View style={styles.iconsRow}>
                         <TouchableOpacity style={styles.iconButton}>
                             <MaterialIcons name="camera-alt" size={25} color={'gray'} />

@@ -2,7 +2,7 @@ import { Drawer } from "expo-router/drawer";
 import { TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
-import { useHeader } from "@/context/HeaderContext";
+import { useHeader } from '@/context/GlobalContext';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Colors } from "@/constants/Colors";
 import { DrawerContent } from "./DrawerContent";

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 export default function Post() {
 
     const { t } = useTranslation();
-
     return (
         <View style={styles.postWrapper}>
             <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>

@@ -1,6 +1,6 @@
 import { CreateCard } from '@/components/shared/CreateCard';
 import { Colors } from '@/constants/Colors';
-import { useHeader } from '@/context/HeaderContext';
+import { useHeader } from '@/context/GlobalContext';
 import { useFocusEffect } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

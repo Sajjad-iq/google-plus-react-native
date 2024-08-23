@@ -8,9 +8,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { CreateCard } from '@/components/shared/CreateCard';
 import Post from '@/components/shared/post';
 import { useTranslation } from 'react-i18next';
+import { useLayoutDirection } from '@/context/GlobalContext';
 
 export default function Profile() {
     const { t } = useTranslation();
+    const { currentLayoutDirection } = useLayoutDirection()
+    const align = currentLayoutDirection == 'rtl' ? 'flex-end' : 'flex-start'
 
     return (
         <ScrollView style={styles.container}>
@@ -28,9 +31,11 @@ export default function Profile() {
                 </SecondaryButton>
             </View>
 
-            <View style={{ marginTop: 40, padding: 10, gap: 15, borderTopColor: Colors.grayPrimary, borderTopWidth: 4 }}>
+            <View style={{ marginTop: 40, padding: 10, gap: 15, borderTopColor: Colors.grayPrimary, borderTopWidth: 4, alignItems: align }}>
                 <Text style={{ color: "gray", fontWeight: 'bold', fontSize: 14, marginTop: 20 }}>KILUA ZOLDYK {t("profile.interests")}</Text>
-                <CreateCard ><Text style={{ color: "gray", fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>{t("Collections.createCollection")}</Text></CreateCard>
+                <View style={{ gap: 10, flexDirection: "row" }}>
+                    <CreateCard ><Text style={{ color: "gray", fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>{t("Collections.createCollection")}</Text></CreateCard>
+                </View>
             </View>
 
             <View style={{ marginTop: 40, gap: 10, paddingVertical: 20 }}>

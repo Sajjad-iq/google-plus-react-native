@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { useHeader } from '@/context/HeaderContext';
+import { useHeader } from '@/context/GlobalContext';
 import { Colors } from '@/constants/Colors';
 import { NotificationCard } from '@/components/others/NotificationCard';
 import { ScrollView } from 'react-native-gesture-handler';

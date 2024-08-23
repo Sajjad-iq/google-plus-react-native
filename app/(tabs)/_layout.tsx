@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View } from 'react-native'; // Import View for styling
-import { useHeader } from '@/context/HeaderContext';
+import { useHeader } from '@/context/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {

@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { CreatePostFooter } from './createPostFooter';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { useTranslation } from 'react-i18next';
+import { useLayoutDirection } from '@/context/GlobalContext';
 
 interface Props {
     isActive: boolean;
@@ -14,7 +15,8 @@ interface Props {
 
 export const CreatePost = (props: Props) => {
     const { t } = useTranslation();
-
+    const { currentLayoutDirection } = useLayoutDirection()
+    const align = currentLayoutDirection == 'rtl' ? 'right' : 'left'
     return (
         <Modal
             animationType="slide"
@@ -29,7 +31,7 @@ export const CreatePost = (props: Props) => {
                         <View style={{ flex: 1, flexDirection: 'column' }}>
                             <CratePostHeader />
                             <TextInput
-                                style={styles.textArea}
+                                style={[styles.textArea, { textAlign: align }]}
                                 placeholder={t('createPost.inputPlaceholder')}
                                 placeholderTextColor={Colors.grayX2}
                                 multiline={true}
