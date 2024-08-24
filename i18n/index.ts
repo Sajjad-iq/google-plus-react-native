@@ -16,11 +16,10 @@ const initI18n = async () => {
         // Try to get the saved language from AsyncStorage
         let savedLanguage = await AsyncStorage.getItem("language");
 
-        console.log(savedLanguage)
         // If no saved language, use the first preferred language from the device locales
         if (!savedLanguage) {
             const locales = Localization.getLocales();
-            savedLanguage = locales[0]?.languageCode || 'en-US';
+            savedLanguage = locales[0]?.languageCode || 'en';
 
             // Save the default language in AsyncStorage
             await AsyncStorage.setItem("language", savedLanguage);
@@ -30,7 +29,7 @@ const initI18n = async () => {
             compatibilityJSON: "v3",
             resources,
             lng: savedLanguage,
-            fallbackLng: "en-US", // Use 'en-US' as the default fallback language
+            fallbackLng: "en", // Use 'en-US' as the default fallback language
             interpolation: {
                 escapeValue: false, // React already escapes values by default
             },

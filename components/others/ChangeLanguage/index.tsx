@@ -23,8 +23,8 @@ export default function ChangeLanguage() {
             <RNPickerSelect
                 onValueChange={(value: any) => changeLanguage(value)}
                 items={[
-                    { label: t("settings.language.english"), value: 'en-US' },
-                    { label: t("settings.language.arabic"), value: 'ar-IQ' },
+                    { label: t("settings.language.english"), value: 'en' },
+                    { label: t("settings.language.arabic"), value: 'ar' },
                 ]}
                 style={pickerSelectStyles}
                 value={selectedLanguage}

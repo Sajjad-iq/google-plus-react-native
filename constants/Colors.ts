@@ -7,5 +7,6 @@ export const Colors = {
   text: '#000',
   blackPrimary: '#000',
   bluePrimary: "#4285F4",
+  blueX1: "#5a90e8",
   greenPrimary: "#34A853"
 }

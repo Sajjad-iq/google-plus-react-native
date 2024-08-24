@@ -1,5 +1,5 @@
 {
-    "language": "ar-IQ",
+    "language": "ar",
     "home": {
         "title": "الصفحة الرئيسية",
         "whatsNew": "اكتب شيئاً..."
@@ -35,8 +35,8 @@
             "m": "د",
             "y": "س"
         },
-        "addCommentPlaceholder": "اكتب تعليق...",
-        "postComment": "أرسل"
+        "addCommentPlaceholder": "إضافة تعليق...",
+        "postComment": "مشاركة"
     },
     "createPost": {
         "postState": {

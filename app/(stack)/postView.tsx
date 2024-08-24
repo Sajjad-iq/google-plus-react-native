@@ -6,17 +6,19 @@ import { AddComment } from '@/components/others/addComment';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { PostComment } from '@/components/shared/postComment';
 import { useTranslation } from 'react-i18next';
+import { useLayoutDirection } from '@/context/GlobalContext';
 
 export default function PostView() {
 
     const { t } = useTranslation();
-
+    const { currentLayoutDirection } = useLayoutDirection()
+    const align = currentLayoutDirection == 'rtl' ? 'right' : 'left'
     return (
         <KeyboardAvoidingView >
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <Post />
                 <View style={styles.statusWrapper}>
-                    <Text style={styles.stateLabel}>{t('post.previewFooterMessage.public')}</Text>
+                    <Text style={[styles.stateLabel, { textAlign: align }]}>{t('post.previewFooterMessage.public')}</Text>
                 </View>
 
                 <View style={styles.commentsWrapper}>
@@ -41,12 +43,14 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
     }, commentsWrapper: {
-        paddingVertical: 15,
+        paddingVertical: 25,
         backgroundColor: Colors.whitePrimary,
-        gap: 20
+        gap: 20,
+        borderTopColor: Colors.grayPrimary,
+        borderTopWidth: 2,
+        marginTop: 10,
     },
     scrollViewContent: {
-        paddingVertical: 5,
         flexGrow: 1,
     },
     statusWrapper: {
@@ -56,6 +60,6 @@ const styles = StyleSheet.create({
     },
     stateLabel: {
         fontSize: 14,
-        color: Colors.bluePrimary,
+        color: Colors.blueX1,
     },
 });

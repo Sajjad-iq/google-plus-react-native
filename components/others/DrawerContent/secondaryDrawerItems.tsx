@@ -110,5 +110,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 15,
         marginLeft: 20,
+        textAlign: 'left',
     }
 });
