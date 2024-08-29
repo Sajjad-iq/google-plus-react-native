@@ -1,4 +1,4 @@
-import { CreateCard } from '@/components/shared/CreateCard';
+import { CreateCard } from '@/components/UI/CreateCard';
 import { Colors } from '@/constants/Colors';
 import { useHeader } from '@/context/GlobalContext';
 import { useFocusEffect } from 'expo-router';

@@ -5,7 +5,7 @@ import { Avatar } from '@/components/UI/avatar';
 import { SecondaryButton } from '@/components/UI/SecondaryButton';
 import { Colors } from '@/constants/Colors';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CreateCard } from '@/components/shared/CreateCard';
+import { CreateCard } from '@/components/UI/CreateCard';
 import Post from '@/components/shared/post';
 import { useTranslation } from 'react-i18next';
 import { useLayoutDirection } from '@/context/GlobalContext';

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useHeader } from '@/context/GlobalContext';
-import { CreateCard } from '@/components/shared/CreateCard';
+import { CreateCard } from '@/components/UI/CreateCard';
 import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
 
