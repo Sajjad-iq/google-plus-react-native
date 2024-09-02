@@ -24,8 +24,8 @@ export function NotificationCard(props: Props) {
         }}>
             {props.numberOfUsers === 1 ? <Avatar size={'Medium'} /> : props.numberOfUsers === 2 ? <TwoUsers /> : props.numberOfUsers === 3 ? <ThreeUsers /> : <FourUsers />}
             <View style={{ flex: 1, gap: 8 }}>
-                <Text style={{ fontWeight: '600', fontSize: 15 }}>NotificationCard</Text>
-                <Text style={{ fontSize: 14 }}>Added you to their circles</Text>
+                <Text style={{ fontWeight: '600', fontSize: 15, textAlign: 'left' }}>NotificationCard</Text>
+                <Text style={{ fontSize: 14, textAlign: 'left' }}>Added you to their circles</Text>
             </View>
         </View>
     );

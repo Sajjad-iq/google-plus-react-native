@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import getCurrentLang from '@/hooks/getCurrentLang';
 import { UserInfo } from '@/types/user';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
@@ -9,6 +10,7 @@ interface HeaderContextType {
     setHeaderColor: (color: string) => void
     userInfo: UserInfo | null
     setUserInfo: (data: UserInfo) => void
+    lang: string
 }
 
 const GlobalContext = createContext<HeaderContextType | undefined>(undefined);
@@ -17,7 +19,7 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
     const [headerTitle, setHeaderTitle] = useState<string>("Home");
     const [headerColor, setHeaderColor] = useState<string>(Colors.redPrimary);
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-
+    const lang = getCurrentLang();
 
 
     return ( // 
@@ -25,7 +27,8 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
             {
                 headerTitle, setHeaderTitle,
                 headerColor, setHeaderColor,
-                userInfo, setUserInfo
+                userInfo, setUserInfo,
+                lang
             }
         }>
             {children}

@@ -19,11 +19,11 @@ export default function PostView() {
                 </View>
 
                 <View style={styles.commentsWrapper}>
-                    <PostComment />
-                    <PostComment />
-                    <PostComment />
-                    <PostComment />
-                    <PostComment />
+                    <PostComment author='KILUA ZOLDYK' />
+                    <PostComment author='محمد كاظم' />
+                    <PostComment author='KILUA ZOLDYK' />
+                    <PostComment author='KILUA ZOLDYK' />
+                    <PostComment author='KILUA ZOLDYK' />
                 </View>
             </ScrollView>
 

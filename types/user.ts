@@ -8,4 +8,6 @@ export interface UserInfo {
     picture: string;
     locale: string;
     accessToken: string
+    bio?: string
+    profile_cover?: string
 }
