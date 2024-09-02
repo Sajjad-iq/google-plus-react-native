@@ -6,7 +6,7 @@ import useCheckUserCredentials from "@/hooks/useCheckUserCredentials";
 
 export default function LayoutComponent() {
 
-    const checkUserCredentials = useCheckUserCredentials()
+    const { checkUserCredentials, userInfo } = useCheckUserCredentials()
     useEffect(() => {
         checkUserCredentials();
     }, []);
