@@ -3,10 +3,12 @@ import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar } from '../../UI/avatar';
 import { Colors } from '@/constants/Colors';
+import { useGlobalData } from '@/context/GlobalContext';
 
 export function Header() {
 
     const insets = useSafeAreaInsets();
+    const { userInfo } = useGlobalData()
 
     return (
         <ImageBackground
@@ -16,13 +18,13 @@ export function Header() {
         >
             <View style={styles.userDetailsWrapper}>
                 <View style={[{ marginTop: insets.top + 15 }]} >
-                    <Avatar size={'Large'} />
+                    <Avatar size={'Large'} src={userInfo?.picture} />
                 </View>
 
 
                 <View style={styles.detailsWrapper}>
-                    <Text style={styles.userName}>KILUA ZOLDYK</Text>
-                    <Text style={styles.userEmail}>rasooool59@gmail.com</Text>
+                    <Text style={styles.userName}>{userInfo?.name}</Text>
+                    <Text style={styles.userEmail}>{userInfo?.email}</Text>
                 </View>
             </View>
         </ImageBackground>

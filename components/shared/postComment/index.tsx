@@ -3,22 +3,18 @@ import React from 'react'
 import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
-import { useLayoutDirection } from '@/context/GlobalContext';
 
 interface Props {
 }
 export function PostComment(props: Props) {
 
     const { t } = useTranslation();
-    const { currentLayoutDirection } = useLayoutDirection()
-    const flexDirection = currentLayoutDirection == 'rtl' ? 'row-reverse' : 'row'
-    const align = currentLayoutDirection == 'rtl' ? 'right' : 'left'
     return (
-        <View style={[styles.wrapper, { flexDirection: flexDirection }]}>
+        <View style={[styles.wrapper, { flexDirection: "row" }]}>
             <Avatar size='Small' />
-            <View style={[styles.innerWrapper, { flexDirection: flexDirection }]} >
+            <View style={[styles.innerWrapper, { flexDirection: "row" }]} >
                 <View style={{ gap: 5, flex: 1 }}>
-                    <Text style={[styles.arthur, { textAlign: align }]}>KILUA ZOLDYK</Text>
+                    <Text style={[styles.arthur]}>KILUA ZOLDYK</Text>
                     <Text>some text here...</Text>
                 </View>
 

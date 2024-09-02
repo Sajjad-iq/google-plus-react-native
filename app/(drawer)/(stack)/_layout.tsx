@@ -4,11 +4,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from "@/constants/Colors";
 import { useTranslation } from "react-i18next";
+import getCurrentLang from "@/hooks/getCurrentLang";
+
 
 export default function ScreensLayout() {
   const navigation = useNavigation();
   const { t } = useTranslation();
-
+  const lang = getCurrentLang()
   return (
     <Stack screenOptions={{
       headerTintColor: Colors.whitePrimary,  // Customize as needed
@@ -67,7 +69,7 @@ export default function ScreensLayout() {
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <View style={styles.headerTitleContainer}>
+            <View style={[styles.headerTitleContainer, { flexDirection: lang == 'ar' ? "row-reverse" : "row" }]}>
               <Text style={styles.headerTitle}>{t("profile.about")}</Text>
               <TouchableOpacity onPress={() => { }}>
                 <MaterialCommunityIcons name="dots-vertical" size={28} color={Colors.whitePrimary} />
@@ -109,8 +111,7 @@ export default function ScreensLayout() {
 
 const styles = StyleSheet.create({
   headerTitleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end', // Pushes the title to the right
+    justifyContent: 'flex-start', // Pushes the title to the right
     alignItems: 'center',
     gap: 25,
   },

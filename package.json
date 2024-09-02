@@ -1,5 +1,5 @@
 {
-  "name": "google_plus_react_native",
+  "name": "glimmer_plus",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -17,13 +17,17 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-google-signin/google-signin": "^12.2.1",
     "@react-native-picker/picker": "^2.7.7",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/drawer": "^6.7.0",
     "@react-navigation/material-top-tabs": "^6.6.14",
     "@react-navigation/native": "^6.1.18",
     "expo": "~51.0.26",
+    "expo-auth-session": "~5.5.2",
     "expo-constants": "~16.0.2",
+    "expo-crypto": "~13.0.2",
+    "expo-dev-client": "~4.0.25",
     "expo-font": "~12.0.9",
     "expo-image-picker": "~15.0.7",
     "expo-linking": "~6.3.1",
@@ -32,6 +36,7 @@
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
+    "expo-updates": "~0.25.24",
     "expo-web-browser": "~13.0.3",
     "i18next": "^23.14.0",
     "install": "^0.13.0",

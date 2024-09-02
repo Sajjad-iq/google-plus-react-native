@@ -8,9 +8,16 @@ import ChangeLanguage from '@/components/others/ChangeLanguage';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { PrimaryButton } from '@/components/UI/PrimaryButton';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 
 export default function Settings() {
     const { t } = useTranslation();
+
+    const logOut = async () => {
+        await AsyncStorage.removeItem("@user")
+        router.push("/login");
+    }
 
     return (
         <KeyboardAvoidingView>
@@ -23,13 +30,12 @@ export default function Settings() {
                     </View>
                 </View>
 
-                <View style={[styles.container, { paddingBottom: 60 }]}>
-                    <View style={{ gap: 30 }}>
-                        <ChangeLanguage />
-                    </View>
+
+                <View style={{ flexDirection: "row", flex: 1, justifyContent: "space-between", paddingHorizontal: 20, marginBottom: 20 }}>
+                    <PrimaryButton title={t("settings.save")} />
+                    <PrimaryButton onPress={logOut} title='LogOut' />
                 </View>
 
-                <PrimaryButton style={{ alignSelf: 'flex-end', marginBottom: 20 }} title={t("settings.save")} />
             </ScrollView>
         </KeyboardAvoidingView>
     );

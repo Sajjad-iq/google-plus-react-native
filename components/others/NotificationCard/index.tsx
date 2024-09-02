@@ -2,7 +2,6 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Avatar } from '@/components/UI/avatar'
 import { Colors } from '@/constants/Colors'
-import { useLayoutDirection } from '@/context/GlobalContext';
 
 interface Props {
     numberOfUsers?: number;
@@ -10,13 +9,10 @@ interface Props {
 }
 
 export function NotificationCard(props: Props) {
-    const { currentLayoutDirection } = useLayoutDirection()
-    const flexDirection = currentLayoutDirection == 'rtl' ? 'row-reverse' : 'row'
-    const align = currentLayoutDirection == 'rtl' ? 'right' : 'left'
 
     return (
         <View style={{
-            flexDirection: flexDirection,
+            flexDirection: "row",
             alignItems: 'center',
             paddingVertical: 15,
             paddingHorizontal: 10,
@@ -28,8 +24,8 @@ export function NotificationCard(props: Props) {
         }}>
             {props.numberOfUsers === 1 ? <Avatar size={'Medium'} /> : props.numberOfUsers === 2 ? <TwoUsers /> : props.numberOfUsers === 3 ? <ThreeUsers /> : <FourUsers />}
             <View style={{ flex: 1, gap: 8 }}>
-                <Text style={{ fontWeight: '600', fontSize: 15, textAlign: align }}>NotificationCard</Text>
-                <Text style={{ fontSize: 14, textAlign: align }}>Added you to their circles</Text>
+                <Text style={{ fontWeight: '600', fontSize: 15 }}>NotificationCard</Text>
+                <Text style={{ fontSize: 14 }}>Added you to their circles</Text>
             </View>
         </View>
     );
@@ -38,13 +34,12 @@ export function NotificationCard(props: Props) {
 
 function TwoUsers() {
 
-    const { currentLayoutDirection } = useLayoutDirection()
     return (
         <View style={{}} >
-            <View style={{ paddingLeft: currentLayoutDirection == 'rtl' ? 0 : 20 }}>
+            <View style={{ paddingLeft: 20 }}>
                 <Avatar size={'Small'} />
             </View>
-            <View style={{ paddingLeft: currentLayoutDirection == 'rtl' ? 20 : 0 }}>
+            <View style={{ paddingLeft: 0 }}>
                 <Avatar size={'Small'} />
             </View>
         </View>

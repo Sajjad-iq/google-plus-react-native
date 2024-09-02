@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "google_plus_react_native",
-    "slug": "google_plus_react_native",
+    "name": "glimmer plus",
+    "slug": "glimmer_plus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,9 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.glimmer.plus",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.glimmer.plus",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -32,6 +34,20 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "85b4d27e-54b4-4d96-b690-7489999eeb2c"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/85b4d27e-54b4-4d96-b690-7489999eeb2c"
     }
   }
 }

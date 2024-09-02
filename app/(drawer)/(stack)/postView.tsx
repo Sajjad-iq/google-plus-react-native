@@ -6,19 +6,16 @@ import { AddComment } from '@/components/others/addComment';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { PostComment } from '@/components/shared/postComment';
 import { useTranslation } from 'react-i18next';
-import { useLayoutDirection } from '@/context/GlobalContext';
 
 export default function PostView() {
 
     const { t } = useTranslation();
-    const { currentLayoutDirection } = useLayoutDirection()
-    const align = currentLayoutDirection == 'rtl' ? 'right' : 'left'
     return (
         <KeyboardAvoidingView >
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <Post />
                 <View style={styles.statusWrapper}>
-                    <Text style={[styles.stateLabel, { textAlign: align }]}>{t('post.previewFooterMessage.public')}</Text>
+                    <Text style={[styles.stateLabel]}>{t('post.previewFooterMessage.public')}</Text>
                 </View>
 
                 <View style={styles.commentsWrapper}>

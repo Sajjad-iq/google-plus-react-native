@@ -14,16 +14,13 @@ const resources = {
 const initI18n = async () => {
     try {
         // Try to get the saved language from AsyncStorage
-        let savedLanguage = await AsyncStorage.getItem("language");
+        let savedLanguage = null
 
         // If no saved language, use the first preferred language from the device locales
-        if (!savedLanguage) {
-            const locales = Localization.getLocales();
-            savedLanguage = locales[0]?.languageCode || 'en';
-
-            // Save the default language in AsyncStorage
-            await AsyncStorage.setItem("language", savedLanguage);
-        }
+        const locales = Localization.getLocales();
+        savedLanguage = locales[0]?.languageCode || 'en';
+        // Save the default language in AsyncStorage
+        await AsyncStorage.setItem("language", savedLanguage);
         // Initialize i18n
         i18n.use(initReactI18next).init({
             compatibilityJSON: "v3",
