@@ -6,21 +6,21 @@ interface Props extends ImageProps {
     size: "Small" | "Medium" | "Large" | "xLarge"
 }
 
-export function Avatar(props: Props) {
+export function Avatar({ src, size, style }: Props) {
     const defaultImage = require('@/assets/images/ProfileImg.jpg');
-    const imageSource = props.src ? { uri: props.src } : defaultImage;
+    const imageSource = src ? { uri: src } : defaultImage;
 
     return (
         <Image
             source={imageSource}
             style={[
                 styles.avatar,
-                props.size === "Small" ? styles.smallSize :
-                    props.size === "Medium" ? styles.mediumSize :
-                        props.size === 'xLarge' ? styles.xLargeSize :
+                size === "Small" ? styles.smallSize :
+                    size === "Medium" ? styles.mediumSize :
+                        size === 'xLarge' ? styles.xLargeSize :
                             styles.largeSize
                 ,
-                props.style
+                style
             ]}
         />
     )

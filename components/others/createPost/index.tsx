@@ -6,6 +6,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { CreatePostFooter } from './createPostFooter';
 import KeyboardAvoidingView from '@/components/shared/KeyboardAvoidingView';
 import { useTranslation } from 'react-i18next';
+import { useCreatePost } from '@/hooks/useCreatePost';
+import { usePhotoPicker } from '@/hooks/usePhotoPicker';
+import FlexibleImage from '@/components/UI/FlexibleImage';
 
 interface Props {
     isActive: boolean;
@@ -14,6 +17,9 @@ interface Props {
 
 export const CreatePost = (props: Props) => {
     const { t } = useTranslation();
+    const { imageUri, pickImage, resetImage, imageBlob } = usePhotoPicker()
+    const { postBody, isSubmitting, handleInputChange, submitPost } = useCreatePost({ image: imageBlob, resetImage: resetImage });
+
     return (
         <Modal
             animationType="slide"
@@ -22,32 +28,32 @@ export const CreatePost = (props: Props) => {
             transparent={Platform.OS === 'android'}
             presentationStyle={Platform.OS === 'ios' ? 'pageSheet' : 'overFullScreen'}
         >
-            <KeyboardAvoidingView >
+            <KeyboardAvoidingView>
                 <View style={styles.postView}>
-                    <ScrollView contentContainerStyle={styles.contentContainer} >
+                    <ScrollView contentContainerStyle={styles.contentContainer}>
                         <View style={{ flex: 1, flexDirection: 'column' }}>
-                            <CratePostHeader />
+                            <CratePostHeader submitCallback={submitPost} />
                             <TextInput
-                                style={[styles.textArea]}
+                                style={styles.textArea}
                                 placeholder={t('createPost.inputPlaceholder')}
                                 placeholderTextColor={Colors.grayX2}
                                 multiline={true}
+                                value={postBody}
+                                onChangeText={handleInputChange}
                             />
+                            <FlexibleImage src={imageUri || ''} />
                         </View>
                     </ScrollView>
 
-                    <TouchableOpacity
-                        style={styles.addLocationButton}
-                    >
+                    <TouchableOpacity style={styles.addLocationButton}>
                         <MaterialIcons name="location-pin" size={28} color="gray" />
                         <Text style={styles.addLocationText}>{t('createPost.addLocation')}</Text>
                     </TouchableOpacity>
 
-                    <CreatePostFooter />
+                    <CreatePostFooter picPhotoCallback={pickImage}
+                    />
                 </View>
-
             </KeyboardAvoidingView>
-
         </Modal>
     );
 };
@@ -59,7 +65,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.whitePrimary,
         borderRadius: 4,
         flexDirection: 'column',
-        gap: 20
+        gap: 20,
     },
     contentContainer: {
         paddingBottom: 20, // Adds space at the bottom of the ScrollView

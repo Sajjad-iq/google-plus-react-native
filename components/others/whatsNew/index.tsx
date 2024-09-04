@@ -4,17 +4,19 @@ import { Avatar } from '@/components/UI/avatar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
+import { useGlobalData } from '@/context/GlobalContext';
 
 interface Props {
     onPress: () => void
 }
 export function WhatsNew(props: Props) {
-
+    const { userInfo } = useGlobalData()
     const { t } = useTranslation();
+
     return (
         <Pressable onPress={props.onPress} style={[styles.Wrapper, { flexDirection: "row" }]} >
             <View style={[styles.textWrapper, { flexDirection: "row" }]} >
-                <Avatar size={'Medium'} />
+                <Avatar src={userInfo.profile_avatar} size={'Medium'} />
                 <Text style={styles.text}>{t("home.whatsNew")}</Text>
             </View>
 

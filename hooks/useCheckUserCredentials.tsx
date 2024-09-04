@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserInfo } from '@/types/user';
+import { GoogleUserInfo, UserInfo } from '@/types/user';
 import { useGlobalData } from '@/context/GlobalContext';
 import { backend } from '@env';
 
@@ -10,6 +10,7 @@ export default function useCheckUserCredentials() {
     const checkUserCredentials = async () => {
         try {
             const user = await getLocalUser();
+            const token = await AsyncStorage.getItem("@token")
 
             if (!user) {
                 console.log("No user info loaded");
@@ -17,30 +18,21 @@ export default function useCheckUserCredentials() {
                 return;
             }
 
-            const googleUser = await checkJWT(user.accessToken);
+            const googleUser = await checkJWT(token || '');
 
             if (!googleUser) {
-                console.log("Google user not found");
+                console.log("Google user not found form layout component");
+                router.push("/login");
                 return;
             }
+            const backendUserData = await LoginAndRefreshUser(googleUser);
 
-            const backendUserData = await getUserInfoFromBackend(googleUser);
+            setUserInfo(backendUserData)
+            await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
+            router.push("/(drawer)/");
 
-            if (backendUserData) {
-                const currentUserData = {
-                    ...googleUser,
-                    profile_cover: backendUserData.profile_cover || "",
-                    bio: backendUserData.bio || "",
-                };
-
-                setUserInfo(currentUserData);
-                router.push("/(drawer)/");
-            } else {
-                console.log("Backend user data not found");
-            }
         } catch (error) {
             console.error("Failed to check user credentials", error);
-            router.push("/login");
         }
     };
 
@@ -54,7 +46,7 @@ export default function useCheckUserCredentials() {
         }
     };
 
-    const checkJWT = async (token: string): Promise<UserInfo | null> => {
+    const checkJWT = async (token: string): Promise<GoogleUserInfo> => {
         try {
             const response = await fetch(
                 "https://www.googleapis.com/userinfo/v2/me",
@@ -65,26 +57,20 @@ export default function useCheckUserCredentials() {
 
             if (!response.ok) {
                 console.error("Failed to verify JWT, redirecting to login");
-                setUserInfo({} as UserInfo);
                 router.push("/login");
-                return null;
+                await AsyncStorage.removeItem("@user");
+                return {} as GoogleUserInfo;
             }
 
-            const user = (await response.json()) as UserInfo;
-            user.accessToken = token;
-            await AsyncStorage.setItem("@user", JSON.stringify(user));
-            setUserInfo(user);
-
+            const user = (await response.json()) as GoogleUserInfo;
             return user;
         } catch (error) {
             console.error("Failed to fetch user info", error);
-            setUserInfo({} as UserInfo);
-            router.push("/login");
-            return null;
+            return {} as GoogleUserInfo;
         }
     };
 
-    const getUserInfoFromBackend = async (user: UserInfo): Promise<UserInfo | null> => {
+    const LoginAndRefreshUser = async (user: GoogleUserInfo): Promise<UserInfo> => {
         try {
             const response = await fetch(`${backend}/login`, {
                 method: 'POST',
@@ -101,7 +87,7 @@ export default function useCheckUserCredentials() {
 
             if (!response.ok) {
                 console.error(`HTTP error! Status: ${response.status}`);
-                return null;
+                return {} as UserInfo;
             }
 
             const data = await response.json();
@@ -109,7 +95,7 @@ export default function useCheckUserCredentials() {
             return data;
         } catch (error) {
             console.error("Failed to fetch user info from backend", error);
-            return null;
+            return {} as UserInfo;
         }
     };
 

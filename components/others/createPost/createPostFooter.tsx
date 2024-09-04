@@ -3,11 +3,14 @@ import React from 'react'
 import { Colors } from '@/constants/Colors';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-export function CreatePostFooter() {
+interface Props {
+    picPhotoCallback: () => void
+}
+export function CreatePostFooter(props: Props) {
     return (
         <View style={styles.footerView}>
             <View style={{ flexDirection: 'row', gap: 30 }}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={props.picPhotoCallback} >
                     <MaterialIcons name="camera-alt" size={24} color={'gray'} />
                 </TouchableOpacity>
                 <TouchableOpacity >

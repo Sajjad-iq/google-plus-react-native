@@ -1,5 +1,19 @@
 export interface UserInfo {
     id: string;
+    username: string;
+    email: string;
+    profile_avatar?: string;
+    profile_cover?: string;
+    bio?: string;
+    status?: string
+    role?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+
+export interface GoogleUserInfo {
+    id: string;
     email: string;
     verified_email: boolean;
     name: string;
@@ -7,7 +21,4 @@ export interface UserInfo {
     family_name: string;
     picture: string;
     locale: string;
-    accessToken: string
-    bio?: string
-    profile_cover?: string
 }

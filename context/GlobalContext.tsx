@@ -8,7 +8,7 @@ interface HeaderContextType {
     setHeaderTitle: (title: string) => void;
     headerColor: string;
     setHeaderColor: (color: string) => void
-    userInfo: UserInfo | null
+    userInfo: UserInfo
     setUserInfo: (data: UserInfo) => void
     lang: string
 }
@@ -18,7 +18,7 @@ const GlobalContext = createContext<HeaderContextType | undefined>(undefined);
 export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [headerTitle, setHeaderTitle] = useState<string>("Home");
     const [headerColor, setHeaderColor] = useState<string>(Colors.redPrimary);
-    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+    const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
     const lang = getCurrentLang();
 
 

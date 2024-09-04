@@ -20,11 +20,11 @@ export default function Profile() {
         <ScrollView style={styles.container}>
             <View >
                 <FlexibleImage style={{ height: 200, overflow: 'hidden' }} />
-                <Avatar size={'xLarge'} src={userInfo?.picture} style={{ alignSelf: 'center', marginTop: -40 }} />
+                <Avatar size={'xLarge'} src={userInfo?.profile_avatar} style={{ alignSelf: 'center', marginTop: -40 }} />
             </View>
 
             <View style={{ marginTop: 30, alignItems: 'center', gap: 20 }}>
-                <Text style={{ fontSize: 30, fontWeight: '700' }}>{userInfo?.name}</Text>
+                <Text style={{ fontSize: 30, fontWeight: '700' }}>{userInfo?.username}</Text>
                 <Text style={{ fontSize: 16, fontWeight: '400', textAlign: 'center' }}>kilua description for the profile...</Text>
                 <Text style={{ fontSize: 14, fontWeight: '400' }}>1 follower</Text>
                 <SecondaryButton onPress={() => router.push("/(drawer)/(stack)/settings")}>
@@ -33,7 +33,7 @@ export default function Profile() {
             </View>
 
             <View style={{ marginTop: 40, padding: 10, gap: 15, borderTopColor: Colors.grayPrimary, borderTopWidth: 4, alignItems: "flex-start" }}>
-                <Text style={{ color: "gray", fontWeight: 'bold', fontSize: 14, marginTop: 20 }}>{userInfo?.name} {t("profile.interests")}</Text>
+                <Text style={{ color: "gray", fontWeight: 'bold', fontSize: 14, marginTop: 20 }}>{userInfo?.username} {t("profile.interests")}</Text>
                 <View style={{ gap: 10, flexDirection: "row" }}>
                     <CreateCard ><Text style={{ color: "gray", fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>{t("Collections.createCollection")}</Text></CreateCard>
                 </View>

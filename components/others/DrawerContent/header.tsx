@@ -18,12 +18,12 @@ export function Header() {
         >
             <View style={styles.userDetailsWrapper}>
                 <View style={[{ marginTop: insets.top + 15 }]} >
-                    <Avatar size={'Large'} src={userInfo?.picture} />
+                    <Avatar size={'Large'} src={userInfo?.profile_avatar} />
                 </View>
 
 
                 <View style={styles.detailsWrapper}>
-                    <Text style={styles.userName}>{userInfo?.name}</Text>
+                    <Text style={styles.userName}>{userInfo?.username}</Text>
                     <Text style={styles.userEmail}>{userInfo?.email}</Text>
                 </View>
             </View>

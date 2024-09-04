@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserInfo } from '@/types/user';
+import { GoogleUserInfo, UserInfo } from '@/types/user';
 import { useGlobalData } from '@/context/GlobalContext';
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
@@ -41,33 +41,19 @@ export default function useUpdateUserCredentials() {
                 throw new Error("Failed to fetch Google user info");
             }
 
-            const googleUser = (await response.json()) as UserInfo;
-            googleUser.accessToken = accessToken;
+            const googleUser = (await response.json()) as GoogleUserInfo;
+            await AsyncStorage.setItem("@token", JSON.stringify(accessToken));
 
             const backendUserData = await registerUser(googleUser);
-            if (backendUserData) {
-                const currentUserData = {
-                    ...googleUser,
-                    profile_cover: backendUserData.profile_cover || "",
-                    bio: backendUserData.bio || "",
-                };
-                await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
-                setUserInfo(currentUserData);
-                router.push("/(drawer)/");
-                console.log(currentUserData)
-            } else {
-                console.log("Backend user data not found");
-                await AsyncStorage.setItem("@user", JSON.stringify(googleUser));
-                setUserInfo(googleUser);
-            }
+            await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
+            setUserInfo(backendUserData);
             router.push("/(drawer)/");
         } catch (error) {
             console.error("Error fetching Google user info:", error);
-            router.push("/login");
         }
     };
 
-    const registerUser = async (user: UserInfo) => {
+    const registerUser = async (user: GoogleUserInfo): Promise<UserInfo> => {
         try {
             const response = await fetch(`${backend}/login`, {
                 method: 'POST',
@@ -76,7 +62,7 @@ export default function useUpdateUserCredentials() {
                     id: user.id,
                     username: user.name,
                     email: user.email,
-                    profile_avatar: user.picture
+                    profileAvatar: user.picture
                 }),
             });
 
@@ -88,6 +74,7 @@ export default function useUpdateUserCredentials() {
         } catch (error) {
             console.error("Error registering user with backend:", error);
         }
+        return {} as UserInfo;
     };
 
     return {
