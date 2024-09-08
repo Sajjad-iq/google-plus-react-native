@@ -32,6 +32,7 @@ export default function useUpdateUserCredentials() {
     }, [token]);
 
     const getUserInfo = async (accessToken: string) => {
+        console.log("Fetching Google user info from login page");
         try {
             const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
                 headers: { Authorization: `Bearer ${accessToken}` },
@@ -41,13 +42,22 @@ export default function useUpdateUserCredentials() {
                 throw new Error("Failed to fetch Google user info");
             }
 
-            const googleUser = (await response.json()) as GoogleUserInfo;
-            await AsyncStorage.setItem("@token", JSON.stringify(accessToken));
 
-            const backendUserData = await registerUser(googleUser);
-            await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
-            setUserInfo(backendUserData);
-            router.push("/(drawer)/");
+            const googleUser = (await response.json()) as GoogleUserInfo;
+            if (googleUser.name !== "") {
+                await AsyncStorage.setItem("@token", JSON.stringify(accessToken));
+                console.log("Google user info:", googleUser);
+
+                const backendUserData = await registerUser(googleUser);
+                if (backendUserData) {
+                    await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
+                    setUserInfo(backendUserData);
+                    router.push("/(drawer)/");
+                } else {
+                    console.log("Backend user data not found");
+                }
+            }
+
         } catch (error) {
             console.error("Error fetching Google user info:", error);
         }

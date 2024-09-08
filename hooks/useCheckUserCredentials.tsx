@@ -9,40 +9,26 @@ export default function useCheckUserCredentials() {
 
     const checkUserCredentials = async () => {
         try {
-            const user = await getLocalUser();
             const token = await AsyncStorage.getItem("@token")
-
-            if (!user) {
-                console.log("No user info loaded");
-                router.push("/login");
-                return;
-            }
 
             const googleUser = await checkJWT(token || '');
 
-            if (!googleUser) {
+            if (!googleUser.name) {
                 console.log("Google user not found form layout component");
                 router.push("/login");
                 return;
             }
             const backendUserData = await LoginAndRefreshUser(googleUser);
 
-            setUserInfo(backendUserData)
-            await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
-            router.push("/(drawer)/");
+            if (backendUserData) {
+                setUserInfo(backendUserData)
+                await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
+                router.push("/(drawer)/");
+            }
 
         } catch (error) {
             console.error("Failed to check user credentials", error);
-        }
-    };
-
-    const getLocalUser = async (): Promise<UserInfo | null> => {
-        try {
-            const data = await AsyncStorage.getItem("@user");
-            return data ? (JSON.parse(data) as UserInfo) : null;
-        } catch (error) {
-            console.error("Failed to get local user", error);
-            return null;
+            router.push("/login");
         }
     };
 
@@ -57,8 +43,6 @@ export default function useCheckUserCredentials() {
 
             if (!response.ok) {
                 console.error("Failed to verify JWT, redirecting to login");
-                router.push("/login");
-                await AsyncStorage.removeItem("@user");
                 return {} as GoogleUserInfo;
             }
 

@@ -4,7 +4,7 @@ import { useGlobalData } from "@/context/GlobalContext";
 
 interface Props {
     resetImage: () => void;
-    image: Blob;
+    image: any;
 }
 
 export function useCreatePost(props: Props) {
@@ -29,7 +29,11 @@ export function useCreatePost(props: Props) {
         formData.append("author_avatar", userInfo.profile_avatar || "");
         formData.append("author_name", userInfo.username);
         formData.append("share_state", "Public");
-        formData.append("image_url", props.image);  // Adjust filename if necessary
+        formData.append("image_url", {
+            uri: props.image,
+            name: "image.png",
+            type: "image/jpg"
+        } as any);  // Adjust filename if necessary
 
 
         setIsSubmitting(true);
@@ -38,6 +42,10 @@ export function useCreatePost(props: Props) {
         try {
             const response = await fetch(`${backend}/create-post`, {
                 method: "POST",
+                headers: {
+                    "Accept": 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
                 body: formData,
             });
 
