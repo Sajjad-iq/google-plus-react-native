@@ -9,30 +9,77 @@ import { androidClientId, iosClientId, webClientId, backend } from '@env';
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function useUpdateUserCredentials() {
+export default function useUserCredentials() {
     const [token, setToken] = useState<string | null>(null);
-    const { setUserInfo } = useGlobalData();
+    const { setUserInfo, userInfo } = useGlobalData();
 
+    // Google Auth request
     const [request, response, promptAsync] = Google.useAuthRequest({
         androidClientId: androidClientId,
         iosClientId: iosClientId,
         webClientId: webClientId,
     });
 
+    // Check for Google access token on response success
     useEffect(() => {
         if (response?.type === "success" && response.authentication?.accessToken) {
             setToken(response.authentication.accessToken);
         }
     }, [response]);
 
+    // Fetch Google user info if token is set
     useEffect(() => {
         if (token) {
             getUserInfo(token);
+        } else {
+            checkStoredCredentials();
         }
     }, [token]);
 
+    // Check if user token exists in AsyncStorage and validate
+    const checkStoredCredentials = async () => {
+        try {
+            const storedToken = await AsyncStorage.getItem("@token");
+            if (storedToken) {
+                const googleUser = await checkJWT(storedToken);
+                if (googleUser?.name) {
+                    const backendUserData = await registerOrUpdateUser(googleUser);
+                    if (backendUserData) {
+                        setUserInfo(backendUserData);
+                        await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
+                        router.push("/(drawer)/");
+                    }
+                }
+            } else {
+                router.push("/login");
+            }
+        } catch (error) {
+            console.error("Error checking stored credentials", error);
+            router.push("/login");
+        }
+    };
+
+    // Verify JWT with Google API
+    const checkJWT = async (token: string): Promise<GoogleUserInfo> => {
+        try {
+            const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (!response.ok) {
+                console.error("Failed to verify JWT");
+                return {} as GoogleUserInfo;
+            }
+
+            return (await response.json()) as GoogleUserInfo;
+        } catch (error) {
+            console.error("Error fetching Google user info", error);
+            return {} as GoogleUserInfo;
+        }
+    };
+
+    // Fetch Google user info or register with the backend
     const getUserInfo = async (accessToken: string) => {
-        console.log("Fetching Google user info from login page");
         try {
             const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
                 headers: { Authorization: `Bearer ${accessToken}` },
@@ -42,19 +89,17 @@ export default function useUpdateUserCredentials() {
                 throw new Error("Failed to fetch Google user info");
             }
 
-
             const googleUser = (await response.json()) as GoogleUserInfo;
-            if (googleUser.name !== "") {
-                await AsyncStorage.setItem("@token", JSON.stringify(accessToken));
-                console.log("Google user info:", googleUser);
+            await AsyncStorage.setItem("@token", accessToken);
 
-                const backendUserData = await registerUser(googleUser);
+            if (googleUser.name) {
+                const backendUserData = await registerOrUpdateUser(googleUser);
                 if (backendUserData) {
                     await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
                     setUserInfo(backendUserData);
                     router.push("/(drawer)/");
                 } else {
-                    console.log("Backend user data not found");
+                    console.error("Backend user data not found");
                 }
             }
 
@@ -63,7 +108,8 @@ export default function useUpdateUserCredentials() {
         }
     };
 
-    const registerUser = async (user: GoogleUserInfo): Promise<UserInfo> => {
+    // Register or update user with backend
+    const registerOrUpdateUser = async (user: GoogleUserInfo): Promise<UserInfo> => {
         try {
             const response = await fetch(`${backend}/login`, {
                 method: 'POST',
@@ -72,7 +118,7 @@ export default function useUpdateUserCredentials() {
                     id: user.id,
                     username: user.name,
                     email: user.email,
-                    profileAvatar: user.picture
+                    profileAvatar: user.picture,
                 }),
             });
 
@@ -90,5 +136,7 @@ export default function useUpdateUserCredentials() {
     return {
         request,
         promptAsync,
+        checkStoredCredentials,
+        userInfo,
     };
 }

@@ -1,16 +1,12 @@
 import { Stack } from "expo-router";
 import '../i18n';
 import React, { useEffect } from "react";
-import useCheckUserCredentials from "@/hooks/useCheckUserCredentials";
+import useUserCredentials from "@/hooks/useUserCredentials";
 
 
 export default function LayoutComponent() {
 
-    const { checkUserCredentials } = useCheckUserCredentials()
-    useEffect(() => {
-        checkUserCredentials();
-    }, []);
-
+    useUserCredentials()
 
     return (
         <Stack>

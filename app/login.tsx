@@ -1,8 +1,9 @@
 import { StyleSheet, View, Button, Image } from "react-native";
-import useUpdateUserCredentials from "@/hooks/useUpdateUserCredentials";
+import useUserCredentials from "@/hooks/useUserCredentials";
 
 export default function LoginScreen() {
-    const { request, promptAsync } = useUpdateUserCredentials()
+    const { request, promptAsync } = useUserCredentials()
+
     return (
         <View style={styles.container}>
             <Button
