@@ -6,7 +6,10 @@ import useUserCredentials from "@/hooks/useUserCredentials";
 
 export default function LayoutComponent() {
 
-    useUserCredentials()
+    const { checkStoredCredentials } = useUserCredentials()
+    useEffect(() => {
+        checkStoredCredentials()
+    }, [])
 
     return (
         <Stack>

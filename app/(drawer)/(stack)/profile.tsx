@@ -14,12 +14,13 @@ import { router } from 'expo-router';
 export default function Profile() {
     const { t } = useTranslation();
     const { userInfo } = useGlobalData()
+    const localImage = require('@/assets/images/profile_cover.webp');
 
 
     return (
         <ScrollView style={styles.container}>
             <View >
-                <FlexibleImage style={{ height: 200, overflow: 'hidden' }} />
+                <FlexibleImage source={localImage} style={{ height: 200 }} />
                 <Avatar size={'xLarge'} src={userInfo?.profile_avatar} style={{ alignSelf: 'center', marginTop: -40 }} />
             </View>
 

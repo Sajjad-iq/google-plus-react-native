@@ -3,7 +3,6 @@ import * as ImagePicker from "expo-image-picker";
 
 export function usePhotoPicker() {
     const [imageUri, setImageUri] = useState<string>();
-    const [imageBlob, setImageBlob] = useState<Blob>({} as Blob);
     const [error, setError] = useState<string | null>(null);
 
     const pickImage = async () => {
@@ -19,15 +18,12 @@ export function usePhotoPicker() {
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
                 aspect: [4, 3],
-                quality: 1,
+                quality: 0.75
             });
 
             if (!result.canceled && result.assets && result.assets.length > 0) {
                 const uri = result.assets[0].uri;
                 setImageUri(uri);
-
-                const blob = await uriToBlob(uri);
-                setImageBlob(blob);
             } else {
                 console.log("Image selection was canceled or failed.");
             }
@@ -36,25 +32,12 @@ export function usePhotoPicker() {
         }
     };
 
-    const uriToBlob = async (uri: string): Promise<Blob> => {
-        try {
-            const response = await fetch(uri);
-            const blob = await response.blob();
-            return blob;
-        } catch (err: any) {
-            console.log("Failed to convert image URI to Blob.");
-            throw err;
-        }
-    };
-
     const resetImage = () => {
         setImageUri("");
-        setImageBlob({} as Blob);
     };
 
     return {
         imageUri,
-        imageBlob,
         pickImage,
         resetImage,
         error,

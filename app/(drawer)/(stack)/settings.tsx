@@ -10,12 +10,16 @@ import { PrimaryButton } from '@/components/UI/PrimaryButton';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { useGlobalData } from '@/context/GlobalContext';
+import { UserInfo } from '@/types/user';
 
 export default function Settings() {
     const { t } = useTranslation();
+    const { setUserInfo } = useGlobalData();
 
     const logOut = async () => {
         await AsyncStorage.removeItem("@user")
+        setUserInfo({} as UserInfo)
         router.push("/login");
     }
 

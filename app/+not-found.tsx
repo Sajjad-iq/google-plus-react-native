@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 export default function NotFoundScreen() {
 
   useEffect(() => {
-/*     router.push("/(drawer)/")
- */  }, [])
+    router.push("/(drawer)/")
+  }, [])
   return (
     <>
       <Stack.Screen options={{ title: '' }} />

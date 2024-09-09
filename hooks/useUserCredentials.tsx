@@ -6,12 +6,14 @@ import { useGlobalData } from '@/context/GlobalContext';
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import { androidClientId, iosClientId, webClientId, backend } from '@env';
+import Alerts from '@/components/others/alerts';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function useUserCredentials() {
     const [token, setToken] = useState<string | null>(null);
     const { setUserInfo, userInfo } = useGlobalData();
+    const { networkAlert, errorAlert } = Alerts()
 
     // Google Auth request
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -31,8 +33,6 @@ export default function useUserCredentials() {
     useEffect(() => {
         if (token) {
             getUserInfo(token);
-        } else {
-            checkStoredCredentials();
         }
     }, [token]);
 
@@ -41,13 +41,17 @@ export default function useUserCredentials() {
         try {
             const storedToken = await AsyncStorage.getItem("@token");
             if (storedToken) {
-                const googleUser = await checkJWT(storedToken);
-                if (googleUser?.name) {
+                const googleUser = await getUserFromGoogle(storedToken);
+
+                if (googleUser) {
                     const backendUserData = await registerOrUpdateUser(googleUser);
                     if (backendUserData) {
                         setUserInfo(backendUserData);
                         await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
                         router.push("/(drawer)/");
+                    } else {
+                        networkAlert()
+                        await setLocalUser()
                     }
                 }
             } else {
@@ -55,82 +59,85 @@ export default function useUserCredentials() {
             }
         } catch (error) {
             console.error("Error checking stored credentials", error);
-            router.push("/login");
         }
     };
 
+
+    const setLocalUser = async () => {
+        const user = await AsyncStorage.getItem("@user");
+        console.log(user)
+        if (user) setUserInfo(user as unknown as UserInfo);
+        else router.push("/login");
+    }
+
     // Verify JWT with Google API
-    const checkJWT = async (token: string): Promise<GoogleUserInfo> => {
+    const getUserFromGoogle = async (token: string): Promise<GoogleUserInfo | null> => {
         try {
-            const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+            const userData = await fetch("https://www.googleapis.com/userinfo/v2/me", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            if (!response.ok) {
+            if (!userData.ok) {
                 console.error("Failed to verify JWT");
-                return {} as GoogleUserInfo;
+                router.push("/login");
+                return null;
             }
 
-            return (await response.json()) as GoogleUserInfo;
+            return (await userData.json()) as GoogleUserInfo;
         } catch (error) {
             console.error("Error fetching Google user info", error);
-            return {} as GoogleUserInfo;
+            await setLocalUser()
+            networkAlert()
+            return null
         }
     };
 
     // Fetch Google user info or register with the backend
     const getUserInfo = async (accessToken: string) => {
         try {
-            const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch Google user info");
-            }
-
-            const googleUser = (await response.json()) as GoogleUserInfo;
+            const googleUser = await getUserFromGoogle(accessToken);
             await AsyncStorage.setItem("@token", accessToken);
 
-            if (googleUser.name) {
+            if (googleUser) {
                 const backendUserData = await registerOrUpdateUser(googleUser);
                 if (backendUserData) {
                     await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
                     setUserInfo(backendUserData);
                     router.push("/(drawer)/");
-                } else {
-                    console.error("Backend user data not found");
                 }
             }
 
         } catch (error) {
+            errorAlert()
             console.error("Error fetching Google user info:", error);
         }
     };
 
     // Register or update user with backend
-    const registerOrUpdateUser = async (user: GoogleUserInfo): Promise<UserInfo> => {
+    const registerOrUpdateUser = async (user: GoogleUserInfo): Promise<UserInfo | null> => {
         try {
-            const response = await fetch(`${backend}/login`, {
+            const userData = await fetch(`${backend}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     id: user.id,
                     username: user.name,
                     email: user.email,
-                    profileAvatar: user.picture,
+                    profile_avatar: user.picture,
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error(`Backend error! Status: ${response.status}`);
+            if (!userData.ok) {
+                return null
             }
 
-            return await response.json();
+            return await userData.json();
         } catch (error) {
             console.error("Error registering user with backend:", error);
+            networkAlert()
+            setLocalUser()
+            return null;
         }
-        return {} as UserInfo;
     };
 
     return {

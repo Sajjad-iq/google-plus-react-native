@@ -9,11 +9,14 @@ interface Props extends ImageProps {
 export default function FlexibleImage({ ...props }: Props) {
 
     return (
-        <Image
-            {...props}
-            style={[styles.imageContent, { height: 300 }]}
-            resizeMode='contain'
-        />
+
+        props.src || props.source ?
+            <Image
+                {...props}
+                style={[styles.imageContent, { height: 300 }, props.style]}
+                resizeMode='cover'
+            />
+            : null
     )
 }
 

@@ -17,8 +17,13 @@ interface Props {
 
 export const CreatePost = (props: Props) => {
     const { t } = useTranslation();
-    const { imageUri, pickImage, resetImage, imageBlob } = usePhotoPicker()
-    const { postBody, isSubmitting, handleInputChange, submitPost } = useCreatePost({ image: imageUri, resetImage: resetImage });
+    const { imageUri, pickImage, resetImage } = usePhotoPicker()
+    const { postBody, isSubmitting, handleInputChange, submitPost } = useCreatePost(
+        {
+            image: imageUri || "",
+            resetImage: resetImage,
+            closeModal: props.hideCallback
+        });
 
     return (
         <Modal

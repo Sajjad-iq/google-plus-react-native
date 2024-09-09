@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { backend } from '@env';
 import { useGlobalData } from "@/context/GlobalContext";
+import Alerts from "@/components/others/alerts";
 
 interface Props {
+    closeModal: () => void;
     resetImage: () => void;
-    image: any;
+    image: string;
 }
 
 export function useCreatePost(props: Props) {
@@ -12,6 +14,7 @@ export function useCreatePost(props: Props) {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const { userInfo } = useGlobalData();
+    const { networkAlert, errorAlert, emptyPostAlert } = Alerts()
 
     const handleInputChange = (text: string) => {
         setPostBody(text);
@@ -20,6 +23,7 @@ export function useCreatePost(props: Props) {
     const submitPost = async () => {
         if (!postBody.trim() && !props.image) {
             console.log("Post cannot be empty");
+            emptyPostAlert()
             return;
         }
 
@@ -50,15 +54,16 @@ export function useCreatePost(props: Props) {
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText || "Failed to create post");
+                networkAlert()
             }
 
             const result = await response.json();
             setPostBody("");
+            props.closeModal();
             props.resetImage();  // Ensure image is reset
         } catch (err: any) {
             console.log(err.message || "An unknown error occurred");
+            errorAlert()
         } finally {
             setIsSubmitting(false);
         }

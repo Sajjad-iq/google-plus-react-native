@@ -34,6 +34,7 @@ export default function HomeScreen() {
                 <Post />
                 <Post />
                 <Post />
+
             </ScrollView>
         </View>
 
