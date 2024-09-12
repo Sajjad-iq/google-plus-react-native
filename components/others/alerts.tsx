@@ -38,9 +38,24 @@ export default function Alerts() {
             ],
             { cancelable: true }
         );
+
+
+    const NoPostsAlert = () =>
+        Alert.alert(
+            "No Posts Yet",
+            "",
+            [
+                {
+                    text: "OK",
+                    style: "cancel"
+                },
+            ],
+            { cancelable: true }
+        );
     return {
         networkAlert,
         errorAlert,
-        emptyPostAlert
+        emptyPostAlert,
+        NoPostsAlert
     }
 }

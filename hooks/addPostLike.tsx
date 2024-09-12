@@ -1,0 +1,57 @@
+import Alerts from '@/components/others/alerts';
+import { backend } from '@env';
+import { useState } from 'react';
+
+// Define the interface for the post response
+interface PostResponse {
+    message: string;
+    likes_count: number;
+    your_like: boolean;
+}
+
+// Define the hook function
+export const useAddLike = (postId: string) => {
+
+    const [isLiked, setIsLiked] = useState<boolean>(false);
+    const [likesCount, setLikesCount] = useState<number>(0);
+    const [error, setError] = useState<string | null>(null);
+    const [touched, setTouched] = useState<boolean>(false);
+    const { networkAlert, errorAlert } = Alerts();
+
+    const toggleLike = async () => {
+        try {
+            setTouched(true);
+            setError(null);
+
+            // API request to toggle the like status for a post
+            const response = await fetch(`${backend}/posts/${postId}/like`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Authorization header if needed, like JWT token
+                    // 'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                networkAlert();
+            }
+
+            const data: PostResponse = await response.json();
+
+            // Update the state with the new like status and likes count
+            setLikesCount(data.likes_count);
+        } catch (err: any) {
+            setError(err.message);
+            errorAlert();
+        }
+    };
+
+    return {
+        isLiked,
+        likesCount,
+        error,
+        touched,
+        toggleLike,
+    };
+};

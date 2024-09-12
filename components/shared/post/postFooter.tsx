@@ -2,19 +2,26 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { PostType } from '@/types/post';
+import { useAddLike } from '@/hooks/addPostLike';
 
-export function PostFooter() {
 
+interface Props extends PostType {
+
+}
+export function PostFooter(props: Props) {
+
+    const { toggleLike, touched, isLiked, likesCount } = useAddLike(props.id);
 
     return (
         <View style={[styles.container, {
             flexDirection: "row"
         }]}>
             <View style={styles.buttonWrapper} >
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={toggleLike} style={styles.button}>
                     <MaterialIcons name="exposure-plus-1" size={24} color={'gray'} />
                 </TouchableOpacity>
-                <Text style={styles.counterLabel}>1</Text>
+                <Text style={styles.counterLabel}>{touched ? likesCount : props.likes_count}</Text>
             </View>
 
             <View style={{ flexDirection: "row", gap: 20 }}>
@@ -22,14 +29,14 @@ export function PostFooter() {
                     <TouchableOpacity style={styles.button}>
                         <MaterialIcons name="comment" size={20} color={'gray'} />
                     </TouchableOpacity>
-                    <Text style={styles.counterLabel}>1</Text>
+                    <Text style={styles.counterLabel}>{props.comments_count}</Text>
                 </View>
 
                 <View style={styles.buttonWrapper} >
                     <TouchableOpacity style={styles.button}>
                         <MaterialIcons name="share" size={20} color={'gray'} />
                     </TouchableOpacity>
-                    <Text style={styles.counterLabel}>1</Text>
+                    <Text style={styles.counterLabel}>{0}</Text>
                 </View>
             </View>
         </View>

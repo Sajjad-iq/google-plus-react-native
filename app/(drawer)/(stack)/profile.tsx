@@ -41,9 +41,7 @@ export default function Profile() {
             </View>
 
             <View style={{ marginTop: 40, gap: 10, paddingVertical: 20 }}>
-                <Post />
-                <Post />
-                <Post />
+
             </View>
         </ScrollView>
     )

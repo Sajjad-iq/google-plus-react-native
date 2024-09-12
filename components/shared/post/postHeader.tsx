@@ -2,31 +2,30 @@ import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
 import { useGlobalData } from '@/context/GlobalContext';
 import getCurrentLang from '@/hooks/getCurrentLang';
+import { PostType } from '@/types/post';
 import { AntDesign } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet } from 'react-native'
 
-interface Props {
-    avatar?: string
-    userName: string
-    date: string
-    status: "Public" | "Private"
+interface Props extends PostType {
 }
 
 export default function PostHeader(props: Props) {
     const { lang } = useGlobalData()
+    const { t } = useTranslation();
 
     return (
         <View style={[styles.headerWrapper, { flexDirection: "row" }]} >
             <View style={[styles.leftContainer, { flexDirection: "row" }]}>
-                <Avatar size="Medium" src={props.avatar} />
+                <Avatar size="Medium" src={props.author_avatar} />
                 <View style={[styles.labelWrapper, { flexDirection: "row" }]}>
-                    <Text style={styles.arthurName} >{props.userName}</Text>
+                    <Text style={styles.arthurName} >{props.author_name}</Text>
                     <AntDesign style={{ transform: [{ rotate: lang === 'ar' ? '180deg' : '0deg' }] }} name="caretright" size={8} color={Colors.grayX2} />
-                    <Text style={styles.postStatus}>{props.status}</Text>
+                    <Text style={styles.postStatus}>{t(`post.postState.public`)}</Text>
                 </View>
             </View>
 
-            <Text style={styles.dateLabel}>{props.date}</Text>
+            <Text style={styles.dateLabel}> {`2 ${t('post.postTimer.d')} `}</Text>
         </View>
     )
 }

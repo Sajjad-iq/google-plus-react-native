@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors';
 import { Avatar } from '@/components/UI/avatar';
@@ -9,6 +9,7 @@ import { useGlobalData } from '@/context/GlobalContext';
 
 interface Props {
     submitCallback: () => void
+    isSubmitting: boolean
 }
 export function CratePostHeader(props: Props) {
     const { t } = useTranslation();
@@ -26,7 +27,12 @@ export function CratePostHeader(props: Props) {
                     <Text style={{ color: Colors.bluePrimary, fontWeight: '500' }}>{t('createPost.postState.public')}</Text>
                 </View>
             </View>
-            <PrimaryButton onPress={props.submitCallback} title={t('createPost.post')} />
+            {
+                props.isSubmitting ?
+                    <ActivityIndicator size="small" color={Colors.blueX1} />
+                    :
+                    <PrimaryButton onPress={props.submitCallback} title={t('createPost.post')} />
+            }
         </View>
     )
 }

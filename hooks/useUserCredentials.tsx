@@ -65,10 +65,18 @@ export default function useUserCredentials() {
 
     const setLocalUser = async () => {
         const user = await AsyncStorage.getItem("@user");
-        console.log(user)
-        if (user) setUserInfo(user as unknown as UserInfo);
-        else router.push("/login");
-    }
+        if (user) {
+            try {
+                const parsedUser = JSON.parse(user); // Parse the string to a JavaScript object
+                setUserInfo(parsedUser); // Ensure parsedUser matches the UserInfo type
+            } catch (error) {
+                router.push("/login"); // Redirect to login if parsing fails
+            }
+        } else {
+            router.push("/login"); // Redirect to login if no user is found
+        }
+    };
+
 
     // Verify JWT with Google API
     const getUserFromGoogle = async (token: string): Promise<GoogleUserInfo | null> => {

@@ -13,6 +13,7 @@ import FlexibleImage from '@/components/UI/FlexibleImage';
 interface Props {
     isActive: boolean;
     hideCallback: () => void;
+    postsReloadCallback: () => void;
 }
 
 export const CreatePost = (props: Props) => {
@@ -22,7 +23,8 @@ export const CreatePost = (props: Props) => {
         {
             image: imageUri || "",
             resetImage: resetImage,
-            closeModal: props.hideCallback
+            closeModal: props.hideCallback,
+            postsReloadCallback: props.postsReloadCallback
         });
 
     return (
@@ -37,8 +39,8 @@ export const CreatePost = (props: Props) => {
                 <View style={styles.postView}>
                     <ScrollView contentContainerStyle={styles.contentContainer}>
                         <View style={{ flex: 1, flexDirection: 'column' }}>
-                            <CratePostHeader submitCallback={submitPost} />
-                            <TextInput
+                            <CratePostHeader isSubmitting={isSubmitting} submitCallback={submitPost} />
+                            <TextInput         
                                 style={styles.textArea}
                                 placeholder={t('createPost.inputPlaceholder')}
                                 placeholderTextColor={Colors.grayX2}

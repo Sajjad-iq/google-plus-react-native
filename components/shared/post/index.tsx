@@ -1,27 +1,40 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import PostHeader from './postHeader';
 import { PostFooter } from './postFooter';
 import { router } from 'expo-router';
 import FlexibleImage from '@/components/UI/FlexibleImage';
 import { useTranslation } from 'react-i18next';
+import { PostType } from '@/types/post';
+import { useFetchPostByID } from '@/hooks/useFetchPostByID';
+import { useGlobalData } from '@/context/GlobalContext';
 
-export default function Post() {
+interface Props extends PostType {
+    previewMode?: boolean
+}
+export default function Post(props: Props) {
 
-    const { t } = useTranslation();
+    const { setViewPostDataID } = useGlobalData()
+
+    const previewPost = () => {
+        if (props.previewMode) return
+        setViewPostDataID(props.id)
+        router.push("/(stack)/postView")
+    }
     return (
         <View style={styles.postWrapper}>
             <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-                <PostHeader avatar="" userName="KILUA ZOLDYK" date={`2 ${t('post.postTimer.d')} `} status={t('post.postState.public')} />
+                <PostHeader {...props} />
             </View>
 
             <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>
-                <Text style={styles.textContent}>Lorem ipsum</Text>
+                <Text style={styles.textContent}>{props.body}</Text>
             </View>
-            <FlexibleImage onPress={() => {
-                router.push("/(stack)/postView");
-            }} />
-            <PostFooter />
+            <TouchableOpacity onPress={previewPost} >
+                <FlexibleImage src={props.image_url} />
+            </TouchableOpacity>
+
+            <PostFooter {...props} />
         </View>
     );
 }
