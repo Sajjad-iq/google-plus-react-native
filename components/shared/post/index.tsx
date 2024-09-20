@@ -4,9 +4,7 @@ import PostHeader from './postHeader';
 import { PostFooter } from './postFooter';
 import { router } from 'expo-router';
 import FlexibleImage from '@/components/UI/FlexibleImage';
-import { useTranslation } from 'react-i18next';
 import { PostType } from '@/types/post';
-import { useFetchPostByID } from '@/hooks/useFetchPostByID';
 import { useGlobalData } from '@/context/GlobalContext';
 
 interface Props extends PostType {
@@ -18,6 +16,7 @@ export default function Post(props: Props) {
 
     const previewPost = () => {
         if (props.previewMode) return
+
         setViewPostDataID(props.id)
         router.push("/(stack)/postView")
     }

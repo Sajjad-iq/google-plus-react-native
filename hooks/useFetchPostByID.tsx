@@ -1,5 +1,4 @@
 import Alerts from '@/components/others/alerts';
-import { useGlobalData } from '@/context/GlobalContext';
 import { PostType } from '@/types/post';
 import { backend } from '@env';
 import { useState, useEffect } from 'react';
@@ -14,6 +13,7 @@ export const useFetchPostByID = (postId: string) => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
+                console.log(backend);
                 setLoading(true);
                 setError(null);
 
@@ -34,7 +34,7 @@ export const useFetchPostByID = (postId: string) => {
         };
 
         fetchPost();
-    }, []);
+    }, [postId]);
 
     return { post, loading, error };
 };

@@ -49,9 +49,6 @@ export default function useUserCredentials() {
                         setUserInfo(backendUserData);
                         await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
                         router.push("/(drawer)/");
-                    } else {
-                        networkAlert()
-                        await setLocalUser()
                     }
                 }
             } else {
@@ -136,14 +133,16 @@ export default function useUserCredentials() {
             });
 
             if (!userData.ok) {
-                return null
+                console.error("Failed to get user");
+                return null;
             }
 
-            return await userData.json();
+            const parsedData = await userData.json();  // Parse JSON once
+            return parsedData;  // Return the parsed data
         } catch (error) {
             console.error("Error registering user with backend:", error);
-            networkAlert()
-            setLocalUser()
+            networkAlert();
+            setLocalUser();
             return null;
         }
     };

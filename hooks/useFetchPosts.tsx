@@ -26,7 +26,7 @@ export const useFetchPosts = (url: string) => {
             }
         } catch (err: any) {
             errorAlert();
-            setError(err.message || 'An unexpected error occurred');
+            console.log(err.message || 'An unexpected error occurred');
         } finally {
             setLoading(false);
         }
