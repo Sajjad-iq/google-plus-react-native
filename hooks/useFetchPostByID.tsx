@@ -13,7 +13,6 @@ export const useFetchPostByID = (postId: string) => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                console.log(backend);
                 setLoading(true);
                 setError(null);
 

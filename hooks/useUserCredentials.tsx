@@ -40,16 +40,21 @@ export default function useUserCredentials() {
     const checkStoredCredentials = async () => {
         try {
             const storedToken = await AsyncStorage.getItem("@token");
-            if (storedToken) {
-                const googleUser = await getUserFromGoogle(storedToken);
+            const user = await getLocalUser()
 
-                if (googleUser) {
-                    const backendUserData = await registerOrUpdateUser(googleUser);
-                    if (backendUserData) {
-                        setUserInfo(backendUserData);
-                        await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
-                        router.push("/(drawer)/");
-                    }
+            if (storedToken && user) {
+                const googleUser = {
+                    id: user?.id,
+                    name: user?.username,
+                    email: user?.email,
+                    picture: user?.profile_avatar,
+                } as unknown as GoogleUserInfo
+
+                const backendUserData = await registerOrUpdateUser(googleUser);
+                if (backendUserData) {
+                    setUserInfo(backendUserData);
+                    await AsyncStorage.setItem("@user", JSON.stringify(backendUserData));
+                    router.push("/(drawer)/");
                 }
             } else {
                 router.push("/login");
@@ -60,17 +65,39 @@ export default function useUserCredentials() {
     };
 
 
-    const setLocalUser = async () => {
+
+    const getLocalUser = async (): Promise<UserInfo | null> => {
         const user = await AsyncStorage.getItem("@user");
         if (user) {
             try {
                 const parsedUser = JSON.parse(user); // Parse the string to a JavaScript object
-                setUserInfo(parsedUser); // Ensure parsedUser matches the UserInfo type
+                return parsedUser
             } catch (error) {
                 router.push("/login"); // Redirect to login if parsing fails
+                return null
             }
+
         } else {
             router.push("/login"); // Redirect to login if no user is found
+            return null
+        }
+    };
+
+
+    const getJWTToken = async (): Promise<string | null> => {
+        const token = await AsyncStorage.getItem("@JWTtoken");
+        if (token) {
+            try {
+                const parsedUser = JSON.parse(token); // Parse the string to a JavaScript object
+                return parsedUser
+            } catch (error) {
+                router.push("/login"); // Redirect to login if parsing fails
+                return null
+            }
+
+        } else {
+            router.push("/login"); // Redirect to login if no user is found
+            return null
         }
     };
 
@@ -82,16 +109,20 @@ export default function useUserCredentials() {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            if (!userData.ok) {
-                console.error("Failed to verify JWT");
-                router.push("/login");
+            if (userData.status >= 401) {
+                console.error("Google JWT token invalid");
+                router.push("/login"); // Redirect to login if no user is found
                 return null;
             }
 
-            return (await userData.json()) as GoogleUserInfo;
+            if (!userData.ok) {
+                console.error("Failed to verify JWT");
+                return null;
+            }
+
+            return (await userData.json());
         } catch (error) {
             console.error("Error fetching Google user info", error);
-            await setLocalUser()
             networkAlert()
             return null
         }
@@ -99,6 +130,7 @@ export default function useUserCredentials() {
 
     // Fetch Google user info or register with the backend
     const getUserInfo = async (accessToken: string) => {
+        console.log(accessToken)
         try {
             const googleUser = await getUserFromGoogle(accessToken);
             await AsyncStorage.setItem("@token", accessToken);
@@ -120,17 +152,30 @@ export default function useUserCredentials() {
 
     // Register or update user with backend
     const registerOrUpdateUser = async (user: GoogleUserInfo): Promise<UserInfo | null> => {
+
+        const storedToken = await AsyncStorage.getItem("@token");
+        console.log(storedToken)
         try {
             const userData = await fetch(`${backend}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    id: user.id,
-                    username: user.name,
-                    email: user.email,
-                    profile_avatar: user.picture,
+                    user: {
+                        id: user.id,
+                        username: user.name,
+                        email: user.email,
+                        profile_avatar: user.picture,
+                    },
+                    token: storedToken
+
                 }),
             });
+
+            if (userData.status >= 401) {
+                console.error("JWT token invalid");
+                router.push("/login"); // Redirect to login if no user is found
+                return null;
+            }
 
             if (!userData.ok) {
                 console.error("Failed to get user");
@@ -138,11 +183,12 @@ export default function useUserCredentials() {
             }
 
             const parsedData = await userData.json();  // Parse JSON once
-            return parsedData;  // Return the parsed data
+            await AsyncStorage.setItem("@JWTtoken", parsedData.token);
+
+            return parsedData.user;  // Return the parsed data
         } catch (error) {
             console.error("Error registering user with backend:", error);
             networkAlert();
-            setLocalUser();
             return null;
         }
     };
