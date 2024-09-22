@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Alerts from '@/components/others/alerts';
 import { PostType } from '@/types/post';
+import useJWTToken from './useJWTToken';
 
 export const useFetchPosts = (url: string) => {
     const [posts, setPosts] = useState<PostType[]>([]);
@@ -8,12 +9,16 @@ export const useFetchPosts = (url: string) => {
     const [error, setError] = useState<string | null>(null);
     const [reloadTrigger, setReloadTrigger] = useState<boolean>(false);
     const { networkAlert, errorAlert, NoPostsAlert } = Alerts();
+    const { getJWTToken } = useJWTToken()
 
     const fetchPosts = async () => {
         setLoading(true);
         setError(null); // Clear previous errors
+        const JWTToken = await getJWTToken()
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                headers: { Authorization: `Bearer ${JWTToken}` }
+            });
             if (!response.ok) {
                 networkAlert();
             }

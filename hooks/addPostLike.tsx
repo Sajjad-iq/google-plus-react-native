@@ -1,6 +1,7 @@
 import Alerts from '@/components/others/alerts';
 import { backend } from '@env';
 import { useState } from 'react';
+import useJWTToken from './useJWTToken';
 
 // Define the interface for the post response
 interface PostResponse {
@@ -17,19 +18,20 @@ export const useAddLike = (postId: string) => {
     const [error, setError] = useState<string | null>(null);
     const [touched, setTouched] = useState<boolean>(false);
     const { networkAlert, errorAlert } = Alerts();
+    const { getJWTToken } = useJWTToken()
 
     const toggleLike = async () => {
         try {
             setTouched(true);
             setError(null);
+            const JWTToken = await getJWTToken()
 
             // API request to toggle the like status for a post
             const response = await fetch(`${backend}/posts/${postId}/like`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
-                    // Authorization header if needed, like JWT token
-                    // 'Authorization': `Bearer ${token}`,
+                    "Authorization": `Bearer ${JWTToken}`
                 },
             });
 

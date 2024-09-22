@@ -2,6 +2,7 @@ import { useState } from "react";
 import { backend } from '@env';
 import { useGlobalData } from "@/context/GlobalContext";
 import Alerts from "@/components/others/alerts";
+import useJWTToken from "./useJWTToken";
 
 interface Props {
     closeModal: () => void;
@@ -15,6 +16,7 @@ export function useCreatePost(props: Props) {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const { userInfo } = useGlobalData();
     const { networkAlert, errorAlert, emptyPostAlert } = Alerts()
+    const { getJWTToken } = useJWTToken()
 
     const handleInputChange = (text: string) => {
         setPostBody(text);
@@ -33,6 +35,7 @@ export function useCreatePost(props: Props) {
         formData.append("author_avatar", userInfo.profile_avatar || "");
         formData.append("author_name", userInfo.username);
         formData.append("share_state", "Public");
+
         if (props.image) {
             formData.append("image_url", {
                 uri: props.image,
@@ -43,12 +46,15 @@ export function useCreatePost(props: Props) {
 
         setIsSubmitting(true);
 
+        const JWTToken = await getJWTToken()
+
         try {
             const response = await fetch(`${backend}/create-post`, {
                 method: "POST",
                 headers: {
                     "Accept": 'application/json',
                     'Content-Type': 'multipart/form-data',
+                    "Authorization": `Bearer ${JWTToken}`
                 },
                 body: formData,
             });

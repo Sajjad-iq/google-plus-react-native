@@ -84,23 +84,6 @@ export default function useUserCredentials() {
     };
 
 
-    const getJWTToken = async (): Promise<string | null> => {
-        const token = await AsyncStorage.getItem("@JWTtoken");
-        if (token) {
-            try {
-                const parsedUser = JSON.parse(token); // Parse the string to a JavaScript object
-                return parsedUser
-            } catch (error) {
-                router.push("/login"); // Redirect to login if parsing fails
-                return null
-            }
-
-        } else {
-            router.push("/login"); // Redirect to login if no user is found
-            return null
-        }
-    };
-
 
     // Verify JWT with Google API
     const getUserFromGoogle = async (token: string): Promise<GoogleUserInfo | null> => {
@@ -130,7 +113,6 @@ export default function useUserCredentials() {
 
     // Fetch Google user info or register with the backend
     const getUserInfo = async (accessToken: string) => {
-        console.log(accessToken)
         try {
             const googleUser = await getUserFromGoogle(accessToken);
             await AsyncStorage.setItem("@token", accessToken);
@@ -154,7 +136,6 @@ export default function useUserCredentials() {
     const registerOrUpdateUser = async (user: GoogleUserInfo): Promise<UserInfo | null> => {
 
         const storedToken = await AsyncStorage.getItem("@token");
-        console.log(storedToken)
         try {
             const userData = await fetch(`${backend}/login`, {
                 method: 'POST',
@@ -167,7 +148,6 @@ export default function useUserCredentials() {
                         profile_avatar: user.picture,
                     },
                     token: storedToken
-
                 }),
             });
 
@@ -197,6 +177,6 @@ export default function useUserCredentials() {
         request,
         promptAsync,
         checkStoredCredentials,
-        userInfo,
+        userInfo
     };
 }
