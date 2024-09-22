@@ -30,10 +30,12 @@
             "public": "Shared publicly. View activities"
         },
         "postTimer": {
-            "d": "d",
-            "h": "h",
-            "m": "m",
-            "y": "y"
+            "d": "day",
+            "h": "hour",
+            "m": "minutes",
+            "w": "week",
+            "mon": "month",
+            "y": "year"
         },
         "addCommentPlaceholder": "Write a comment...",
         "postComment": "Send"

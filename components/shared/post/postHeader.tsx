@@ -1,7 +1,7 @@
 import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
 import { useGlobalData } from '@/context/GlobalContext';
-import getCurrentLang from '@/hooks/getCurrentLang';
+import useTimeAgo from '@/hooks/useTimeAgo';
 import { PostType } from '@/types/post';
 import { AntDesign } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ interface Props extends PostType {
 export default function PostHeader(props: Props) {
     const { lang } = useGlobalData()
     const { t } = useTranslation();
+    const { timeAgo } = useTimeAgo()
 
     return (
         <View style={[styles.headerWrapper, { flexDirection: "row" }]} >
@@ -25,7 +26,7 @@ export default function PostHeader(props: Props) {
                 </View>
             </View>
 
-            <Text style={styles.dateLabel}> {`2 ${t('post.postTimer.d')} `}</Text>
+            <Text style={styles.dateLabel}> {timeAgo(props.updated_at)}</Text>
         </View>
     )
 }
