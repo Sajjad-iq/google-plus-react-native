@@ -13,7 +13,6 @@ export default function Followings() {
   useFocusEffect(
     React.useCallback(() => {
       setHeaderTitle(t('Collections.title'));
-      setHeaderColor(Colors.bluePrimary);
     }, [setHeaderTitle])
   );
 

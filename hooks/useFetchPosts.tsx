@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import Alerts from '@/components/others/alerts';
 import { PostType } from '@/types/post';
 import useJWTToken from './useJWTToken';
+import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
 
 export const useFetchPosts = (url: string) => {
     const [posts, setPosts] = useState<PostType[]>([]);
@@ -37,10 +39,11 @@ export const useFetchPosts = (url: string) => {
         }
     };
 
-    useEffect(() => {
-        fetchPosts();
-    }, [url, reloadTrigger]); // Re-fetch posts whenever `url` or `reloadTrigger` changes
-
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchPosts();
+        }, [url, reloadTrigger])
+    );
     // Function to trigger a reload
     const reload = useCallback(() => {
         setReloadTrigger((prev) => !prev); // Toggle the reload trigger to force re-fetch

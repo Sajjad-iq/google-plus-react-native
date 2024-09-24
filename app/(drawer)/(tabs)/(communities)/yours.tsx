@@ -7,14 +7,13 @@ import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
 
 export default function yours() {
-    const { setHeaderTitle, setHeaderColor } = useHeader();
+    const { setHeaderTitle } = useHeader();
     const { t } = useTranslation();
 
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle(t("Communities.title"));
-            setHeaderColor(Colors.greenPrimary);
-        }, [setHeaderTitle, setHeaderColor])
+        }, [setHeaderTitle])
     );
 
 

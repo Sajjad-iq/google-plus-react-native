@@ -7,13 +7,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
 
 export default function NotificationsScreen() {
-    const { setHeaderTitle, setHeaderColor } = useHeader();
+    const { setHeaderTitle } = useHeader();
     const { t } = useTranslation();
 
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle(t("Notifications.title"));
-            setHeaderColor(Colors.redPrimary);
         }, [setHeaderTitle])
     );
 

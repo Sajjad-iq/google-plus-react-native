@@ -7,13 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { View, StyleSheet, Text } from 'react-native';
 
 export default function FEATURED() {
-    const { setHeaderTitle, setHeaderColor } = useHeader();
+    const { setHeaderTitle } = useHeader();
     const { t } = useTranslation();
 
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle(t('Collections.title'));
-            setHeaderColor(Colors.bluePrimary);
         }, [setHeaderTitle])
     );
 

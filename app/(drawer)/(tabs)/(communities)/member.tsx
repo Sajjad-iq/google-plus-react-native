@@ -7,14 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function Member() {
-  const { setHeaderTitle, setHeaderColor } = useHeader();
+  const { setHeaderTitle } = useHeader();
   const { t } = useTranslation();
 
   useFocusEffect(
     React.useCallback(() => {
       setHeaderTitle(t("Communities.title"));
-      setHeaderColor(Colors.greenPrimary);
-    }, [setHeaderTitle, setHeaderColor])
+    }, [setHeaderTitle])
   );
 
 

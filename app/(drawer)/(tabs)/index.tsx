@@ -13,7 +13,7 @@ import { useFetchPosts } from '@/hooks/useFetchPosts';
 import { backend } from '@env';
 
 export default function HomeScreen() {
-    const { setHeaderTitle, setHeaderColor } = useHeader();
+    const { setHeaderTitle } = useHeader();
     const [modalVisible, setModalVisible] = useState(false);
     const { t } = useTranslation();
     const [limit, setLimit] = useState(2);
@@ -26,7 +26,6 @@ export default function HomeScreen() {
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle(t('home.title'));
-            setHeaderColor(Colors.redPrimary);
         }, [setHeaderTitle, t])
     );
 

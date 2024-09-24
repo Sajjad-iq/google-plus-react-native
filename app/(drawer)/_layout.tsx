@@ -17,7 +17,7 @@ export default function DrawerLayout() {
         drawerContent={(props) => <DrawerContent {...props} />}
         screenOptions={{
           headerStyle: {
-            backgroundColor: headerColor,
+            backgroundColor: Colors.redPrimary,
             elevation: 0, // Remove shadow on Android
             shadowOpacity: 0, // Remove shadow on iOS
             borderBottomWidth: 0, // Ensure no border at the bottom

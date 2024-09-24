@@ -7,13 +7,12 @@ import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
 
 export default function Yours() {
-    const { setHeaderTitle, setHeaderColor } = useHeader();
+    const { setHeaderTitle } = useHeader();
     const { t } = useTranslation();
 
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle(t('Collections.title'));
-            setHeaderColor(Colors.bluePrimary);
         }, [setHeaderTitle])
     );
 

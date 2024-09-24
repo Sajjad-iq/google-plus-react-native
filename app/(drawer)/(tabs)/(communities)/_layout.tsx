@@ -26,7 +26,7 @@ export default function TabLayout() {
         <MaterialTopTabs
             screenOptions={{
                 tabBarStyle: {
-                    backgroundColor: headerColor,
+                    backgroundColor: Colors.redPrimary,
                     shadowOpacity: 0, // Remove shadow on iOS
                     elevation: 0,     // Remove shadow on Android
                     borderBottomWidth: 0, // Ensure no bottom border

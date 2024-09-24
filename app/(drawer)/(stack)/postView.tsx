@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, ActivityIndicator, FlatList } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Post from '@/components/shared/post';
 import { Colors } from '@/constants/Colors';
 import { AddComment } from '@/components/others/addComment';
@@ -20,14 +20,17 @@ export default function PostView() {
     const { post, loading, fetchPost, touched } = useFetchPostByID(viewPostDataID);
     const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments } = usePostComments(viewPostDataID, limit, fetchPost)
 
-    useEffect(() => {
-        fetchPost();
-    }, [viewPostDataID]);
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchPost();
+        }, [viewPostDataID])
+    );
 
-    useEffect(() => {
-        fetchComments();
-    }, [limit]);
-
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchComments();
+        }, [limit])
+    );
     return (
         <KeyboardAvoidingView >
             <FlatList
