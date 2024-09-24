@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useState } from 'react';
 import { Colors } from '@/constants/Colors';
 import { Avatar } from '@/components/UI/avatar';
@@ -7,7 +7,13 @@ import { PrimaryButton } from '@/components/UI/PrimaryButton';
 import { useTranslation } from 'react-i18next';
 import { useGlobalData } from '@/context/GlobalContext';
 
-export function AddComment() {
+interface Props {
+    setCommentContent: (content: string) => void
+    addComment: () => void
+    isAddingComment: boolean
+    commentContent: string
+}
+export function AddComment(props: Props) {
     const [isFocused, setIsFocused] = useState(false);
     const { t } = useTranslation();
     const { userInfo } = useGlobalData()
@@ -22,8 +28,10 @@ export function AddComment() {
                     placeholder={t("post.addCommentPlaceholder")}
                     placeholderTextColor={Colors.grayX2}
                     multiline={true}
+                    onChange={(e) => props.setCommentContent(e.nativeEvent.text)}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
+                    value={props.commentContent}
                 />
             </View>
 
@@ -38,7 +46,16 @@ export function AddComment() {
                         </TouchableOpacity>
                     </View>
 
-                    <PrimaryButton title={t("post.postComment")} />
+
+                    <View style={{ justifyContent: "center", alignItems: "center", height: 35 }}>
+                        {
+                            props.isAddingComment ?
+                                <ActivityIndicator size="small" color={Colors.blueX1} />
+                                :
+                                <PrimaryButton onPress={props.addComment} title={t("post.postComment")} />
+                        }
+                    </View>
+
 
                 </View>
             )}

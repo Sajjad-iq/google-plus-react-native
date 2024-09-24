@@ -26,9 +26,10 @@ export default function Post(props: Props) {
                 <PostHeader {...props} />
             </View>
 
-            <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>
+            <TouchableOpacity style={{ paddingBottom: 20, paddingHorizontal: 20 }} onPress={previewPost} >
                 <Text style={styles.textContent}>{props.body}</Text>
-            </View>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={previewPost} >
                 <FlexibleImage src={props.image_url} />
             </TouchableOpacity>

@@ -52,10 +52,24 @@ export default function Alerts() {
             ],
             { cancelable: true }
         );
+
+    const ExpiredSession = () =>
+        Alert.alert(
+            "Session",
+            "The Session was Expired, You need to login again",
+            [
+                {
+                    text: "OK",
+                    style: "cancel"
+                },
+            ],
+            { cancelable: true }
+        );
     return {
         networkAlert,
         errorAlert,
         emptyPostAlert,
-        NoPostsAlert
+        NoPostsAlert,
+        ExpiredSession
     }
 }

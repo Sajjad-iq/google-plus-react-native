@@ -12,4 +12,5 @@ export interface PostType {
     mentioned_users?: number[];  // pq.Int32Array is represented as an array of numbers
     created_at: string;  // time.Time is typically serialized as an ISO string
     updated_at: string;
+    your_like: boolean
 }

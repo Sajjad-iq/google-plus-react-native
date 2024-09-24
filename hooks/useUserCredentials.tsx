@@ -13,7 +13,7 @@ WebBrowser.maybeCompleteAuthSession();
 export default function useUserCredentials() {
     const [token, setToken] = useState<string | null>(null);
     const { setUserInfo, userInfo } = useGlobalData();
-    const { networkAlert, errorAlert } = Alerts()
+    const { networkAlert, errorAlert, ExpiredSession } = Alerts()
 
     // Google Auth request
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -92,8 +92,9 @@ export default function useUserCredentials() {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            if (userData.status >= 401) {
+            if (userData.status == 401) {
                 console.error("Google JWT token invalid");
+                ExpiredSession()
                 router.push("/login"); // Redirect to login if no user is found
                 return null;
             }
@@ -151,8 +152,9 @@ export default function useUserCredentials() {
                 }),
             });
 
-            if (userData.status >= 401) {
-                console.error("JWT token invalid");
+            if (userData.status == 401) {
+                console.error("Backend JWT token invalid");
+                ExpiredSession()
                 router.push("/login"); // Redirect to login if no user is found
                 return null;
             }

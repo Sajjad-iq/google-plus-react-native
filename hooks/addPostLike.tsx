@@ -2,12 +2,13 @@ import Alerts from '@/components/others/alerts';
 import { backend } from '@env';
 import { useState } from 'react';
 import useJWTToken from './useJWTToken';
+import { router } from 'expo-router';
 
 // Define the interface for the post response
 interface PostResponse {
     message: string;
     likes_count: number;
-    your_like: boolean;
+    liked: boolean;
 }
 
 // Define the hook function
@@ -17,7 +18,7 @@ export const useAddLike = (postId: string) => {
     const [likesCount, setLikesCount] = useState<number>(0);
     const [error, setError] = useState<string | null>(null);
     const [touched, setTouched] = useState<boolean>(false);
-    const { networkAlert, errorAlert } = Alerts();
+    const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken()
 
     const toggleLike = async () => {
@@ -35,6 +36,14 @@ export const useAddLike = (postId: string) => {
                 },
             });
 
+
+            if (response.status == 401) {
+                console.error("Backend JWT token invalid");
+                ExpiredSession()
+                router.push("/login"); // Redirect to login if no user is found
+                return null;
+            }
+
             if (!response.ok) {
                 networkAlert();
             }
@@ -43,6 +52,7 @@ export const useAddLike = (postId: string) => {
 
             // Update the state with the new like status and likes count
             setLikesCount(data.likes_count);
+            setIsLiked(data.liked)
         } catch (err: any) {
             setError(err.message);
             errorAlert();

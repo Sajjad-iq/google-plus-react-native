@@ -18,8 +18,8 @@ export function PostFooter(props: Props) {
             flexDirection: "row"
         }]}>
             <View style={styles.buttonWrapper} >
-                <TouchableOpacity onPress={toggleLike} style={styles.button}>
-                    <MaterialIcons name="exposure-plus-1" size={24} color={'gray'} />
+                <TouchableOpacity onPress={toggleLike} style={[styles.button, { backgroundColor: touched ? isLiked ? Colors.redPrimary : Colors.grayPrimary : props.your_like ? Colors.redPrimary : Colors.grayPrimary }]}>
+                    <MaterialIcons name="exposure-plus-1" size={24} color={touched ? isLiked ? Colors.whitePrimary : 'gray' : props.your_like ? Colors.whitePrimary : 'gray'} />
                 </TouchableOpacity>
                 <Text style={styles.counterLabel}>{touched ? likesCount : props.likes_count}</Text>
             </View>
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.grayPrimary,
         width: 35,
         height: 35,
         borderRadius: 20
