@@ -18,18 +18,19 @@ export default function PostView() {
     const { viewPostDataID } = useGlobalData()
     const [limit, setLimit] = useState(2);
     const { post, loading, fetchPost, touched } = useFetchPostByID(viewPostDataID);
-    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments } = usePostComments(viewPostDataID, limit, fetchPost)
+    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop } = usePostComments(viewPostDataID, limit, fetchPost)
 
     useFocusEffect(
         React.useCallback(() => {
             fetchPost();
+            setStop(false)
         }, [viewPostDataID])
     );
 
     useFocusEffect(
         React.useCallback(() => {
             fetchComments();
-        }, [limit])
+        }, [limit, viewPostDataID])
     );
     return (
         <KeyboardAvoidingView >
@@ -46,7 +47,7 @@ export default function PostView() {
                 )}
                 contentContainerStyle={{ gap: 14, backgroundColor: Colors.whitePrimary }}
                 keyExtractor={(comment: PostCommentType) => comment.id}
-                onEndReached={() => comments.length > 0 && setLimit(limit + 2)} // Trigger loading more posts
+                onEndReached={() => comments.length > 0 && !stop && setLimit(limit + 2)} // Trigger loading more posts
                 onEndReachedThreshold={0.2} // Load more when the list is halfway through
                 renderItem={({ item }: { item: PostCommentType }) => (
                     <PostComment {...item} />

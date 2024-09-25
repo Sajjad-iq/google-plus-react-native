@@ -5,8 +5,13 @@ import useJWTToken from './useJWTToken';
 import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
 
+interface FetchResponse {
+    stop: boolean;
+    posts: PostType[];
+}
 export const useFetchPosts = (url: string) => {
     const [posts, setPosts] = useState<PostType[]>([]);
+    const [stop, setStop] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [reloadTrigger, setReloadTrigger] = useState<boolean>(false);
@@ -24,13 +29,10 @@ export const useFetchPosts = (url: string) => {
             if (!response.ok) {
                 networkAlert();
             }
-            const data: PostType[] = await response.json();
+            const data: FetchResponse = await response.json();
+            setPosts(data.posts);
+            setStop(data.stop);
 
-            if (data.length === 0) {
-                NoPostsAlert(); // Alert when there are no posts
-            } else {
-                setPosts(data);
-            }
         } catch (err: any) {
             errorAlert();
             console.log(err.message || 'An unexpected error occurred');
@@ -42,6 +44,7 @@ export const useFetchPosts = (url: string) => {
     useFocusEffect(
         React.useCallback(() => {
             fetchPosts();
+            setStop(false)
         }, [url, reloadTrigger])
     );
     // Function to trigger a reload
@@ -49,5 +52,5 @@ export const useFetchPosts = (url: string) => {
         setReloadTrigger((prev) => !prev); // Toggle the reload trigger to force re-fetch
     }, []);
 
-    return { posts, loading, error, reload, setPosts };
+    return { posts, loading, error, reload, setPosts, stop };
 };

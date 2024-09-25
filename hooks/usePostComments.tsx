@@ -3,14 +3,11 @@ import { backend } from '@env';
 import Alerts from '@/components/others/alerts';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
-import { useFocusEffect } from '@react-navigation/native';
-
 import { PostCommentType } from '@/types/comment';
-import React from 'react';
 
-interface CommentResponse {
-    message: string;
-    comment: PostCommentType;
+interface FetchResponse {
+    stop: boolean;
+    comments: PostCommentType[];
 }
 
 // Define the hook function
@@ -18,6 +15,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
     const [comments, setComments] = useState<PostCommentType[]>([]); // Store fetched comments
     const [commentContent, setCommentContent] = useState<string>(''); // Store the content of the comment
     const [isAddingComments, setIsAddingComments] = useState<boolean>(false); // Store loading state for adding comments
+    const [stop, setStop] = useState<boolean>(false);
     const [isFetchingComments, setIsFetchingComments] = useState<boolean>(false); // Store loading state for fetching comments
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken(); // Hook to get the JWT token
@@ -57,7 +55,6 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
                 return;
             }
 
-            const data: CommentResponse = await response.json();
             setCommentContent(""); // Clear the input field
             reloadComments()
             reloadPost()
@@ -94,8 +91,9 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
                 return;
             }
 
-            const data: PostCommentType[] = await response.json();
-            setComments(data); // Set the fetched comments
+            const data: FetchResponse = await response.json();
+            setComments(data.comments); // Set the fetched comments
+            setStop(data.stop)
         } catch (err: any) {
             console.log(err.message); // Log the error
             errorAlert(); // Trigger error alert
@@ -117,6 +115,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         isFetchingComments,
         isAddingComments,
         reloadComments, // Expose the reload function
-        fetchComments
+        fetchComments,
+        stop, setStop
     };
 };

@@ -5,12 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Colors } from "@/constants/Colors";
 import { useTranslation } from "react-i18next";
 import getCurrentLang from "@/hooks/getCurrentLang";
+import PostOptionsMenu from "@/components/shared/post/postOptionsMenu";
 
 
 export default function ScreensLayout() {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const lang = getCurrentLang()
+
   return (
     <Stack screenOptions={{
       headerTintColor: Colors.whitePrimary,  // Customize as needed
@@ -95,16 +97,23 @@ export default function ScreensLayout() {
           backgroundColor: Colors.redPrimary, // Customize as needed
         },
       }} />
-      <Stack.Screen name="postView" options={{
-        headerTitle: '', headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons name="arrow-left" size={28} color={Colors.whitePrimary} />
-          </TouchableOpacity>
-        ),
-        headerStyle: {
-          backgroundColor: Colors.redPrimary, // Customize as needed
-        },
-      }} />
+      <Stack.Screen
+        name="postView"
+        options={{
+          headerTitle: '',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons name="arrow-left" size={28} color={Colors.whitePrimary} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <PostOptionsMenu />
+          ),
+          headerStyle: {
+            backgroundColor: Colors.redPrimary,
+          },
+        }}
+      />
     </Stack>
   );
 }

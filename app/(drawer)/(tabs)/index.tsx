@@ -17,7 +17,7 @@ export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const { t } = useTranslation();
     const [limit, setLimit] = useState(2);
-    const { posts, loading, reload } = useFetchPosts(`${backend}/posts?limit=${limit}`); // Initial limit set to 10
+    const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit}`); // Initial limit set to 10
 
     const showHideCreatePost = () => {
         setModalVisible(!modalVisible);
@@ -45,7 +45,7 @@ export default function HomeScreen() {
                         </View>
                     )}
                     ListHeaderComponent={() => <WhatsNew onPress={showHideCreatePost} />}
-                    onEndReached={() => posts.length > 0 && setLimit(limit + 2)} // Trigger loading more posts
+                    onEndReached={() => posts.length > 0 && !stop ? setLimit(limit + 2) : null} // Trigger loading more posts
                     onEndReachedThreshold={0.2} // Load more when the list is halfway through
                     ListFooterComponent={() => loading ? (
                         <ActivityIndicator size="large" color={Colors.redPrimary} style={{ marginVertical: 20 }} />
