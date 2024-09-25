@@ -15,22 +15,22 @@ import { useFocusEffect } from '@react-navigation/native';
 export default function PostView() {
 
     const { t } = useTranslation();
-    const { viewPostDataID } = useGlobalData()
+    const { selectedPost } = useGlobalData()
     const [limit, setLimit] = useState(2);
-    const { post, loading, fetchPost, touched } = useFetchPostByID(viewPostDataID);
-    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop } = usePostComments(viewPostDataID, limit, fetchPost)
+    const { post, loading, fetchPost, touched } = useFetchPostByID(selectedPost.id);
+    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop } = usePostComments(selectedPost.id, limit, fetchPost)
 
     useFocusEffect(
         React.useCallback(() => {
             fetchPost();
             setStop(false)
-        }, [viewPostDataID])
+        }, [selectedPost])
     );
 
     useFocusEffect(
         React.useCallback(() => {
             fetchComments();
-        }, [limit, viewPostDataID])
+        }, [limit, selectedPost])
     );
     return (
         <KeyboardAvoidingView >

@@ -2,20 +2,15 @@ import * as DropdownMenu from 'zeego/dropdown-menu';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { useGlobalData } from '@/context/GlobalContext';
+import { useTranslation } from 'react-i18next';
+import { useDeletePost } from '@/hooks/useDeletePost';
 
 export default function PostOptionsMenu() {
-    // Function to handle the "Delete" option click
-    const handleDelete = () => {
-        console.log('Delete option clicked');
-        // Add your delete functionality here
-    };
 
-    // Function to handle the "Edit" option click
-    const handleEdit = () => {
-        console.log('Edit option clicked');
-        // Add your edit functionality here
-    };
-
+    const { selectedPost, userInfo } = useGlobalData();
+    const { t } = useTranslation();
+    const { deletePost } = useDeletePost(selectedPost, userInfo)
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
@@ -23,26 +18,35 @@ export default function PostOptionsMenu() {
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content
-                side="bottom"           // Specify the side (e.g., "top", "bottom", "left", "right")
-                align="start"           // Specify the alignment (e.g., "start", "center", "end")
-                alignOffset={0}         // Offset for alignment (optional)
-                sideOffset={10}         // Offset for the side (optional)
-                loop={false}            // Set whether the menu should loop through items
-                avoidCollisions={true}  // Avoid collisions with screen edges
-                collisionPadding={5}    // Padding used to avoid collisions (can be adjusted)
+                side="bottom"
+                align="start"
+                alignOffset={0}
+                sideOffset={10}
+                loop={false}
+                avoidCollisions={true}
+                collisionPadding={5}
             >
-                <DropdownMenu.Item key='Delete' onSelect={handleDelete}>
-                    <DropdownMenu.ItemTitle>
-                        Delete
-                    </DropdownMenu.ItemTitle>
-                </DropdownMenu.Item>
+                {userInfo.id === selectedPost.author_id ? (
+                    <>
+                        <DropdownMenu.Item key='delete' onSelect={deletePost}>
+                            <DropdownMenu.ItemTitle>
+                                {t('post.dropDownOptions.delete')}
+                            </DropdownMenu.ItemTitle>
+                        </DropdownMenu.Item>
 
-                <DropdownMenu.Item key='Edit' onSelect={handleEdit}>
-                    <DropdownMenu.ItemTitle>
-                        Edit
-                    </DropdownMenu.ItemTitle>
-                </DropdownMenu.Item>
-
+                        {/*            <DropdownMenu.Item key='edit' onSelect={handleEdit}>
+                            <DropdownMenu.ItemTitle>
+                                {t('post.dropDownOptions.edit')}
+                            </DropdownMenu.ItemTitle>
+                        </DropdownMenu.Item> */}
+                    </>
+                ) : (
+                    <DropdownMenu.Item key='report' onSelect={() => ""}>
+                        <DropdownMenu.ItemTitle>
+                            {t('post.dropDownOptions.report')}
+                        </DropdownMenu.ItemTitle>
+                    </DropdownMenu.Item>
+                )}
             </DropdownMenu.Content>
         </DropdownMenu.Root>
     );

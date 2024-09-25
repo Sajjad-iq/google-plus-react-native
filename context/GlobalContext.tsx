@@ -12,8 +12,8 @@ interface HeaderContextType {
     userInfo: UserInfo
     setUserInfo: (data: UserInfo) => void
     lang: string
-    viewPostDataID: string
-    setViewPostDataID: (id: string) => void
+    selectedPost: PostType
+    setSelectedPost: (post: any) => void
 
 }
 
@@ -23,7 +23,7 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
     const [headerTitle, setHeaderTitle] = useState<string>("Home");
     const [headerColor, setHeaderColor] = useState<string>(Colors.redPrimary);
     const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
-    const [viewPostDataID, setViewPostDataID] = useState<string>('');
+    const [selectedPost, setSelectedPost] = useState<PostType>({} as PostType);
     const lang = getCurrentLang();
 
 
@@ -34,7 +34,7 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
                 headerColor, setHeaderColor,
                 userInfo, setUserInfo,
                 lang,
-                viewPostDataID, setViewPostDataID
+                selectedPost, setSelectedPost
 
             }
         }>

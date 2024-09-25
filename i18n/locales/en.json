@@ -38,7 +38,12 @@
             "y": "year"
         },
         "addCommentPlaceholder": "Write a comment...",
-        "postComment": "Send"
+        "postComment": "Send",
+        "dropDownOptions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "report": "Report"
+        }
     },
     "createPost": {
         "postState": {

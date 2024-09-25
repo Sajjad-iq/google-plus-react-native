@@ -12,12 +12,12 @@ interface Props extends PostType {
 }
 export default function Post(props: Props) {
 
-    const { setViewPostDataID } = useGlobalData()
+    const { setSelectedPost } = useGlobalData()
 
     const previewPost = () => {
         if (props.previewMode) return
 
-        setViewPostDataID(props.id)
+        setSelectedPost(props)
         router.push("/(stack)/postView")
     }
     return (

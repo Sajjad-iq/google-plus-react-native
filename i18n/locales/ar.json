@@ -38,7 +38,12 @@
             "y": "سنة"
         },
         "addCommentPlaceholder": "إضافة تعليق...",
-        "postComment": "مشاركة"
+        "postComment": "مشاركة",
+        "dropDownOptions": {
+            "edit": "تعديل",
+            "delete": "حذف",
+            "report": "إبلاغ"
+        }
     },
     "createPost": {
         "postState": {
