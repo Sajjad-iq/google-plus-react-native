@@ -42,7 +42,8 @@
         "dropDownOptions": {
             "edit": "تعديل",
             "delete": "حذف",
-            "report": "إبلاغ"
+            "report": "إبلاغ",
+            "replay": "رد"
         }
     },
     "createPost": {

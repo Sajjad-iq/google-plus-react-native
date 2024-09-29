@@ -32,7 +32,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
             }
 
             // API request to add a new comment for a post
-            const response = await fetch(`${backend}/posts/${postId}/comment`, {
+            const response = await fetch(`${backend}/posts/${postId}/comment `, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
             const JWTToken = await getJWTToken(); // Retrieve JWT token for authorization
 
             // API request to fetch comments for the post
-            const response = await fetch(`${backend}/posts/comment/${postId}?limit=${limit}`, {
+            const response = await fetch(`${backend}/posts/comment/${postId}?limit=${limit} `, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${JWTToken}`,

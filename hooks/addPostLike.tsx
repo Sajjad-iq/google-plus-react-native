@@ -28,7 +28,7 @@ export const useAddLike = (postId: string) => {
             const JWTToken = await getJWTToken()
 
             // API request to toggle the like status for a post
-            const response = await fetch(`${backend}/posts/${postId}/like`, {
+            const response = await fetch(`${backend}/posts/${postId}/like `, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

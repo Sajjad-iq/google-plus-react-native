@@ -28,7 +28,7 @@ export const useDeletePost = (post: PostType, user: UserInfo) => {
             const JWTToken = await getJWTToken()
 
             // API request to toggle the like status for a post
-            const response = await fetch(`${backend}/posts/${post.id}`, {
+            const response = await fetch(`${backend}/posts/${post.id} `, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',

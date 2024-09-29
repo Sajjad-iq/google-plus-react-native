@@ -42,7 +42,8 @@
         "dropDownOptions": {
             "edit": "Edit",
             "delete": "Delete",
-            "report": "Report"
+            "report": "Report",
+            "replay": "Replay"
         }
     },
     "createPost": {

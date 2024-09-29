@@ -17,8 +17,7 @@ export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const { t } = useTranslation();
     const [limit, setLimit] = useState(2);
-    const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit}`); // Initial limit set to 10
-
+    const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit}`); // Initial limit set to 
     const showHideCreatePost = () => {
         setModalVisible(!modalVisible);
     };
