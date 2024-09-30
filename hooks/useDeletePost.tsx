@@ -1,17 +1,10 @@
 import Alerts from '@/components/others/alerts';
 import { backend } from '@env';
-import { useState } from 'react';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
 import { PostType } from '@/types/post';
 import { UserInfo } from '@/types/user';
 
-// Define the interface for the post response
-interface PostResponse {
-    message: string;
-    likes_count: number;
-    liked: boolean;
-}
 
 // Define the hook function
 export const useDeletePost = (post: PostType, user: UserInfo) => {

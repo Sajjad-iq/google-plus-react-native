@@ -9,7 +9,7 @@ import * as DropdownMenu from 'zeego/dropdown-menu';
 import { useGlobalData } from '@/context/GlobalContext';
 
 interface Props extends PostCommentType {
-
+    deleteComment: (id: string) => Promise<void>;
 }
 export function PostComment(props: Props) {
 
@@ -44,7 +44,7 @@ export function PostComment(props: Props) {
             >
                 {userInfo.id === props.user_id ? (
                     <>
-                        <DropdownMenu.Item key='delete' onSelect={() => ""}>
+                        <DropdownMenu.Item key='delete' onSelect={() => props.deleteComment(props.id)}>
                             <DropdownMenu.ItemTitle>
                                 {t('post.dropDownOptions.delete')}
                             </DropdownMenu.ItemTitle>

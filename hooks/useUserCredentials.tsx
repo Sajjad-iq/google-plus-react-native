@@ -138,7 +138,7 @@ export default function useUserCredentials() {
 
         const storedToken = await AsyncStorage.getItem("@token");
         try {
-            const userData = await fetch(`${backend}/login`, {
+            const userData = await fetch(`${backend}/login `, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

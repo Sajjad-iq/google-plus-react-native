@@ -102,6 +102,31 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         }
     };
 
+
+    // Function to delete a comment
+    const deleteComment = async (commentId: string) => {
+        try {
+            const JWTToken = await getJWTToken(); // Get the JWT token
+
+            const response = await fetch(`${backend}/posts/${commentId}/comment`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${JWTToken}`,
+                },
+            });
+
+            if (!response.ok) {
+                networkAlert(); // Handle network errors
+                return;
+            }
+
+            reloadComments(); // Refresh comments after deletion
+            reloadPost(); // Reload post to update comment count
+        } catch (err) {
+            console.log(err); // Log the error
+            errorAlert(); // Trigger error alert
+        }
+    };
     // Reload comments
     const reloadComments = () => {
         fetchComments(); // Call fetchComments to reload
@@ -116,6 +141,6 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         isAddingComments,
         reloadComments, // Expose the reload function
         fetchComments,
-        stop, setStop
+        stop, setStop, deleteComment
     };
 };

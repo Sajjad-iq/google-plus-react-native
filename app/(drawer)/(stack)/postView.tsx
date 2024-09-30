@@ -18,7 +18,7 @@ export default function PostView() {
     const { selectedPost } = useGlobalData()
     const [limit, setLimit] = useState(2);
     const { post, loading, fetchPost, touched } = useFetchPostByID(selectedPost.id);
-    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop } = usePostComments(selectedPost.id, limit, fetchPost)
+    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop, deleteComment } = usePostComments(selectedPost.id, limit, fetchPost)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -50,7 +50,7 @@ export default function PostView() {
                 onEndReached={() => comments.length > 0 && !stop && setLimit(limit + 2)} // Trigger loading more posts
                 onEndReachedThreshold={0.2} // Load more when the list is halfway through
                 renderItem={({ item }: { item: PostCommentType }) => (
-                    <PostComment {...item} />
+                    <PostComment {...item} deleteComment={deleteComment} />
                 )}
                 ListFooterComponent={() => isFetchingComments && !loading ? (
                     <ActivityIndicator size="large" color={Colors.redPrimary} style={{ marginVertical: 20 }} />
