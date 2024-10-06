@@ -20,7 +20,7 @@ export default function Settings() {
     const logOut = async () => {
         await AsyncStorage.removeItem("@user")
         setUserInfo({} as UserInfo)
-        router.push("/login");
+        router.push("/");
     }
 
     return (

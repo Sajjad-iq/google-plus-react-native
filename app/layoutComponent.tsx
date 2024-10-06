@@ -14,7 +14,7 @@ export default function LayoutComponent() {
     return (
         <Stack>
             <Stack.Screen
-                name="login" // Login screen
+                name="index" // Login screen
                 options={{ headerShown: false }} // Hide the header
             />
             <Stack.Screen

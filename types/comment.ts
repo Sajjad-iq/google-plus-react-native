@@ -5,6 +5,7 @@ export interface PostCommentType {
     user_id: string;
     content: string;
     author_name: string;
+    mentioned_users: string[];
     author_avatar: string;
     created_at: string;
     updated_at: string;

@@ -3,6 +3,7 @@
     "name": "glimmer plus",
     "slug": "glimmer_plus",
     "version": "1.0.0",
+    "entryPoint": "expo-router/entry",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -18,6 +19,7 @@
     },
     "android": {
       "package": "com.glimmer.plus",
+      "googleServicesFile": "./android/app/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

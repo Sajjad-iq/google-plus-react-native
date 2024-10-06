@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, FlatList, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useHeader } from '@/context/GlobalContext';
 import Post from '@/components/shared/post';
@@ -11,13 +11,17 @@ import { useTranslation } from 'react-i18next';
 import { PostType } from '@/types/post';
 import { useFetchPosts } from '@/hooks/useFetchPosts';
 import { backend } from '@env';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
 
 export default function HomeScreen() {
     const { setHeaderTitle } = useHeader();
     const [modalVisible, setModalVisible] = useState(false);
     const { t } = useTranslation();
     const [limit, setLimit] = useState(2);
-    const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit}`); // Initial limit set to 
+    const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit} `); // Initial limit set to 
+    const { expoPushToken, notification } = usePushNotifications();
+    const data = JSON.stringify(notification, undefined, 2);
+
     const showHideCreatePost = () => {
         setModalVisible(!modalVisible);
     };
@@ -30,6 +34,8 @@ export default function HomeScreen() {
 
     return (
         <View style={{ flex: 1 }}>
+            <Text>Token: {expoPushToken?.data ?? ""}</Text>
+            <Text>Notification: {data}</Text>
             <Pencil onPress={showHideCreatePost} />
             <CreatePost postsReloadCallback={reload} hideCallback={showHideCreatePost} isActive={modalVisible} />
             {loading && posts.length === 0 ? (

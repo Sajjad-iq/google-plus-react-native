@@ -18,18 +18,20 @@ export default function PostView() {
     const { selectedPost } = useGlobalData()
     const [limit, setLimit] = useState(2);
     const { post, loading, fetchPost, touched } = useFetchPostByID(selectedPost.id);
-    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop, deleteComment } = usePostComments(selectedPost.id, limit, fetchPost)
+    const { setCommentContent, addComment, comments, isFetchingComments, isAddingComments, commentContent, fetchComments, setStop, stop, deleteComment, setReplay, unsetReplay } = usePostComments(selectedPost.id, limit, fetchPost)
 
     useFocusEffect(
         React.useCallback(() => {
             fetchPost();
             setStop(false)
+            unsetReplay()
         }, [selectedPost])
     );
 
     useFocusEffect(
         React.useCallback(() => {
             fetchComments();
+            unsetReplay()
         }, [limit, selectedPost])
     );
     return (
@@ -45,19 +47,19 @@ export default function PostView() {
                             </View>
                         </View>
                 )}
-                contentContainerStyle={{ gap: 14, backgroundColor: Colors.whitePrimary }}
+                contentContainerStyle={{ gap: 17, backgroundColor: Colors.whitePrimary }}
                 keyExtractor={(comment: PostCommentType) => comment.id}
                 onEndReached={() => comments.length > 0 && !stop && setLimit(limit + 2)} // Trigger loading more posts
                 onEndReachedThreshold={0.2} // Load more when the list is halfway through
                 renderItem={({ item }: { item: PostCommentType }) => (
-                    <PostComment {...item} deleteComment={deleteComment} />
+                    <PostComment {...item} deleteComment={deleteComment} setReplay={setReplay} />
                 )}
                 ListFooterComponent={() => isFetchingComments && !loading ? (
                     <ActivityIndicator size="large" color={Colors.redPrimary} style={{ marginVertical: 20 }} />
                 ) : null}
             />
 
-            <AddComment commentContent={commentContent} isAddingComment={isAddingComments} addComment={addComment} setCommentContent={setCommentContent} />
+            <AddComment unsetReplay={unsetReplay} commentContent={commentContent} isAddingComment={isAddingComments} addComment={addComment} setCommentContent={setCommentContent} />
         </KeyboardAvoidingView >
     );
 }

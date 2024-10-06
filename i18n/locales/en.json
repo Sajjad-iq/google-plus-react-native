@@ -30,15 +30,15 @@
             "public": "Shared publicly. View activities"
         },
         "postTimer": {
-            "d": "day",
-            "h": "hour",
-            "m": "minutes",
-            "w": "week",
+            "d": "d",
+            "h": "h",
+            "m": "m",
+            "w": "w",
             "mon": "month",
             "y": "year"
         },
         "addCommentPlaceholder": "Write a comment...",
-        "postComment": "Send",
+        "postComment": "POST",
         "dropDownOptions": {
             "edit": "Edit",
             "delete": "Delete",
@@ -51,7 +51,7 @@
             "private": "Private",
             "public": "Public"
         },
-        "post": "Post",
+        "post": "POST",
         "inputPlaceholder": "Write something...",
         "addLocation": "Add your current location"
     },

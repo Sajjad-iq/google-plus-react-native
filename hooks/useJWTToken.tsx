@@ -8,7 +8,7 @@ export default function useJWTToken() {
         if (JWTtoken) {
             return JWTtoken
         } else {
-            router.push("/login"); // Redirect to login if no user is found
+            router.push("/"); // Redirect to login if no user is found
             return null
         }
     };

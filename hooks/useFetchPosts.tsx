@@ -24,7 +24,7 @@ export const useFetchPosts = (url: string) => {
         const JWTToken = await getJWTToken()
         try {
             const response = await fetch(url, {
-                headers: { Authorization: `Bearer ${JWTToken}` }
+                headers: { Authorization: `Bearer ${JWTToken} ` }
             });
             if (!response.ok) {
                 networkAlert();

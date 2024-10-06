@@ -22,3 +22,9 @@ export interface GoogleUserInfo {
     picture: string;
     locale: string;
 }
+
+
+export interface mentionedUserType {
+    id: string;
+    name: string;
+}

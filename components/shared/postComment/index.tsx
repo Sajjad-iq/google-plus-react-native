@@ -7,9 +7,11 @@ import { PostCommentType } from '@/types/comment';
 import useTimeAgo from '@/hooks/useTimeAgo';
 import * as DropdownMenu from 'zeego/dropdown-menu';
 import { useGlobalData } from '@/context/GlobalContext';
+import { mentionedUserType } from '@/types/user';
 
 interface Props extends PostCommentType {
     deleteComment: (id: string) => Promise<void>;
+    setReplay: (user: mentionedUserType) => void
 }
 export function PostComment(props: Props) {
 
@@ -20,15 +22,26 @@ export function PostComment(props: Props) {
 
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
-                <View style={[styles.wrapper, { flexDirection: "row" }]}>
-                    <Avatar size='Small' src={props.author_avatar} />
-                    <View style={[styles.innerWrapper, { flexDirection: "row" }]} >
-                        <View style={{ gap: 5, flex: 1 }}>
+                <View style={[styles.wrapper]}>
+                    <View style={{ paddingLeft: 20, marginRight: 10 }}>
+                        <Avatar size='Small' src={props.author_avatar} />
+                    </View>
+
+                    <View style={[styles.contentWrapper]}>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", flex: 1, paddingRight: 20 }}>
                             <Text style={[styles.arthur, { textAlign: 'left' }]}>{props.author_name}</Text>
-                            <Text>{props.content}</Text>
+                            <Text style={{ flex: 0, color: "gray" }}>{timeAgo(props.created_at)}</Text>
                         </View>
 
-                        <Text style={{ flex: 0, color: Colors.grayX2 }}>{timeAgo(props.created_at)}</Text>
+                        <Text style={[styles.innerWrapper]} >
+                            {
+                                props.mentioned_users?.length > 0 ?
+                                    <Text style={{ color: Colors.bluePrimary, flex: 0 }}>{`+${props.mentioned_users[0]} `}</Text>
+                                    :
+                                    null
+                            }
+                            <Text>{props.content}</Text>
+                        </Text>
                     </View>
                 </View>
             </DropdownMenu.Trigger>
@@ -52,7 +65,10 @@ export function PostComment(props: Props) {
                     </>
                 ) : (
                     <>
-                        <DropdownMenu.Item key='replay' onSelect={() => ""}>
+                        <DropdownMenu.Item key='replay' onSelect={() => props.setReplay({
+                            id: props.id,
+                            name: props.author_name
+                        })}>
                             <DropdownMenu.ItemTitle>
                                 {t('post.dropDownOptions.replay')}
                             </DropdownMenu.ItemTitle>
@@ -75,16 +91,22 @@ const styles = StyleSheet.create({
     wrapper: {
         flexDirection: 'row',
         alignItems: 'flex-start',
-        gap: 15,
         backgroundColor: Colors.whitePrimary,
-        paddingHorizontal: 20
+        gap: 5
     },
     innerWrapper: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
         flex: 1,
-        gap: 15,
-        borderBottomColor: Colors.grayX3,
+        gap: 5,
+        marginRight: 20,
+    },
+    contentWrapper: {
+        flexDirection: "column",
+        gap: 5,
+        flex: 1,
+        borderBottomColor: Colors.grayPrimary,
+        borderBottomWidth: 1,
+        paddingBottom: 17
     },
     arthur: {
         fontWeight: 'bold',

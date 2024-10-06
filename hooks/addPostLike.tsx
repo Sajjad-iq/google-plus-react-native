@@ -28,7 +28,7 @@ export const useAddLike = (postId: string) => {
             const JWTToken = await getJWTToken()
 
             // API request to toggle the like status for a post
-            const response = await fetch(`${backend}/posts/${postId}/like `, {
+            const response = await fetch(`${backend}/posts/${postId}/like  `, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const useAddLike = (postId: string) => {
             if (response.status == 401) {
                 console.error("Backend JWT token invalid");
                 ExpiredSession()
-                router.push("/login"); // Redirect to login if no user is found
+                router.push("/"); // Redirect to login if no user is found
                 return null;
             }
 

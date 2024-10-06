@@ -12,25 +12,33 @@ interface Props {
     addComment: () => void
     isAddingComment: boolean
     commentContent: string
+    unsetReplay: () => void
 }
 export function AddComment(props: Props) {
+
     const [isFocused, setIsFocused] = useState(false);
     const { t } = useTranslation();
-    const { userInfo } = useGlobalData()
-
+    const { userInfo, mentionedUser } = useGlobalData()
+    const handleKeyPress = (e: any) => {
+        if (e.nativeEvent.key === 'Backspace' && props.commentContent === '') {
+            props.unsetReplay();
+        }
+    }
 
     return (
         <View style={styles.wrapper}>
             <View style={[styles.inputRow, { flexDirection: "row" }]}>
                 <Avatar src={userInfo?.profile_avatar} size={'Small'} />
+                {mentionedUser ? <Text style={{ color: Colors.bluePrimary, flex: 0, marginHorizontal: 5 }}>{`+${mentionedUser.name}`}</Text> : null}
                 <TextInput
-                    style={[styles.textArea]}
-                    placeholder={t("post.addCommentPlaceholder")}
+                    style={[styles.textArea, { paddingHorizontal: mentionedUser ? 5 : 15 }]}
+                    placeholder={mentionedUser ? "" : t("post.addCommentPlaceholder")}
                     placeholderTextColor={Colors.grayX2}
                     multiline={true}
                     onChange={(e) => props.setCommentContent(e.nativeEvent.text)}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
+                    onKeyPress={handleKeyPress}  // Added onKeyPress to detect backspace
                     value={props.commentContent}
                 />
             </View>
@@ -80,11 +88,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.whitePrimary,
         borderRadius: 5,
-        marginLeft: 15,
         color: Colors.text,
         fontSize: 16,
         paddingVertical: 8,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
     },
     actionsRow: {
         flexDirection: 'row',

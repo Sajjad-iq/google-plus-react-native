@@ -49,7 +49,7 @@ export function useCreatePost(props: Props) {
         const JWTToken = await getJWTToken()
 
         try {
-            const response = await fetch(`${backend}/create-post `, {
+            const response = await fetch(`${backend}/create-post  `, {
                 method: "POST",
                 headers: {
                     "Accept": 'application/json',

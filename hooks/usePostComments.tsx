@@ -4,6 +4,8 @@ import Alerts from '@/components/others/alerts';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
 import { PostCommentType } from '@/types/comment';
+import { useGlobalData } from '@/context/GlobalContext';
+import { mentionedUserType } from '@/types/user';
 
 interface FetchResponse {
     stop: boolean;
@@ -19,6 +21,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
     const [isFetchingComments, setIsFetchingComments] = useState<boolean>(false); // Store loading state for fetching comments
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken(); // Hook to get the JWT token
+    const { setMentionedUser, mentionedUser } = useGlobalData()
 
     // Function to add a comment
     const addComment = async () => {
@@ -32,7 +35,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
             }
 
             // API request to add a new comment for a post
-            const response = await fetch(`${backend}/posts/${postId}/comment `, {
+            const response = await fetch(`${backend}/posts/${postId}/comment  `, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,12 +43,13 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
                 },
                 body: JSON.stringify({
                     content: commentContent,
+                    mentioned_users: [mentionedUser]
                 }),
             });
 
             if (response.status === 401) {
                 ExpiredSession();
-                router.push("/login"); // Redirect to login if no user is found
+                router.push("/"); // Redirect to login if no user is found
                 return;
             }
 
@@ -58,6 +62,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
             setCommentContent(""); // Clear the input field
             reloadComments()
             reloadPost()
+            unsetReplay()
         } catch (err: any) {
             console.log(err.message); // Log the error
             errorAlert(); // Trigger error alert
@@ -73,7 +78,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
             const JWTToken = await getJWTToken(); // Retrieve JWT token for authorization
 
             // API request to fetch comments for the post
-            const response = await fetch(`${backend}/posts/comment/${postId}?limit=${limit} `, {
+            const response = await fetch(`${backend}/posts/comment/${postId}?limit=${limit}  `, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${JWTToken}`,
@@ -82,7 +87,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
 
             if (response.status === 401) {
                 ExpiredSession();
-                router.push("/login"); // Redirect to login if no user is found
+                router.push("/"); // Redirect to login if no user is found
                 return;
             }
 
@@ -108,7 +113,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         try {
             const JWTToken = await getJWTToken(); // Get the JWT token
 
-            const response = await fetch(`${backend}/posts/${commentId}/comment`, {
+            const response = await fetch(`${backend}/posts/${commentId}/comment  `, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${JWTToken}`,
@@ -132,6 +137,14 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         fetchComments(); // Call fetchComments to reload
     };
 
+    const setReplay = (user: mentionedUserType) => {
+        setMentionedUser(user)
+    }
+
+
+    const unsetReplay = () => {
+        setMentionedUser(null)
+    }
     return {
         comments,
         setCommentContent,
@@ -141,6 +154,6 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         isAddingComments,
         reloadComments, // Expose the reload function
         fetchComments,
-        stop, setStop, deleteComment
+        stop, setStop, deleteComment, setReplay, unsetReplay
     };
 };

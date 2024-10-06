@@ -57,7 +57,7 @@ export default function useUserCredentials() {
                     router.push("/(drawer)/");
                 }
             } else {
-                router.push("/login");
+                router.push("/");
             }
         } catch (error) {
             console.error("Error checking stored credentials", error);
@@ -73,12 +73,12 @@ export default function useUserCredentials() {
                 const parsedUser = JSON.parse(user); // Parse the string to a JavaScript object
                 return parsedUser
             } catch (error) {
-                router.push("/login"); // Redirect to login if parsing fails
+                router.push("/"); // Redirect to login if parsing fails
                 return null
             }
 
         } else {
-            router.push("/login"); // Redirect to login if no user is found
+            router.push("/"); // Redirect to login if no user is found
             return null
         }
     };
@@ -95,7 +95,7 @@ export default function useUserCredentials() {
             if (userData.status == 401) {
                 console.error("Google JWT token invalid");
                 ExpiredSession()
-                router.push("/login"); // Redirect to login if no user is found
+                router.push("/"); // Redirect to login if no user is found
                 return null;
             }
 
@@ -138,7 +138,7 @@ export default function useUserCredentials() {
 
         const storedToken = await AsyncStorage.getItem("@token");
         try {
-            const userData = await fetch(`${backend}/login `, {
+            const userData = await fetch(`${backend}/login  `, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -155,7 +155,7 @@ export default function useUserCredentials() {
             if (userData.status == 401) {
                 console.error("Backend JWT token invalid");
                 ExpiredSession()
-                router.push("/login"); // Redirect to login if no user is found
+                router.push("/"); // Redirect to login if no user is found
                 return null;
             }
 

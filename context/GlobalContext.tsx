@@ -1,7 +1,7 @@
 import { Colors } from '@/constants/Colors';
 import getCurrentLang from '@/hooks/getCurrentLang';
 import { PostType } from '@/types/post';
-import { UserInfo } from '@/types/user';
+import { mentionedUserType, UserInfo } from '@/types/user';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface HeaderContextType {
@@ -14,6 +14,8 @@ interface HeaderContextType {
     lang: string
     selectedPost: PostType
     setSelectedPost: (post: any) => void
+    mentionedUser: mentionedUserType | null
+    setMentionedUser: (user: any) => void
 
 }
 
@@ -24,6 +26,7 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
     const [headerColor, setHeaderColor] = useState<string>(Colors.redPrimary);
     const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
     const [selectedPost, setSelectedPost] = useState<PostType>({} as PostType);
+    const [mentionedUser, setMentionedUser] = useState<mentionedUserType | null>(null);
     const lang = getCurrentLang();
 
 
@@ -34,8 +37,8 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
                 headerColor, setHeaderColor,
                 userInfo, setUserInfo,
                 lang,
-                selectedPost, setSelectedPost
-
+                selectedPost, setSelectedPost,
+                mentionedUser, setMentionedUser
             }
         }>
             {children}
