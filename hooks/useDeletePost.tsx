@@ -1,5 +1,4 @@
 import Alerts from '@/components/others/alerts';
-import { backend } from '@env';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
 import { PostType } from '@/types/post';
@@ -11,6 +10,7 @@ export const useDeletePost = (post: PostType, user: UserInfo) => {
 
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken()
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     const deletePost = async () => {
         try {

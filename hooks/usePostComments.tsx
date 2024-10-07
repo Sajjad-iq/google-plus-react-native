@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { backend } from '@env';
+import { useState } from 'react';
 import Alerts from '@/components/others/alerts';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
@@ -22,6 +21,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken(); // Hook to get the JWT token
     const { setMentionedUser, mentionedUser } = useGlobalData()
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     // Function to add a comment
     const addComment = async () => {

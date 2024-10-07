@@ -14,9 +14,9 @@ export interface PushNotificationState {
 export const usePushNotifications = (): PushNotificationState => {
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
-            shouldPlaySound: false,
+            shouldPlaySound: true,
             shouldShowAlert: true,
-            shouldSetBadge: false,
+            shouldSetBadge: true,
         }),
     });
 

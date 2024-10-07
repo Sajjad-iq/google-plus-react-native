@@ -1,6 +1,5 @@
 import Alerts from '@/components/others/alerts';
 import { PostType } from '@/types/post';
-import { backend } from '@env';
 import { useState } from 'react';
 import useJWTToken from './useJWTToken';
 
@@ -13,6 +12,8 @@ export const useFetchPostByID = (postId: string) => {
     const [error, setError] = useState<string | null>(null);
     const { networkAlert, errorAlert } = Alerts();
     const { getJWTToken } = useJWTToken()
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
+
     const fetchPost = async () => {
         const JWTToken = await getJWTToken()
 

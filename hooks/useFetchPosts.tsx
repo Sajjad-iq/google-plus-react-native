@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Alerts from '@/components/others/alerts';
 import { PostType } from '@/types/post';
 import useJWTToken from './useJWTToken';

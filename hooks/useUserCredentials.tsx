@@ -5,15 +5,19 @@ import { GoogleUserInfo, UserInfo } from '@/types/user';
 import { useGlobalData } from '@/context/GlobalContext';
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import { androidClientId, iosClientId, webClientId, backend } from '@env';
 import Alerts from '@/components/others/alerts';
 
 WebBrowser.maybeCompleteAuthSession();
+
 
 export default function useUserCredentials() {
     const [token, setToken] = useState<string | null>(null);
     const { setUserInfo, userInfo } = useGlobalData();
     const { networkAlert, errorAlert, ExpiredSession } = Alerts()
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
+    const androidClientId = process.env.EXPO_PUBLIC_ANDRIOD_CLIENT_ID;
+    const iosClientId = process.env.EXPO_PUBLIC_IOS_CLIENT_ID;
+    const webClientId = process.env.EXPO_PUBLIC_WEB_CLIENT_ID;
 
     // Google Auth request
     const [request, response, promptAsync] = Google.useAuthRequest({

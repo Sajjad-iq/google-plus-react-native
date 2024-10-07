@@ -10,7 +10,6 @@ import { Colors } from '@/constants/Colors';
 import { useTranslation } from 'react-i18next';
 import { PostType } from '@/types/post';
 import { useFetchPosts } from '@/hooks/useFetchPosts';
-import { backend } from '@env';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 
 export default function HomeScreen() {
@@ -18,10 +17,11 @@ export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const { t } = useTranslation();
     const [limit, setLimit] = useState(2);
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
     const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit} `); // Initial limit set to 
-    const { expoPushToken, notification } = usePushNotifications();
-    const data = JSON.stringify(notification, undefined, 2);
+    const { expoPushToken } = usePushNotifications();
 
+    console.log(expoPushToken)
     const showHideCreatePost = () => {
         setModalVisible(!modalVisible);
     };
@@ -35,7 +35,6 @@ export default function HomeScreen() {
     return (
         <View style={{ flex: 1 }}>
             <Text>Token: {expoPushToken?.data ?? ""}</Text>
-            <Text>Notification: {data}</Text>
             <Pencil onPress={showHideCreatePost} />
             <CreatePost postsReloadCallback={reload} hideCallback={showHideCreatePost} isActive={modalVisible} />
             {loading && posts.length === 0 ? (

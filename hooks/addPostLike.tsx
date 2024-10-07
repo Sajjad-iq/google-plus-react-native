@@ -1,5 +1,4 @@
 import Alerts from '@/components/others/alerts';
-import { backend } from '@env';
 import { useState } from 'react';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
@@ -20,6 +19,7 @@ export const useAddLike = (postId: string) => {
     const [touched, setTouched] = useState<boolean>(false);
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken()
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     const toggleLike = async () => {
         try {

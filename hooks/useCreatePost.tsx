@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { backend } from '@env';
 import { useGlobalData } from "@/context/GlobalContext";
 import Alerts from "@/components/others/alerts";
 import useJWTToken from "./useJWTToken";
@@ -17,6 +16,7 @@ export function useCreatePost(props: Props) {
     const { userInfo } = useGlobalData();
     const { networkAlert, errorAlert, emptyPostAlert } = Alerts()
     const { getJWTToken } = useJWTToken()
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     const handleInputChange = (text: string) => {
         setPostBody(text);
