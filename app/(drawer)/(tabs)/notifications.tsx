@@ -3,26 +3,41 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useHeader } from '@/context/GlobalContext';
 import { Colors } from '@/constants/Colors';
 import { NotificationCard } from '@/components/others/NotificationCard';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
+import { useNotifications } from '@/hooks/useNotifications';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import { NotificationType } from '@/types/notification';
 
 export default function NotificationsScreen() {
-    const { setHeaderTitle } = useHeader();
+    const { setHeaderTitle, userInfo } = useHeader();
     const { t } = useTranslation();
+    const { notifications, loading, fetchNotifications, getActorNames } = useNotifications(userInfo.id);
 
     useFocusEffect(
         React.useCallback(() => {
             setHeaderTitle(t("Notifications.title"));
+            fetchNotifications()
         }, [setHeaderTitle])
     );
 
     return (
-        <ScrollView contentContainerStyle={{ gap: 1 }} style={{ flex: 1 }}>
-            <NotificationCard isRead numberOfUsers={1} />
-            <NotificationCard isRead numberOfUsers={3} />
-            <NotificationCard numberOfUsers={2} />
-            <NotificationCard isRead numberOfUsers={4} />
-            <NotificationCard numberOfUsers={2} />
-        </ScrollView>
+        <View style={{ flex: 1 }}>
+            {loading && notifications.length === 0 ? (
+                <ActivityIndicator size="large" color={Colors.redPrimary} style={{ marginVertical: 20 }} />
+            ) : (
+                <FlatList
+                    data={notifications}
+                    keyExtractor={(notification: NotificationType) => notification.id}
+                    renderItem={({ item }: { item: NotificationType }) => (
+                        <NotificationCard getActorNames={getActorNames} {...item} />
+                    )}
+                    contentContainerStyle={{ gap: 2, backgroundColor: Colors.grayPrimary }}
+                    onEndReachedThreshold={0.2} // Load more when the list is halfway through
+                    ListFooterComponent={() => loading ? (
+                        <ActivityIndicator size="large" color={Colors.redPrimary} style={{ marginVertical: 20 }} />
+                    ) : null}
+                />
+            )}
+        </View>
     );
 }

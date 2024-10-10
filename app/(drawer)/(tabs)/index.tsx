@@ -34,7 +34,6 @@ export default function HomeScreen() {
 
     return (
         <View style={{ flex: 1 }}>
-            <Text>Token: {expoPushToken?.data ?? ""}</Text>
             <Pencil onPress={showHideCreatePost} />
             <CreatePost postsReloadCallback={reload} hideCallback={showHideCreatePost} isActive={modalVisible} />
             {loading && posts.length === 0 ? (
