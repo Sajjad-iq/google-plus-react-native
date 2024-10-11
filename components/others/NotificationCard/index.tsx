@@ -16,14 +16,14 @@ export function NotificationCard(props: Props) {
             alignItems: 'center',
             paddingVertical: 10,
             paddingHorizontal: 10,
-            backgroundColor: !props.isRead ? Colors.whitePrimary : 'transparent',
-            opacity: props.isRead ? 1 : 0.7,
+            backgroundColor: !props.is_read ? Colors.whitePrimary : 'transparent',
+            opacity: !props.is_read ? 1 : 0.7,
             gap: 15
         }}>
             {props.actors.length === 1 ? <Avatar size={'Medium'} src={props.actors[0].avatar} /> : props.actors.length === 2 ? <TwoUsers actors={props.actors} /> : props.actors.length === 3 ? <ThreeUsers actors={props.actors} /> : props.actors.length >= 4 ? <FourUsers actors={props.actors} /> : <Avatar size={'Medium'} />}
-            <View style={{ flex: 1, gap: 8 }}>
-                <Text style={{ fontWeight: '500', fontSize: 14, textAlign: 'left' }}>{props.getActorNames(props.actors)}</Text>
-                <Text style={{ fontSize: 14, textAlign: 'left', fontWeight: '600' }}>أشار إليك</Text>
+            <View style={{ flex: 1, gap: 1 }}>
+                <Text style={{ fontWeight: '600', fontSize: 14, textAlign: 'left' }}>{props.getActorNames(props.actors)}</Text>
+                <Text style={{ fontSize: 14, textAlign: 'left', fontWeight: '500', color: "gray" }}>{props.notification_content} </Text>
             </View>
         </View>
     );

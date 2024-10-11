@@ -6,11 +6,12 @@ export interface Actor {
 
 export interface NotificationType {
     id: string;
-    userID: string;
+    user_id: string;
     actors: Actor[];
-    actionType: string;
-    referenceID: string;
-    isRead: boolean;
-    createdAt: string;
-    updatedAt: string;
+    action_type: string[];
+    reference_id: string;
+    notification_content: string;
+    is_read: boolean;
+    created_at: Date;
+    updated_at: Date;
 }

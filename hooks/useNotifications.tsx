@@ -2,6 +2,7 @@ import Alerts from '@/components/others/alerts';
 import { Actor, NotificationType } from '@/types/notification'; // Ensure you have a Notification type defined
 import { useState } from 'react';
 import useJWTToken from './useJWTToken';
+import { useGlobalData } from '@/context/GlobalContext';
 
 // Define the hook function
 export const useNotifications = (userID: string, limit: number = 10) => {
@@ -9,6 +10,7 @@ export const useNotifications = (userID: string, limit: number = 10) => {
     const [loading, setLoading] = useState<boolean>(false);
     const { networkAlert, errorAlert } = Alerts();
     const { getJWTToken } = useJWTToken();
+    const { lang } = useGlobalData()
     const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     const fetchNotifications = async () => {
@@ -18,7 +20,10 @@ export const useNotifications = (userID: string, limit: number = 10) => {
             setLoading(true);
             // Make an API request to fetch notifications
             const response = await fetch(`${backend}/notifications?limit=${limit}`, {
-                headers: { Authorization: `Bearer ${JWTToken}` },
+                headers: {
+                    Authorization: `Bearer ${JWTToken}`,
+                    'Accept-Language': lang,  // Pass the lang variable in the header
+                },
             });
 
             if (!response.ok) {

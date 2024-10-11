@@ -4,16 +4,25 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View } from 'react-native'; // Import View for styling
-import { useHeader } from '@/context/GlobalContext';
 import { useTranslation } from 'react-i18next';
+import { Colors } from '@/constants/Colors';
 
 export default function TabLayout() {
 
-  const { headerColor } = useHeader();
   const { t } = useTranslation();
 
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: headerColor, headerShown: false }}>
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: Colors.whitePrimary,
+      headerShown: false,
+      tabBarStyle: {
+        backgroundColor: '#121111', // Set your desired background color here
+        height: 60,
+        paddingBottom: 7,
+        borderTopWidth: 0
+      },
+    }}
+    >
       <Tabs.Screen
         name="index"
         options={{

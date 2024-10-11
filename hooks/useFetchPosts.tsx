@@ -15,7 +15,7 @@ export const useFetchPosts = (url: string) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [reloadTrigger, setReloadTrigger] = useState<boolean>(false);
-    const { networkAlert, errorAlert, NoPostsAlert } = Alerts();
+    const { networkAlert, errorAlert } = Alerts();
     const { getJWTToken } = useJWTToken()
 
     const fetchPosts = async () => {
