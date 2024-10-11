@@ -19,9 +19,6 @@ export default function HomeScreen() {
     const [limit, setLimit] = useState(2);
     const backend = process.env.EXPO_PUBLIC_BACKEND;
     const { posts, loading, reload, stop } = useFetchPosts(`${backend}/posts?limit=${limit} `); // Initial limit set to 
-    const { expoPushToken } = usePushNotifications();
-
-    console.log(expoPushToken)
     const showHideCreatePost = () => {
         setModalVisible(!modalVisible);
     };

@@ -1,8 +1,17 @@
 import { StyleSheet, View, Button, Image } from "react-native";
 import useUserCredentials from "@/hooks/useUserCredentials";
+import { useEffect } from "react";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 export default function LoginScreen() {
-    const { request, promptAsync } = useUserCredentials()
+    const { request, promptAsync, token } = useUserCredentials()
+    const { expoPushToken, updateBackendUserPushToken } = usePushNotifications();
+
+    useEffect(() => {
+        if (expoPushToken) {
+            updateBackendUserPushToken(expoPushToken)
+        }
+    }, [])
 
     return (
         <View style={styles.container}>

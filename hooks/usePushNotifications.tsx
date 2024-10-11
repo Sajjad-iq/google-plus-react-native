@@ -5,13 +5,23 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 
 import { Platform } from "react-native";
+import { ExpoPushToken } from "expo-notifications";
+import useJWTToken from "./useJWTToken";
+import { useGlobalData } from "@/context/GlobalContext";
+import { router } from "expo-router";
 
 export interface PushNotificationState {
     expoPushToken?: Notifications.ExpoPushToken;
     notification?: Notifications.Notification;
+    updateBackendUserPushToken: (token: ExpoPushToken) => void;
 }
 
 export const usePushNotifications = (): PushNotificationState => {
+
+    const backend = process.env.EXPO_PUBLIC_BACKEND;
+    const { getJWTToken } = useJWTToken(); // Hook to get the JWT token
+    const { setSelectedPost, selectedPost } = useGlobalData()
+
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
             shouldPlaySound: true,
@@ -78,7 +88,7 @@ export const usePushNotifications = (): PushNotificationState => {
 
         responseListener.current =
             Notifications.addNotificationResponseReceivedListener((response) => {
-                console.log(response);
+                goToTheDestination(response)
             });
 
         return () => {
@@ -90,8 +100,47 @@ export const usePushNotifications = (): PushNotificationState => {
         };
     }, []);
 
+
+
+    const updateBackendUserPushToken = async (expoPushToken: ExpoPushToken) => {
+
+        const JWTToken = await getJWTToken(); // Retrieve JWT token for authorization
+
+        try {
+            const response = await fetch(backend + `/push-token`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${JWTToken}`,
+                },
+                body: JSON.stringify({
+                    push_token: expoPushToken.data,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.error || 'Failed to update push token');
+            }
+
+            console.log('Push token updated successfully!');
+        } catch (error: any) {
+            console.error('Error updating push token:', error.message);
+        }
+    };
+
+
+    const goToTheDestination = async (response: Notifications.NotificationResponse) => {
+        let post = { ...selectedPost }
+        const id = response.notification.request.content.data.reference_id;
+        post.id = id
+        // Check what data was passed (e.g., postId)
+        setSelectedPost(post)
+        router.push("/(stack)/postView")
+    };
     return {
         expoPushToken,
         notification,
+        updateBackendUserPushToken
     };
 };

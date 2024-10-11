@@ -20,7 +20,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
     const [isFetchingComments, setIsFetchingComments] = useState<boolean>(false); // Store loading state for fetching comments
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken(); // Hook to get the JWT token
-    const { setMentionedUser, mentionedUser } = useGlobalData()
+    const { setMentionedUser, mentionedUser, lang } = useGlobalData()
     const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     // Function to add a comment
@@ -40,6 +40,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${JWTToken}`,
+                    'Accept-Language': lang,  // Pass the lang variable in the header
                 },
                 body: JSON.stringify({
                     content: commentContent,

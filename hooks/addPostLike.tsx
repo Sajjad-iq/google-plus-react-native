@@ -2,6 +2,7 @@ import Alerts from '@/components/others/alerts';
 import { useState } from 'react';
 import useJWTToken from './useJWTToken';
 import { router } from 'expo-router';
+import { useGlobalData } from '@/context/GlobalContext';
 
 // Define the interface for the post response
 interface PostResponse {
@@ -20,6 +21,7 @@ export const useAddLike = (postId: string) => {
     const { networkAlert, errorAlert, ExpiredSession } = Alerts();
     const { getJWTToken } = useJWTToken()
     const backend = process.env.EXPO_PUBLIC_BACKEND;
+    const { lang } = useGlobalData()
 
     const toggleLike = async () => {
         try {
@@ -32,7 +34,8 @@ export const useAddLike = (postId: string) => {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${JWTToken}`
+                    "Authorization": `Bearer ${JWTToken}`,
+                    'Accept-Language': lang,  // Pass the lang variable in the header
                 },
             });
 

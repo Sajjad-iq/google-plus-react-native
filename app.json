@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "glimmer plus",
+    "name": "Glimmer Plus",
     "slug": "glimmer_plus",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,7 +20,7 @@
       "package": "com.glimmer.plus",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       }
     },

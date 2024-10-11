@@ -9,7 +9,7 @@ import { DrawerContent } from "@/components/others/DrawerContent";
 
 export default function DrawerLayout() {
   const navigation = useNavigation();
-  const { headerTitle, headerColor } = useHeader();
+  const { headerTitle } = useHeader();
 
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'transparent' }}>

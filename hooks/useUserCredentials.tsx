@@ -183,6 +183,7 @@ export default function useUserCredentials() {
         request,
         promptAsync,
         checkStoredCredentials,
-        userInfo
+        userInfo,
+        token
     };
 }
