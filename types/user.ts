@@ -25,6 +25,6 @@ export interface GoogleUserInfo {
 
 
 export interface mentionedUserType {
-    id: string;
-    name: string;
+    user_id: string;
+    user_name: string;
 }

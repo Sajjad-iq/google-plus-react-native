@@ -29,7 +29,7 @@ export function AddComment(props: Props) {
         <View style={styles.wrapper}>
             <View style={[styles.inputRow, { flexDirection: "row" }]}>
                 <Avatar src={userInfo?.profile_avatar} size={'Small'} />
-                {mentionedUser ? <Text style={{ color: Colors.bluePrimary, flex: 0, marginHorizontal: 5 }}>{`+${mentionedUser.name}`}</Text> : null}
+                {mentionedUser ? <Text style={{ color: Colors.bluePrimary, flex: 0, marginHorizontal: 5 }}>{`+${mentionedUser.user_name}`}</Text> : null}
                 <TextInput
                     style={[styles.textArea, { paddingHorizontal: mentionedUser ? 5 : 15 }]}
                     placeholder={mentionedUser ? "" : t("post.addCommentPlaceholder")}

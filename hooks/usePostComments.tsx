@@ -44,7 +44,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
                 },
                 body: JSON.stringify({
                     content: commentContent,
-                    mentioned_users: [mentionedUser]
+                    mentioned_users: [mentionedUser?.user_id !== "" ? mentionedUser : null],
                 }),
             });
 
@@ -70,7 +70,7 @@ export const usePostComments = (postId: string, limit: number, reloadPost: () =>
         } finally {
             setIsAddingComments(false); // Stop loading state
         }
-    };
+    }
 
     // Function to fetch comments
     const fetchComments = async () => {

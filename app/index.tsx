@@ -4,14 +4,15 @@ import { useEffect } from "react";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 export default function LoginScreen() {
-    const { request, promptAsync, token } = useUserCredentials()
+    const { request, promptAsync } = useUserCredentials()
     const { expoPushToken, updateBackendUserPushToken } = usePushNotifications();
 
     useEffect(() => {
+        console.log(expoPushToken)
         if (expoPushToken) {
             updateBackendUserPushToken(expoPushToken)
         }
-    }, [])
+    }, [expoPushToken])
 
     return (
         <View style={styles.container}>

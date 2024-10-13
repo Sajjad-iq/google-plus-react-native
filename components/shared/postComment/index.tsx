@@ -35,8 +35,8 @@ export function PostComment(props: Props) {
 
                         <Text style={[styles.innerWrapper]} >
                             {
-                                props.mentioned_users?.length > 0 ?
-                                    <Text style={{ color: Colors.bluePrimary, flex: 0 }}>{`+${props.mentioned_users[0]} `}</Text>
+                                props.mentioned_users ?
+                                    <Text style={{ color: Colors.bluePrimary, flex: 0 }}> {props.mentioned_users[0].user_id !== "" ? `+${props.mentioned_users[0].user_name} ` : ""}</Text>
                                     :
                                     null
                             }
@@ -66,8 +66,8 @@ export function PostComment(props: Props) {
                 ) : (
                     <>
                         <DropdownMenu.Item key='replay' onSelect={() => props.setReplay({
-                            id: props.id,
-                            name: props.author_name
+                            user_id: props.user_id,
+                            user_name: props.author_name
                         })}>
                             <DropdownMenu.ItemTitle>
                                 {t('post.dropDownOptions.replay')}
