@@ -9,9 +9,9 @@ import { ActivityIndicator, FlatList, View } from 'react-native';
 import { NotificationType } from '@/types/notification';
 
 export default function NotificationsScreen() {
-    const { setHeaderTitle, userInfo } = useHeader();
+    const { setHeaderTitle } = useHeader();
     const { t } = useTranslation();
-    const { notifications, loading, fetchNotifications, getActorNames } = useNotifications(userInfo.id);
+    const { notifications, loading, fetchNotifications, getActorNames, readTheNotification } = useNotifications();
 
     useFocusEffect(
         React.useCallback(() => {
@@ -29,7 +29,7 @@ export default function NotificationsScreen() {
                     data={notifications}
                     keyExtractor={(notification: NotificationType) => notification.id}
                     renderItem={({ item }: { item: NotificationType }) => (
-                        <NotificationCard getActorNames={getActorNames} {...item} />
+                        <NotificationCard onPress={() => readTheNotification(item)} getActorNames={getActorNames} {...item} />
                     )}
                     contentContainerStyle={{ gap: 2, backgroundColor: Colors.grayPrimary }}
                     onEndReachedThreshold={0.2} // Load more when the list is halfway through

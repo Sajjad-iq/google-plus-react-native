@@ -26,7 +26,7 @@ export default function PostHeader(props: Props) {
                 </View>
             </View>
 
-            <Text style={styles.dateLabel}> {timeAgo(props.updated_at)}</Text>
+            <Text style={styles.dateLabel}> {timeAgo(props.created_at)}</Text>
         </View>
     )
 }

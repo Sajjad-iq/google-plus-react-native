@@ -20,7 +20,7 @@ export const usePushNotifications = (): PushNotificationState => {
 
     const backend = process.env.EXPO_PUBLIC_BACKEND;
     const { getJWTToken } = useJWTToken(); // Hook to get the JWT token
-    const { setSelectedPost, selectedPost } = useGlobalData()
+    const { setSelectedPost, selectedPost, lang } = useGlobalData()
 
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
@@ -115,6 +115,7 @@ export const usePushNotifications = (): PushNotificationState => {
                 },
                 body: JSON.stringify({
                     push_token: expoPushToken.data,
+                    user_lang: lang
                 }),
             });
 

@@ -3,14 +3,15 @@ import { Actor, NotificationType } from '@/types/notification'; // Ensure you ha
 import { useState } from 'react';
 import useJWTToken from './useJWTToken';
 import { useGlobalData } from '@/context/GlobalContext';
+import { router } from 'expo-router';
 
 // Define the hook function
-export const useNotifications = (userID: string, limit: number = 10) => {
+export const useNotifications = (limit: number = 10) => {
     const [notifications, setNotifications] = useState<NotificationType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { networkAlert, errorAlert } = Alerts();
     const { getJWTToken } = useJWTToken();
-    const { lang } = useGlobalData()
+    const { lang, selectedPost, setSelectedPost } = useGlobalData()
     const backend = process.env.EXPO_PUBLIC_BACKEND;
 
     const fetchNotifications = async () => {
@@ -42,11 +43,48 @@ export const useNotifications = (userID: string, limit: number = 10) => {
     };
 
 
+    const markNotificationsAsRead = async (id: string) => {
+        const JWTToken = await getJWTToken();
+
+        try {
+            // Make an API request to fetch notifications
+            const response = await fetch(`${backend}/notifications/read/${id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${JWTToken}`,
+                },
+            });
+
+            if (!response.ok) {
+                networkAlert();
+                throw new Error(`Error fetching notifications: ${response.status}`);
+            }
+
+        } catch (err: any) {
+            console.log(err.message);
+            errorAlert();
+        } finally {
+            setLoading(false);
+        }
+    };
+
     // New function to extract actor names
     const getActorNames = (actors: Actor[]): string => {
         return actors.map(actor => actor.name).join(', ');
     };
 
+    const readTheNotification = async (notification: NotificationType) => {
+        let post = { ...selectedPost }
+        const id = notification.reference_id;
+        post.id = id
+        // Check what data was passed (e.g., postId)
+        setSelectedPost(post)
+        markNotificationsAsRead(notification.id)
+        router.push("/(stack)/postView")
+    };
 
-    return { notifications, loading, fetchNotifications, getActorNames };
+
+
+
+    return { notifications, loading, fetchNotifications, getActorNames, readTheNotification };
 };
