@@ -16,7 +16,8 @@ interface HeaderContextType {
     setSelectedPost: (post: any) => void
     mentionedUser: mentionedUserType | null
     setMentionedUser: (user: any) => void
-
+    selectedUser: UserInfo
+    setSelectedUser: (data: UserInfo) => void
 }
 
 const GlobalContext = createContext<HeaderContextType | undefined>(undefined);
@@ -26,6 +27,7 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
     const [headerColor, setHeaderColor] = useState<string>(Colors.redPrimary);
     const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
     const [selectedPost, setSelectedPost] = useState<PostType>({} as PostType);
+    const [selectedUser, setSelectedUser] = useState<UserInfo>({} as UserInfo);
     const [mentionedUser, setMentionedUser] = useState<mentionedUserType | null>(null);
     const lang = getCurrentLang();
 
@@ -38,7 +40,8 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
                 userInfo, setUserInfo,
                 lang,
                 selectedPost, setSelectedPost,
-                mentionedUser, setMentionedUser
+                mentionedUser, setMentionedUser,
+                selectedUser, setSelectedUser
             }
         }>
             {children}

@@ -85,6 +85,32 @@ export default function ScreensLayout() {
           },
         }}
       />
+
+      <Stack.Screen
+        name="profilePreview"
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons name="arrow-left" size={28} color={Colors.whitePrimary} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <View style={[styles.headerTitleContainer, { flexDirection: lang == 'ar' ? "row-reverse" : "row" }]}>
+              <Text style={styles.headerTitle}>{t("profile.about")}</Text>
+              <TouchableOpacity onPress={() => { }}>
+                <MaterialCommunityIcons name="dots-vertical" size={28} color={Colors.whitePrimary} />
+              </TouchableOpacity>
+            </View>
+
+          ),
+          headerTransparent: true, // Allows the content to overlap the header
+          headerStyle: {
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+          },
+        }}
+      />
       <Stack.Screen name="settings" options={{
         headerShown: true,
         headerLeft: () => (

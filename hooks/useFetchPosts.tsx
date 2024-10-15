@@ -13,25 +13,29 @@ export const useFetchPosts = (url: string) => {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [stop, setStop] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
     const [reloadTrigger, setReloadTrigger] = useState<boolean>(false);
     const { networkAlert, errorAlert } = Alerts();
     const { getJWTToken } = useJWTToken()
 
     const fetchPosts = async () => {
         setLoading(true);
-        setError(null); // Clear previous errors
         const JWTToken = await getJWTToken()
         try {
             const response = await fetch(url, {
                 headers: { Authorization: `Bearer ${JWTToken} ` }
             });
+
             if (!response.ok) {
                 networkAlert();
             }
+
             const data: FetchResponse = await response.json();
-            setPosts(data.posts);
-            setStop(data.stop);
+            if (data) {
+                if (data.posts.length > 0) {
+                    setPosts(data.posts);
+                }
+                setStop(data.stop);
+            }
 
         } catch (err: any) {
             errorAlert();
@@ -52,5 +56,5 @@ export const useFetchPosts = (url: string) => {
         setReloadTrigger((prev) => !prev); // Toggle the reload trigger to force re-fetch
     }, []);
 
-    return { posts, loading, error, reload, setPosts, stop };
+    return { posts, loading, reload, setPosts, stop };
 };

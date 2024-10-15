@@ -71,6 +71,7 @@
     "profile": {
         "editProfile": "Edit Profile",
         "interests": "Interests",
+        "follow": "Follow",
         "about": "About"
     },
     "settings": {

@@ -23,7 +23,7 @@ export const useFetchPostByID = (postId: string) => {
             setError(null);
 
             // Make an API request to fetch the post by ID
-            const response = await fetch(`${backend}/posts/${postId}  `, {
+            const response = await fetch(`${backend}/posts/post/${postId}  `, {
                 headers: { Authorization: `Bearer ${JWTToken}` }
             });
             if (!response.ok) {

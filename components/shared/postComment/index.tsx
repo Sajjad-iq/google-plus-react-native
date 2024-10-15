@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Touchable, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Avatar } from '@/components/UI/avatar';
 import { Colors } from '@/constants/Colors';
@@ -8,6 +8,7 @@ import useTimeAgo from '@/hooks/useTimeAgo';
 import * as DropdownMenu from 'zeego/dropdown-menu';
 import { useGlobalData } from '@/context/GlobalContext';
 import { mentionedUserType } from '@/types/user';
+import { useUserAccount } from '@/hooks/useUserAccount';
 
 interface Props extends PostCommentType {
     deleteComment: (id: string) => Promise<void>;
@@ -18,14 +19,16 @@ export function PostComment(props: Props) {
     const { timeAgo } = useTimeAgo()
     const { userInfo } = useGlobalData();
     const { t } = useTranslation();
+    const { selectUser } = useUserAccount()
+
     return (
 
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
                 <View style={[styles.wrapper]}>
-                    <View style={{ paddingLeft: 20, marginRight: 10 }}>
+                    <TouchableOpacity onPress={() => userInfo.id === props.user_id ? null : selectUser(props.user_id)} style={{ paddingLeft: 20, marginRight: 10 }}>
                         <Avatar size='Small' src={props.author_avatar} />
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={[styles.contentWrapper]}>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", flex: 1, paddingRight: 20 }}>
