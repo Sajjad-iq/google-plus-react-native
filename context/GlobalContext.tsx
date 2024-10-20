@@ -4,6 +4,10 @@ import { PostType } from '@/types/post';
 import { mentionedUserType, UserInfo } from '@/types/user';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+interface SearchUsersType {
+    users: UserInfo[],
+    isLoading: boolean
+}
 interface HeaderContextType {
     headerTitle: string;
     setHeaderTitle: (title: string) => void;
@@ -18,6 +22,8 @@ interface HeaderContextType {
     setMentionedUser: (user: any) => void
     selectedUser: UserInfo
     setSelectedUser: (data: UserInfo) => void
+    searchUsers: SearchUsersType
+    setSearchUsers: (data: SearchUsersType) => void
 }
 
 const GlobalContext = createContext<HeaderContextType | undefined>(undefined);
@@ -29,6 +35,7 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
     const [selectedPost, setSelectedPost] = useState<PostType>({} as PostType);
     const [selectedUser, setSelectedUser] = useState<UserInfo>({} as UserInfo);
     const [mentionedUser, setMentionedUser] = useState<mentionedUserType | null>(null);
+    const [searchUsers, setSearchUsers] = useState<SearchUsersType>({ users: [] as UserInfo[], isLoading: false });
     const lang = getCurrentLang();
 
 
@@ -41,7 +48,8 @@ export const GlobalDataProvider: React.FC<{ children: ReactNode }> = ({ children
                 lang,
                 selectedPost, setSelectedPost,
                 mentionedUser, setMentionedUser,
-                selectedUser, setSelectedUser
+                selectedUser, setSelectedUser,
+                searchUsers, setSearchUsers
             }
         }>
             {children}

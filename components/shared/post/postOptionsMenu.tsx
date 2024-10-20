@@ -14,7 +14,7 @@ export default function PostOptionsMenu() {
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
-                <MaterialCommunityIcons name="dots-vertical" size={24} color={Colors.whitePrimary} />
+                <MaterialCommunityIcons style={{ flex: 1 }} name="dots-vertical" size={24} color={Colors.whitePrimary} />
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content

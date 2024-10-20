@@ -6,6 +6,7 @@ import { useHeader } from '@/context/GlobalContext';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Colors } from "@/constants/Colors";
 import { DrawerContent } from "@/components/others/DrawerContent";
+import { router } from "expo-router";
 
 export default function DrawerLayout() {
   const navigation = useNavigation();
@@ -23,11 +24,7 @@ export default function DrawerLayout() {
             borderBottomWidth: 0, // Ensure no border at the bottom
           },
           headerTintColor: Colors.whitePrimary,
-          headerTitleStyle: {
-            color: Colors.whitePrimary,
-          },
-          headerTitleAlign: 'left',
-          headerTitle: headerTitle,
+          title: headerTitle,
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
               <Icon
@@ -39,7 +36,7 @@ export default function DrawerLayout() {
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <TouchableOpacity onPress={() => console.log('Search icon pressed')}>
+            <TouchableOpacity onPress={() => router.push("/(stack)/search")}>
               <Icon
                 name="search"
                 size={26}
